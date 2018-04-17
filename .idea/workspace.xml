@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2086d677-4bdc-44f3-b531-ba979b366ed4" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/myfile2.txt" afterPath="$PROJECT_DIR$/myfile2.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="jobcoin.iws" />
     <ignored path=".idea/workspace.xml" />
