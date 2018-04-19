@@ -11,3 +11,7 @@ Thumbs.db
 *.sublime-project
 *.sublime-workspace
 .idea/
+composer.json
+composer.lock
+composer.phar
+vendor/
