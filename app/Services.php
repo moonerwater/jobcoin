@@ -22,7 +22,7 @@ class Services extends \Base\Services
         /**
          * Check if the user is allowed to access certain action using the SecurityPlugin
          */
-        $eventsManager->attach('dispatch:beforeExecuteRoute', new SecurityPlugin);
+        //$eventsManager->attach('dispatch:beforeExecuteRoute', new SecurityPlugin);
 
         /**
          * Handle exceptions and not-found exceptions using NotFoundPlugin
@@ -52,7 +52,7 @@ class Services extends \Base\Services
         $view->setViewsDir(APP_PATH . $this->get('config')->application->viewsDir);
 
         $view->registerEngines([
-            ".volt" => 'volt'
+            ".phtml" => 'volt'
         ]);
 
         return $view;

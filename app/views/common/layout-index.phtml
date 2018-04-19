@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <!--兼容性meta 让浏览器以webkit内核打开网页 start-->
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <!--兼容性meta end-->
+    <title>五颜六设 - {% block title  %}{% endblock %} - 室内设计 - 家居品牌 - 家居用品 - 装饰设计 - 软装设计 - 家居软装 - 家居设计 - 家居生产 - 室内装潢</title>
+    <meta name="keywords" content="五颜六设,室内设计,家居品牌,家居用品,装饰设计,软装设计,家居软装,家居设计,家居生产,家居方案,软装灵感,家居灵感,室内装潢,室内装潢设计">
+    <meta name="description" content="五颜六设，国内首个集家居灵感搜索引擎、场景体验式实景方案为一体的家居软装社区，以精致的案例及丰富的灵感、创意及商品，为家居设计师、家居爱好者和每个追求品质家居体验的业主带来一场在线的家居灵感盛宴。面向两岸三地私人客户，针对别墅、大中型住宅，提供软装设计及顶级定制服务。依托丰富的家居用品生产经验及成熟的上下游供应链资源，自主投厂生产家居用品，并以此为基础搭建顶级家居品牌的整合平台。深圳侨城体验厅、佛山顺德体验厅、汕头龙湖体验厅即将开业。">
+    <link rel="stylesheet" type="text/css" href="{{url('css/bootstrap.min.css')}}"/>
+    {% block css %}{% endblock %}{% block js %}{% endblock %}
+</head>
+<body>
+<div id="page">
+    <div class="header">
+        {% block header %}{% endblock %}
+    </div>
+    <div>
+        {% block content %}{% endblock %}
+    </div>
+</div>
+<div>
+    {% block footer %}
+    {{ partial('common/layout-footer')}}
+    {% endblock %}
+
+</div>
+</body>
+</html>
