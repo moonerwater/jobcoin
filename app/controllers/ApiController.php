@@ -16,7 +16,9 @@ class ApiController extends ControllerApi
         switch ($action) {
             case 'getversion':
                 $parter = \Partner::find();
-                print_r($parter->toArray());
+                //print_r($parter->toArray());
+                $jobseeker = \Jobseeker::query()->columns('json_extract(attr, "$.name") as name2')->where(' json_extract(attr, "$.name") = "david" ')->orderBy('id asc')->execute();
+                print_r($jobseeker->toArray());
                 break;
         }
     }
