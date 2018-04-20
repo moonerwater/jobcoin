@@ -12,7 +12,7 @@ class ApiController extends ControllerApi
         echo '123456';
     }
 
-    public function v2Action($action) {
+    public function sysAction($action) {
         switch ($action) {
             case 'getversion':
                 $parter = \Partner::find();

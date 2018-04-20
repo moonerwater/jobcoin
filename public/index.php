@@ -1,6 +1,7 @@
 <?php
 
 error_reporting(E_ALL);
+ini_set('display_errors','On'); //上线后删除
 
 use Phalcon\Mvc\Application;
 use Phalcon\Config\Adapter\Ini as ConfigIni;
