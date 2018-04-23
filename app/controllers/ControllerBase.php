@@ -61,22 +61,20 @@ class ControllerBase extends Controller
     }
 
 
-    protected function reply($success, $totalCount, $data)
+    protected function reply($reason, $error_code = 0, $result)
     {
         $obj = new stdClass();
-        $obj->success = $success;
-        $obj->total = $totalCount;
-        $obj->data = $data;
+        $obj->reason = $reason;
+        $obj->error_code = $error_code;
+        $obj->result = $result;
 
-        $cb = $this->request->get('callback');
-
-        $this->response->setContent($cb ? $cb . "(" . json_encode($obj) . ");" : json_encode($obj));
+        $this->response->setContent(json_encode($obj));
         return $this->response->send();
     }
 
-    protected function replyFailure($reason = "")
+    protected function replyFailure($reason = "", $error_code = 404, $result = array())
     {
-        return $this->reply(false, 0, array('message' => $reason));
+        return $this->reply($reason, $error_code, $result);
     }
 
 

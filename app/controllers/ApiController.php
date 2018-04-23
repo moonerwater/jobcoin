@@ -22,4 +22,24 @@ class ApiController extends ControllerApi
                 break;
         }
     }
+
+    public function jobseekerAction($action) {
+        switch($action) {
+            case 'add':
+                $token = trim($this->request->get('token'));
+                $partnerid = $this->checkAndGetToken($token);
+
+                $data = trim($this->request->get('data'));
+                $data = json_decode($data, true);
+                print_r($data);
+                if(!is_array($data) || !$data){
+                    $this->replyFailure('data is empty', 404, null);
+                    return '';
+                }
+
+                echo '456';
+
+                break;
+        }
+    }
 }

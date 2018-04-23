@@ -1,0 +1,24 @@
+http://localhost:81/api/jobseeker/add
+入参
+token = b97840294e6b0af9ecb999d8b6575321
+data =
+{
+    "name": "张三",
+    "idcard": "330102128901016666",
+    "phone": "13510526512",
+    "weixin_id": "xd888",
+    "weixin_name": "心想",
+    "sex": "男",
+    "nation": "汉族",
+    "birthday": "1990-01-08",
+    "height": "1.67m",
+    "education": "本科-中山大学",
+    "language": "中文",
+    "health": "良好",
+    "native_place": "广东中山",
+    "address": "广东省深圳市南山区南光路雅居乐花园110栋-605房",
+    "contact_name": "苏正义",
+    "contact_phone": "13540301188",
+    "phone_model": "iphone 8",
+    "user_image": "https://www.baidu.com/img/bd_logo1.png"
+}
