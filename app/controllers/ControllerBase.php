@@ -28,31 +28,24 @@ class ControllerBase extends Controller
         return $paginator->getPaginate();
     }
 
-    protected function buildInvitationCode($type = '') {
-        $mycode = $this->randomString('upper,number', 6);
-        $user = \User::findFirst(" code_system = '$mycode' ");
-        if ($user) {
-            return $this->buildInvitationCode($type);
+    protected function buildCreditId() {
+        $mycode = $this->randomString(18);
+        $jobseeker = \Jobseeker::findFirst(" credit_id = '$mycode' ");
+        if ($jobseeker) {
+            return $this->buildCreditId();
         }
         return $mycode;
     }
 
-    protected function randomString($type="number,upper,lower",$length){
-        $valid_type = array('number','upper','lower');
-        $case = explode(",",$type);
-        $count = count($case);
-        //根据交集判断参数是否合法
-        if($count !== count(array_intersect($case,$valid_type))){
-            return false;
+    protected function randomString($length = 10){
+        // 密码字符集，可任意添加你需要的字符
+        $chars = 'abcdefghijklmnpqrstuvwxyz123456789';
+        $password = '';
+        for ( $i = 0; $i < $length; $i++ )
+        {
+            $password .= $chars[ mt_rand(0, strlen($chars) - 1) ];
         }
-        $lower = "abcdefghijklmnopqrstuvwxyz";
-        $upper = strtoupper($lower);
-        $number = "0123456789";
-        $str_list = "";
-        for($i=0;$i<$count;++$i){
-            $str_list .= $$case[$i];
-        }
-        return substr(str_shuffle($str_list),0,$length);
+        return $password;
     }
 
     protected function buildNO()
@@ -84,9 +77,19 @@ class ControllerBase extends Controller
      * @param string $mobile
      * @return bool
      */
-    protected function isMobile($mobile) {
-        $pattern = '/^1[3-9][0-9]{9}$/';
+    protected function isPhone($mobile) {
+        $pattern = '/^1[0-9][0-9]{9}$/';
         return preg_match ( $pattern, $mobile ) ? true : false;
+    }
+
+    /**
+     * 身份证验证
+     * @param string $idcard
+     * @return bool
+     */
+    protected function isIdCard($idcard) {
+        $pattern ='/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/';
+        return preg_match ( $pattern, $idcard ) ? true : false;
     }
 
     /**
@@ -96,8 +99,8 @@ class ControllerBase extends Controller
      */
     protected function isEmail($email) {
         $pattern = '/^([a-zA-Z0-9_-])+(\\.[a-zA-Z0-9]+)?@([a-zA-Z0-9_-])+((\\.[a-zA-Z0-9_-]{2,3}){1,2})$/i';
-        $patter = '/^([a-zA-Z0-9_-])+(\\.[a-zA-Z0-9]+)?@[a-zA-Z0-9_-]+(\\.(com|cn|net|org|cc|edu|de|gov|me|info|tv|mobi|asia|co|cc|biz|tel){1}){1,2}/i';
-        return preg_match ( $patter, $email ) ? true : false;
+        $pattern = '/^([a-zA-Z0-9_-])+(\\.[a-zA-Z0-9]+)?@[a-zA-Z0-9_-]+(\\.(com|cn|net|org|cc|edu|de|gov|me|info|tv|mobi|asia|co|cc|biz|tel){1}){1,2}/i';
+        return preg_match ( $pattern, $email ) ? true : false;
     }
 
     /**

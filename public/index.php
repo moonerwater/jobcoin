@@ -1,6 +1,6 @@
 <?php
 
-error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 ini_set('display_errors','On'); //上线后删除
 
 use Phalcon\Mvc\Application;

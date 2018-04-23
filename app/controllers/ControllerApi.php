@@ -6,10 +6,9 @@ class ControllerApi extends ControllerBase
     protected function initialize()
     {
         parent::initialize();
-        $this->view->setVar('versionNum', date('Ymd'));
     }
 
-    protected function checkAndGetToken($token){
+    protected function checkTokenAndGetPartner($token){
         if(!$token){
             $this->replyFailure('token is empty', 404, null);
             die();
