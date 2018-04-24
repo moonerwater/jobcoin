@@ -187,4 +187,12 @@ class ApiController extends ControllerApi
                 break;
         }
     }
+
+    public function combossAction($action) {
+        switch($action){
+            case 'add':
+
+                break;
+        }
+    }
 }
