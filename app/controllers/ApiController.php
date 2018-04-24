@@ -188,7 +188,7 @@ class ApiController extends ControllerApi
         }
     }
 
-    public function combossAction($action) {
+    public function companybossAction($action) {
         switch($action){
             case 'add':
 
