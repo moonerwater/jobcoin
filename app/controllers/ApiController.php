@@ -253,6 +253,26 @@ class ApiController extends ControllerApi
                     $this->reply('success', 0, $result);
                 }
                 break;
+
+            case 'get':
+                $token = trim($this->request->get('token'));
+                $partner_id = $this->checkTokenAndGetPartner($token);
+
+                $tax_code = trim($this->request->get('tax_code'));
+                if(!trim($tax_code)){
+                    $this->replyFailure('tax_code is empty');
+                    return '';
+                }
+                $company = \Company::findFirstByTax_code($tax_code);
+                if (!$company) {
+                    $this->replyFailure('no this tax_code');
+                    return '';
+                }
+                //$companyboss = \CompanyBoss::find(array( 'company_id = ?1', 'bind'=>array(1=>$company->id), 'columns'=>'name, idcard, phone'));
+                $companyboss = \CompanyBoss::find(array( 'company_id = :name:', 'bind'=>array('name'=>$company->id), 'columns'=>'name, idcard, phone'));
+                $result = $companyboss->toArray();
+                $this->reply('success', 0, $result);
+                break;
         }
     }
 }

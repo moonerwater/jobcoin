@@ -51,3 +51,9 @@ tax_code = 452658792136854
 name = 张三
 idcard = 330102128901016688
 phone  = 13510526588
+
+
+http://localhost:81/api/companyboss/get
+入参
+token = b97840294e6b0af9ecb999d8b6575321
+tax_code = 452658792136854
