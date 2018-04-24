@@ -191,7 +191,67 @@ class ApiController extends ControllerApi
     public function companybossAction($action) {
         switch($action){
             case 'add':
+                $token = trim($this->request->get('token'));
+                $partner_id = $this->checkTokenAndGetPartner($token);
 
+                $tax_code = trim($this->request->get('tax_code'));
+                $name = trim($this->request->get('name'));
+                $idcard = trim($this->request->get('idcard'));
+                $phone = trim($this->request->get('phone'));
+
+                if(!trim($tax_code)){
+                    $this->replyFailure('tax_code is empty');
+                    return '';
+                }
+                if(!trim($name)){
+                    $this->replyFailure('name is empty');
+                    return '';
+                }
+                if(!trim($idcard)){
+                    $this->replyFailure('idcard is empty');
+                    return '';
+                }
+                if(!trim($phone)){
+                    $this->replyFailure('phone is empty');
+                    return '';
+                }
+                if(!$this->isPhone(trim($phone))){
+                    $this->replyFailure('phone format is wrong');
+                    return '';
+                }
+                if(!$this->isIdCard(trim($idcard))){
+                    $this->replyFailure('idcard format is wrong');
+                    return '';
+                }
+                $company = \Company::findFirstByTax_code($tax_code);
+                if (!$company) {
+                    $this->replyFailure('no this tax_code');
+                    return '';
+                }
+                $companyboss =\CompanyBoss::findFirst([' company_id = ?1 and idcard = ?2 ', 'bind'=>[ 1=>$company->id, 2=>$idcard ] ]);
+                if ($companyboss) {
+                    $result = new stdClass();
+                    $result->idcard = $companyboss->idcard;
+                    $this->reply('idcard is exist', 0, $result);
+                    return '';
+                }
+                $companyboss = new \CompanyBoss();
+                $companyboss->company_id = $company->id;
+                $companyboss->name = $name;
+                $companyboss->idcard = $idcard;
+                $companyboss->phone = $phone;
+                $companyboss->partner_id = $partner_id;
+                $companyboss->create_time = time();
+                $companyboss->last_time = time();
+                if(!$companyboss->save()){
+                    $this->replyFailure('save is error');
+                    return '';
+                }
+                else{
+                    $result = new stdClass();
+                    $result->idcard = $companyboss->idcard;
+                    $this->reply('success', 0, $result);
+                }
                 break;
         }
     }
