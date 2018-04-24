@@ -33,6 +33,9 @@ class ControllerBase extends Controller
         if($type == 'jobseeker'){
             $obj = \Jobseeker::findFirst(" credit_id = '$mycode' ");
         }
+        elseif($type == 'company'){
+            $obj = \Company::findFirst(" credit_id = '$mycode' ");
+        }
         if ($obj) {
             return $this->buildCreditId($type);
         }

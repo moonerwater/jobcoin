@@ -115,4 +115,76 @@ class ApiController extends ControllerApi
                 break;
         }
     }
+
+    public function companyAction($action) {
+        switch($action){
+            case 'add':
+                $token = trim($this->request->get('token'));
+                $partner_id = $this->checkTokenAndGetPartner($token);
+
+                $org_code = trim($this->request->get('org_code'));
+                $tax_code = trim($this->request->get('tax_code'));
+                $bus_image = trim($this->request->get('bus_image'));
+                if(!trim($org_code)){
+                    $this->replyFailure('org_code is empty');
+                    return '';
+                }
+                if(!trim($tax_code)){
+                    $this->replyFailure('tax_code is empty');
+                    return '';
+                }
+                if(!trim($bus_image)){
+                    $this->replyFailure('bus_image is empty');
+                    return '';
+                }
+                $company = \Company::findFirstByTax_code(trim($tax_code));
+                if ($company) {
+                    $result = new stdClass();
+                    $result->credit_id = $company->credit_id;
+                    $this->reply('credit_id is exist', 0, $result);
+                    return '';
+                }
+                $company = new \Company();
+                $company->credit_id = $this->buildCreditId('company');
+                $company->credit_score = 600;
+                $company->org_code = $org_code;
+                $company->tax_code = $tax_code;
+                $company->bus_image = $bus_image;
+                $company->partner_id = $partner_id;
+                $company->create_time = time();
+                $company->last_time = time();
+                if(!$company->save()){
+                    $this->replyFailure('save is error');
+                    return '';
+                }
+                else{
+                    $result = new stdClass();
+                    $result->credit_id = $company->credit_id;
+                    $this->reply('success', 0, $result);
+                }
+
+                break;
+
+            case 'get':
+                $token = trim($this->request->get('token'));
+                $partner_id = $this->checkTokenAndGetPartner($token);
+
+                $tax_code = trim($this->request->get('tax_code'));
+                if(!trim($tax_code)){
+                    $this->replyFailure('tax_code is empty');
+                    return '';
+                }
+                $company = \Company::findFirstByTax_code($tax_code);
+                if (!$company) {
+                    $this->replyFailure('no this tax_code');
+                    return '';
+                }
+                $result = new stdClass();
+                $result->credit_id = $company->credit_id;
+                $result->credit_score = $company->credit_score;
+                $result->comment = "";
+                $this->reply('success', 0, $result);
+                break;
+        }
+    }
 }
