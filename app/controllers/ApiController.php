@@ -65,7 +65,7 @@ class ApiController extends ControllerApi
                 }
 
                 $jobseeker = new \Jobseeker();
-                $jobseeker->credit_id = $this->buildCreditId();
+                $jobseeker->credit_id = $this->buildCreditId('jobseeker');
                 $jobseeker->credit_score = 600;
                 $jobseeker->jobcoin = 0;
                 $jobseeker->name = $data->name;
