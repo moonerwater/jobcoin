@@ -57,3 +57,25 @@ http://localhost:81/api/companyboss/get
 入参
 token = b97840294e6b0af9ecb999d8b6575321
 tax_code = 452658792136854
+
+
+http://localhost:81/api/resume/add
+入参
+token = b97840294e6b0af9ecb999d8b6575321
+idcard = 330102128901016666
+data =
+[
+    {
+        "company_name": "深圳市高科技术有限公司",
+        "position": "总监助理",
+        "start_time": "2005-01-05",
+        "end_time": "2008-10-16",
+        "work_content": "协助总监完成市场调查"
+    }, {
+        "company_name": "深圳市人间大爱有限公司",
+        "position": "总监",
+        "start_time": "2009-01-05",
+        "end_time": "至今",
+        "work_content": "领导公司运作"
+    }
+]

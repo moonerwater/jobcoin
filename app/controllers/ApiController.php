@@ -275,4 +275,79 @@ class ApiController extends ControllerApi
                 break;
         }
     }
+
+    public function resumeAction($action){
+        switch($action) {
+            case 'add':
+                $token = trim($this->request->get('token'));
+                $partner_id = $this->checkTokenAndGetPartner($token);
+
+                $idcard = trim($this->request->get('idcard'));
+                if(!trim($idcard)){
+                    $this->replyFailure('idcard is empty');
+                    return '';
+                }
+                $jobseeker = \Jobseeker::findFirstByIdcard($idcard);
+                if (!$jobseeker) {
+                    $this->replyFailure('no this idcard');
+                    return '';
+                }
+
+                $resume = \Resume::findFirstByJobseeker_id($jobseeker->id);
+                if($resume){
+                    $result = new stdClass();
+                    $result->idcard = $idcard;
+                    $this->reply('resume is exist', 0, $result);
+                    return '';
+                }
+
+                $data = trim($this->request->get('data'));
+                $data = json_decode($data);
+                if(!is_array($data) || !$data){
+                    $this->replyFailure('data is empty');
+                    return '';
+                }
+
+                foreach($data as $k => $v){
+                    if(!trim($v->company_name)){
+                        $this->replyFailure('company_name is empty');
+                        return '';
+                    }
+                    if(!trim($v->position)){
+                        $this->replyFailure('position is empty');
+                        return '';
+                    }
+                    if(!trim($v->start_time)){
+                        $this->replyFailure('start_time is empty');
+                        return '';
+                    }
+                    if(!trim($v->end_time)){
+                        $this->replyFailure('end_time is empty');
+                        return '';
+                    }
+                    if(!trim($v->work_content)){
+                        $this->replyFailure('work_content is empty');
+                        return '';
+                    }
+                }
+
+                $resume = new \Resume();
+                $resume->jobseeker_id = $jobseeker->id;
+                $resume->partner_id = $partner_id;
+                $resume->exp_attr = json_encode($data, 320);
+                $resume->create_time = time();
+                $resume->last_time = time();
+                if(!$resume->save()){
+                    $this->replyFailure('save is error');
+                    return '';
+                }
+                else{
+                    $result = new stdClass();
+                    $result->credit_id = $jobseeker->credit_id;
+                    $this->reply('success', 0, $result);
+                }
+
+                break;
+        }
+    }
 }
