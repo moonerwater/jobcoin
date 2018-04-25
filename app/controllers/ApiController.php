@@ -67,7 +67,7 @@ class ApiController extends ControllerApi
                 $jobseeker = new \Jobseeker();
                 $jobseeker->credit_id = $this->buildCreditId('jobseeker');
                 $jobseeker->credit_score = 600;
-                $jobseeker->jobcoin = 0;
+                $jobseeker->jobcoin = 1000;
                 $jobseeker->name = $data->name;
                 $jobseeker->idcard = $data->idcard;
                 $jobseeker->phone = $data->phone;
@@ -141,12 +141,13 @@ class ApiController extends ControllerApi
                 if ($company) {
                     $result = new stdClass();
                     $result->credit_id = $company->credit_id;
-                    $this->reply('credit_id is exist', 0, $result);
+                    $this->reply('tax_code is exist', 0, $result);
                     return '';
                 }
                 $company = new \Company();
                 $company->credit_id = $this->buildCreditId('company');
                 $company->credit_score = 600;
+                $company->jobcoin = 1000;
                 $company->org_code = $org_code;
                 $company->tax_code = $tax_code;
                 $company->bus_image = $bus_image;
@@ -182,6 +183,7 @@ class ApiController extends ControllerApi
                 $result = new stdClass();
                 $result->credit_id = $company->credit_id;
                 $result->credit_score = $company->credit_score;
+                $result->jobcoin = $company->jobcoin;
                 $result->comment = "";
                 $this->reply('success', 0, $result);
                 break;
@@ -436,6 +438,11 @@ class ApiController extends ControllerApi
                     return '';
                 }
 
+                if($company->jobcoin < 10){
+                    $this->replyFailure('jobcoin is not enough');
+                    return '';
+                }
+
                 $job = new \Job();
                 $job->company_id = $company->id;
                 $job->position = $position;
@@ -454,8 +461,12 @@ class ApiController extends ControllerApi
                     return '';
                 }
                 else{
+                    $company->jobcoin = $company->jobcoin - 10;
+                    $company->save();
+
                     $result = new stdClass();
                     $result->credit_id = $company->credit_id;
+                    $result->jobcoin = $company->jobcoin;
                     $this->reply('success', 0, $result);
                 }
                 break;
