@@ -377,4 +377,88 @@ class ApiController extends ControllerApi
                 break;
         }
     }
+
+    public function jobAction($action) {
+        switch($action) {
+            case 'add':
+                $token = trim($this->request->get('token'));
+                $partner_id = $this->checkTokenAndGetPartner($token);
+
+                $tax_code = trim($this->request->get('tax_code'));
+                $position = trim($this->request->get('position'));
+                $work_content = trim($this->request->get('work_content'));
+                $need_people = trim($this->request->get('need_people'));
+                $work_time = trim($this->request->get('work_time'));
+                $province = trim($this->request->get('province'));
+                $city = trim($this->request->get('city'));
+                $district = trim($this->request->get('district'));
+                $address = trim($this->request->get('address'));
+
+                if(!trim($tax_code)){
+                    $this->replyFailure('tax_code is empty');
+                    return '';
+                }
+                $company = \Company::findFirstByTax_code($tax_code);
+                if (!$company) {
+                    $this->replyFailure('no this tax_code');
+                    return '';
+                }
+                if(!trim($position)){
+                    $this->replyFailure('position is empty');
+                    return '';
+                }
+                if(!trim($work_content)){
+                    $this->replyFailure('work_content is empty');
+                    return '';
+                }
+                if(!trim($need_people)){
+                    $this->replyFailure('need_people is empty');
+                    return '';
+                }
+                if(!trim($work_time)){
+                    $this->replyFailure('work_time is empty');
+                    return '';
+                }
+                if(!trim($province)){
+                    $this->replyFailure('province is empty');
+                    return '';
+                }
+                if(!trim($city)){
+                    $this->replyFailure('city is empty');
+                    return '';
+                }
+                if(!trim($district)){
+                    $this->replyFailure('district is empty');
+                    return '';
+                }
+                if(!trim($address)){
+                    $this->replyFailure('address is empty');
+                    return '';
+                }
+
+                $job = new \Job();
+                $job->company_id = $company->id;
+                $job->position = $position;
+                $job->work_content = $work_content;
+                $job->need_people = $need_people;
+                $job->work_time = $work_time;
+                $job->province = $province;
+                $job->city = $city;
+                $job->district = $district;
+                $job->address = $address;
+                $job->partner_id = $partner_id;
+                $job->create_time = time();
+                $job->last_time = time();
+                if(!$job->save()){
+                    $this->replyFailure('save is error');
+                    return '';
+                }
+                else{
+                    $result = new stdClass();
+                    $result->credit_id = $company->credit_id;
+                    $this->reply('success', 0, $result);
+                }
+                break;
+        }
+    }
 }

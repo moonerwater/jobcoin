@@ -84,3 +84,17 @@ http://localhost:81/api/resume/get
 入参
 token = b97840294e6b0af9ecb999d8b6575321
 idcard = 330102128901016666
+
+
+http://localhost:81/api/job/add
+入参
+token = b97840294e6b0af9ecb999d8b6575321
+tax_code = 452658792136854
+position = 总监助理
+work_content = 协助总监完成市场调查
+need_people  = 3人
+work_time  = 周一至周五 9:00~18:00
+province  = 广东省
+city  = 深圳市
+district  = 南山区
+address  = 现代城花园318栋205
