@@ -79,3 +79,8 @@ data =
         "work_content": "领导公司运作"
     }
 ]
+
+http://localhost:81/api/resume/get
+入参
+token = b97840294e6b0af9ecb999d8b6575321
+idcard = 330102128901016666

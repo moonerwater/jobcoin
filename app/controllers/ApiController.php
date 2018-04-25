@@ -348,6 +348,33 @@ class ApiController extends ControllerApi
                 }
 
                 break;
+
+            case 'get':
+                $token = trim($this->request->get('token'));
+                $partner_id = $this->checkTokenAndGetPartner($token);
+
+                $idcard = trim($this->request->get('idcard'));
+                if(!trim($idcard)){
+                    $this->replyFailure('idcard is empty');
+                    return '';
+                }
+                $jobseeker = \Jobseeker::findFirstByIdcard($idcard);
+                if (!$jobseeker) {
+                    $this->replyFailure('no this idcard');
+                    return '';
+                }
+
+                $resume = \Resume::findFirstByJobseeker_id($jobseeker->id);
+
+                $result = new stdClass();
+                $result->credit_id = $jobseeker->credit_id;
+                $result->name = $jobseeker->name;
+                $result->idcard = $jobseeker->idcard;
+                $result->evaluation = "good";
+                $exp = json_decode($resume->exp_attr, true);
+                $result->exp = $exp ? $exp : array();
+                $this->reply('success', 0, $result);
+                break;
         }
     }
 }
