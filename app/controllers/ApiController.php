@@ -526,4 +526,104 @@ class ApiController extends ControllerApi
                 break;
         }
     }
+
+    public function applyAction($action){
+        switch($action){
+            case 'add':
+                $token = trim($this->request->get('token'));
+                $partner_id = $this->checkTokenAndGetPartner($token);
+
+                $idcard = trim($this->request->get('idcard'));
+                $job_id = trim($this->request->get('job_id'));
+
+                if (!$idcard) {
+                    $this->replyFailure('idcard is empty');
+                    return '';
+                }
+                if(!trim($job_id)){
+                    $this->replyFailure('job_id is empty');
+                    return '';
+                }
+
+                $jobseeker = \Jobseeker::findFirstByIdcard($idcard);
+                if (!$jobseeker) {
+                    $this->replyFailure('no this idcard');
+                    return '';
+                }
+
+                $job = \Job::findFirstById($job_id);
+                if (!$job) {
+                    $this->replyFailure('no this job');
+                    return '';
+                }
+
+                $resume = \Resume::findFirstByJobseeker_id($jobseeker->id);
+                if (!$resume) {
+                    $this->replyFailure('no this idcard resume');
+                    return '';
+                }
+
+                $apply =\Apply::findFirst([' jobseeker_id = ?1 and job_id = ?2 ', 'bind'=>[ 1=>$jobseeker->id, 2=>$job->id ] ]);
+                if ($apply) {
+                    $result = new stdClass();
+                    $result->idcard = $jobseeker->idcard;
+                    $this->reply('apply resume is exist', 0, $result);
+                    return '';
+                }
+                $apply = new \Apply();
+                $apply->jobseeker_id = $jobseeker->id;
+                $apply->job_id = $job->id;
+                $apply->resume_id = $resume->id;
+                $apply->enter = 'N';
+                $apply->jobseeker_score = 0;
+                $apply->company_score = 0;
+                $apply->create_time = time();
+                $apply->last_time = time();
+                if(!$apply->save()){
+                    $this->replyFailure('save is error');
+                    return '';
+                }
+                else{
+                    $result = new stdClass();
+                    $result->idcard = $jobseeker->idcard;
+                    $this->reply('success', 0, $result);
+                }
+                break;
+
+            case 'get':
+                $token = trim($this->request->get('token'));
+                $partner_id = $this->checkTokenAndGetPartner($token);
+
+                $job_id = trim($this->request->get('job_id'));
+                if(!trim($job_id)){
+                    $this->replyFailure('job_id is empty');
+                    return '';
+                }
+
+                $job = \Job::findFirstById($job_id);
+                if (!$job) {
+                    $this->replyFailure('no this job');
+                    return '';
+                }
+                $apply = \Apply::find(array( 'job_id = :job_id:', 'bind'=>array('job_id'=>$job->id), 'columns'=>'jobseeker_id, resume_id'));
+                $result = $apply->toArray();
+                foreach($result as $k => $v){
+                    $jobseeker = \Jobseeker::findFirstById($v['jobseeker_id']);
+                    $result[$k]['credit_id'] = $jobseeker->credit_id;
+                    $result[$k]['name'] = $jobseeker->name;
+                    $result[$k]['idcard'] = $jobseeker->idcard;
+                    $result[$k]['phone'] = $jobseeker->phone;
+                    unset($result[$k]['jobseeker_id']);
+
+                    $resume = \Resume::findFirstById($v['resume_id']);
+                    $exp = json_decode($resume->exp_attr, true);
+                    $result[$k]['exp'] = $exp ? $exp : array();
+                    unset($result[$k]['resume_id']);
+
+                }
+                $this->reply('success', 0, $result);
+                break;
+        }
+
+    }
 }
