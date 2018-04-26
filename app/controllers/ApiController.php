@@ -122,9 +122,14 @@ class ApiController extends ControllerApi
                 $token = trim($this->request->get('token'));
                 $partner_id = $this->checkTokenAndGetPartner($token);
 
+                $name = trim($this->request->get('name'));
                 $org_code = trim($this->request->get('org_code'));
                 $tax_code = trim($this->request->get('tax_code'));
                 $bus_image = trim($this->request->get('bus_image'));
+                if(!trim($name)){
+                    $this->replyFailure('name is empty');
+                    return '';
+                }
                 if(!trim($org_code)){
                     $this->replyFailure('org_code is empty');
                     return '';
@@ -148,6 +153,7 @@ class ApiController extends ControllerApi
                 $company->credit_id = $this->buildCreditId('company');
                 $company->credit_score = 600;
                 $company->jobcoin = 1000;
+                $company->name = $name;
                 $company->org_code = $org_code;
                 $company->tax_code = $tax_code;
                 $company->bus_image = $bus_image;
@@ -183,6 +189,7 @@ class ApiController extends ControllerApi
                 $result = new stdClass();
                 $result->credit_id = $company->credit_id;
                 $result->credit_score = $company->credit_score;
+                $result->name = $company->name;
                 $result->jobcoin = $company->jobcoin;
                 $result->comment = "";
                 $this->reply('success', 0, $result);
@@ -391,6 +398,7 @@ class ApiController extends ControllerApi
                 $work_content = trim($this->request->get('work_content'));
                 $need_people = trim($this->request->get('need_people'));
                 $work_time = trim($this->request->get('work_time'));
+                $salary = trim($this->request->get('salary'));
                 $province = trim($this->request->get('province'));
                 $city = trim($this->request->get('city'));
                 $district = trim($this->request->get('district'));
@@ -421,6 +429,10 @@ class ApiController extends ControllerApi
                     $this->replyFailure('work_time is empty');
                     return '';
                 }
+                if(!trim($salary)){
+                    $this->replyFailure('salary is empty');
+                    return '';
+                }
                 if(!trim($province)){
                     $this->replyFailure('province is empty');
                     return '';
@@ -449,6 +461,7 @@ class ApiController extends ControllerApi
                 $job->work_content = $work_content;
                 $job->need_people = $need_people;
                 $job->work_time = $work_time;
+                $job->salary = $salary;
                 $job->province = $province;
                 $job->city = $city;
                 $job->district = $district;
@@ -469,6 +482,46 @@ class ApiController extends ControllerApi
                     $result->jobcoin = $company->jobcoin;
                     $this->reply('success', 0, $result);
                 }
+                break;
+
+            case 'list':
+                $token = trim($this->request->get('token'));
+                $partner_id = $this->checkTokenAndGetPartner($token);
+
+                $page = $this->request->get('page', 'int');
+                $pagenum = $this->request->get('pagenum');
+                $page = $page ? $page : 1;
+                $pagenum = $pagenum ? $pagenum : 10;
+
+                $keyword = trim($this->request->get('keyword'));
+                $city = trim($this->request->get('city'));
+                $district = trim($this->request->get('district'));
+
+
+                $where = "";
+                if($keyword){
+                    $where .= ($where ? 'and': '')." (j.position like :keyword: or c.name like :keyword:) ";
+                    $bindArray['keyword'] = "%$keyword%";
+                }
+                if($city){
+                    $where .= ($where ? 'and': '')." (j.city like :city:) ";
+                    $bindArray['city'] = "%$city%";
+                }
+                if($district){
+                    $where .= ($where ? 'and': '')." (j.district like :district:) ";
+                    $bindArray['district'] = "%$district%";
+                }
+                $builder = $this->modelsManager->createBuilder()
+                    ->addFrom('Job', 'j')
+                    ->innerJoin('Company', 'c.id = j.company_id ', 'c')
+                    ->columns('j.id as job_id, c.credit_id, c.name as company_name, j.position, j.work_content, j.need_people, j.work_time, j.salary, j.province, j.city, j.district, j.address')
+                    ->where($where, $bindArray)
+                    ->orderBy('j.id desc ');
+                $querypage = $this->queryPage($builder, $page, $pagenum);
+                $querypage = $querypage->items->toArray();
+
+                $result = $querypage;
+                $this->reply('success', 0, $result);
                 break;
         }
     }

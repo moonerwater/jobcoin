@@ -33,6 +33,7 @@ idcard = 330102128901016666
 http://localhost:81/api/company/add
 入参
 token = b97840294e6b0af9ecb999d8b6575321
+name = 深圳市高地无限科技有限公司
 org_code = 201509882112556
 tax_code = 452658792136854
 bus_image = https://www.baidu.com/img/bd_logo1.png
@@ -94,7 +95,19 @@ position = 总监助理
 work_content = 协助总监完成市场调查
 need_people  = 3人
 work_time  = 周一至周五 9:00~18:00
+salary = 5000~8000人民币
 province  = 广东省
 city  = 深圳市
 district  = 南山区
 address  = 现代城花园318栋205
+
+
+http://localhost:81/api/job/list
+入参
+token = b97840294e6b0af9ecb999d8b6575321
+keyword = 总监
+city = 深圳市
+district  = 南山区
+page = 1
+pagenum = 10
+
