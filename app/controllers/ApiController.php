@@ -570,6 +570,11 @@ class ApiController extends ControllerApi
                     $this->reply('apply resume is exist', 0, $result);
                     return '';
                 }
+                if($jobseeker->jobcoin < 10){
+                    $this->replyFailure('jobseeker jobcoin is not enough');
+                    return '';
+                }
+
                 $apply = new \Apply();
                 $apply->jobseeker_id = $jobseeker->id;
                 $apply->job_id = $job->id;
@@ -584,6 +589,9 @@ class ApiController extends ControllerApi
                     return '';
                 }
                 else{
+                    $jobseeker->jobcoin = $jobseeker->jobcoin - 10;
+                    $jobseeker->save();
+
                     $result = new stdClass();
                     $result->idcard = $jobseeker->idcard;
                     $this->reply('success', 0, $result);
@@ -622,6 +630,104 @@ class ApiController extends ControllerApi
 
                 }
                 $this->reply('success', 0, $result);
+                break;
+
+            case 'yes':
+                $token = trim($this->request->get('token'));
+                $partner_id = $this->checkTokenAndGetPartner($token);
+
+                $idcard = trim($this->request->get('idcard'));
+                $job_id = trim($this->request->get('job_id'));
+
+                if (!$idcard) {
+                    $this->replyFailure('idcard is empty');
+                    return '';
+                }
+                if(!trim($job_id)){
+                    $this->replyFailure('job_id is empty');
+                    return '';
+                }
+
+                $jobseeker = \Jobseeker::findFirstByIdcard($idcard);
+                if (!$jobseeker) {
+                    $this->replyFailure('no this idcard');
+                    return '';
+                }
+
+                $job = \Job::findFirstById($job_id);
+                if (!$job) {
+                    $this->replyFailure('no this job');
+                    return '';
+                }
+
+                $apply =\Apply::findFirst([' jobseeker_id = ?1 and job_id = ?2 ', 'bind'=>[ 1=>$jobseeker->id, 2=>$job->id ] ]);
+                if (!$apply) {
+                    $this->replyFailure('no this apply');
+                    return '';
+                }
+                $apply->enter = 'Y';
+                if(!$apply->save()){
+                    $this->replyFailure('save is error');
+                    return '';
+                }
+                else{
+                    $result = new stdClass();
+                    $result->idcard = $jobseeker->idcard;
+                    $this->reply('success', 0, $result);
+                }
+                break;
+
+            case 'score':
+                $token = trim($this->request->get('token'));
+                $partner_id = $this->checkTokenAndGetPartner($token);
+
+                $idcard = trim($this->request->get('idcard'));
+                $job_id = trim($this->request->get('job_id'));
+                $jobseeker_score = trim($this->request->get('jobseeker_score','int'));
+                $company_score = trim($this->request->get('company_score','int'));
+
+                if (!$idcard) {
+                    $this->replyFailure('idcard is empty');
+                    return '';
+                }
+                if(!trim($job_id)){
+                    $this->replyFailure('job_id is empty');
+                    return '';
+                }
+
+                $jobseeker = \Jobseeker::findFirstByIdcard($idcard);
+                if (!$jobseeker) {
+                    $this->replyFailure('no this idcard');
+                    return '';
+                }
+
+                $job = \Job::findFirstById($job_id);
+                if (!$job) {
+                    $this->replyFailure('no this job');
+                    return '';
+                }
+
+                $apply =\Apply::findFirst([' jobseeker_id = ?1 and job_id = ?2 and enter = ?3 ', 'bind'=>[ 1=>$jobseeker->id, 2=>$job->id, 3=>'Y' ] ]);
+                if (!$apply) {
+                    $this->replyFailure('this apply not enter');
+                    return '';
+                }
+                if($jobseeker_score){
+                    $apply->jobseeker_score = $jobseeker_score;
+                }
+                if($company_score){
+                    $apply->company_score = $company_score;
+                }
+
+                if(!$apply->save()){
+                    $this->replyFailure('save is error');
+                    return '';
+                }
+                else{
+                    $result = new stdClass();
+                    $result->idcard = $jobseeker->idcard;
+                    $this->reply('success', 0, $result);
+                }
                 break;
         }
 

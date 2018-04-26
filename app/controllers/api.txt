@@ -122,3 +122,17 @@ http://localhost:81/api/apply/get
 入参
 token = b97840294e6b0af9ecb999d8b6575321
 job_id = 140
+
+http://localhost:81/api/apply/yes
+入参
+token = b97840294e6b0af9ecb999d8b6575321
+idcard = 330102128901016666
+job_id = 140
+
+http://localhost:81/api/apply/score
+入参
+token = b97840294e6b0af9ecb999d8b6575321
+idcard = 330102128901016666
+job_id = 140
+jobseeker_score = 1
+company_score = 5
