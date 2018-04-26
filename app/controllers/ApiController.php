@@ -478,6 +478,7 @@ class ApiController extends ControllerApi
                     $company->save();
 
                     $result = new stdClass();
+                    $result->job_id = $job->id;
                     $result->credit_id = $company->credit_id;
                     $result->jobcoin = $company->jobcoin;
                     $this->reply('success', 0, $result);
