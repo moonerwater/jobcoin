@@ -10,6 +10,6 @@ class IndexController extends ControllerBase
     public function indexAction()
     {
         $this->view->disable();
-        echo 'nothing';
+        echo '金职链还在开发中';
     }
 }
