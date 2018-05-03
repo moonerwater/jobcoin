@@ -22,6 +22,7 @@ data =
     "phone_model": "iphone 8",
     "user_image": "https://www.baidu.com/img/bd_logo1.png"
 }
+其它相关数据 必填 name = 姓名，idcard = 身份证号，phone = 电话号码。 选填 微信id，微信名称，性别，民族，生日，身高，教育经历，语言，身体状况，籍贯，住址，紧急联系人，紧急联系人电话，手机型号，用户头像网址
 
 
 http://localhost:81/api/jobseeker/get
@@ -80,6 +81,7 @@ data =
         "work_content": "领导公司运作"
     }
 ]
+其它相关数据 必填 company_name = 公司名称，position = 职位，start_time = 开始时间，end_time = 结束时间，work_content = 工作内容
 
 http://localhost:81/api/resume/get
 入参
