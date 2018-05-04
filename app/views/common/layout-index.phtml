@@ -12,22 +12,21 @@
     <meta name="keywords" content="金职链">
     <meta name="description" content="金职链">
     <link rel="stylesheet" type="text/css" href="{{url('css/bootstrap.min.css')}}"/>
-    {% block css %}{% endblock %}{% block js %}{% endblock %}
+    {% block css %}
+        <style type="text/css">
+            body,html {
+                width: 1920px;
+            }
+        </style>
+    {% endblock %}
+    {% block js %}
+    {% endblock %}
 </head>
 <body>
-<div id="page">
-    <div class="header">
-        {% block header %}{% endblock %}
-    </div>
-    <div>
-        {% block content %}{% endblock %}
-    </div>
-</div>
-<div>
-    {% block footer %}
-    {{ partial('common/layout-footer')}}
-    {% endblock %}
-
-</div>
+{% block header %}{% endblock %}
+{% block content %}{% endblock %} 
+{% block footer %}
+{{ partial('common/layout-footer')}}
+{% endblock %}
 </body>
 </html>
