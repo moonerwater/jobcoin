@@ -58,6 +58,19 @@ class Services extends \Base\Services
         return $view;
     }
 
+    protected function initCache()
+    {
+        $frontCache = new Phalcon\Cache\Frontend\Data(array(
+            "lifetime" => 86400
+        ));
+
+        $cache = new Phalcon\Cache\Backend\File($frontCache, array(
+            "cacheDir" => APP_PATH . $this->get('config')->application->cacheDir
+        ));
+
+        return $cache;
+    }
+
     /**
      * Setting up volt
      */

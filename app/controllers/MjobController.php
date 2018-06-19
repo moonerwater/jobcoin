@@ -1,6 +1,6 @@
 <?php
 
-class MjobController extends ControllerBase
+class MjobController extends ControllerApi
 {
     public function initialize()
     {
@@ -10,6 +10,37 @@ class MjobController extends ControllerBase
     public function indexAction()
     {
         
+    }
+
+    public function getphonecodeAction() {
+        $this->view->disable();
+        $mobile = $this->request->get('mobile', 'string');
+        $tempSms = $this->cache->get('sms_'.date("Ymd").'_'.$mobile);
+        $tempSmsLast = $tempSms[count($tempSms)-1];
+        if (!$this->isPhone($mobile)) {
+            $this->replyFailure('手机号码格式不正确');
+            return '';
+        }
+        elseif (count($tempSms) >= 3) {
+            $this->replyFailure('相同手机号码一天内只能发送三次短信');
+            return '';
+        }
+        elseif ($tempSmsLast) {
+            if (time() - $tempSmsLast['time'] < 60) {
+                $this->replyFailure('60秒后才能发送');
+                return '';
+            }
+        }
+        $code = rand(1000,9999);
+        $sms = new \Sms();
+        if (!$sms->sendSms($mobile, 'userSign', array('name' => '123', 'code' => $code))) {
+            $this->replyFailure('发送失败');
+            return '';
+        }
+        $tempSms[] = array('code' => $code, 'time' => time());
+        $this->cache->save('sms_'.date(Ymd).'_'.$mobile, $tempSms);
+
+        $this->reply(true, 0, array('message' => 'success'));
     }
 
     public function loginAction()

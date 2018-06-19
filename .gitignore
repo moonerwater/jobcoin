@@ -1,5 +1,5 @@
 app/config/config.ini.dev
-cache/volt/*.php
+cache/
 .DS_Store*
 ehthumbs.db
 Icon?
