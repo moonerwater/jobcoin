@@ -44,6 +44,21 @@ class MjobController extends ControllerH5
         $this->reply(true, 0, array('message' => 'success'));
     }
 
+    public function checkphonecodeAction() {
+        $this->view->disable();
+        $mobile = $this->request->get('mobile', 'string');
+        $vcode = $this->request->get('code', 'alphanum');
+        $tempSms = $this->cache->get('sms_'.date("Ymd").'_'.$mobile);
+        $tempSms = $tempSms ? $tempSms : array();
+        $tempSmsLast = $tempSms[count($tempSms)-1];
+        if (!($tempSmsLast['code'] && $tempSmsLast['code'] == $vcode)) {
+            $this->replyFailure('验证码错误');
+        }
+        else {
+            $this->reply(true, 0, array('message' => 'success'));
+        }
+    }
+
     public function loginAction()
     {
         
