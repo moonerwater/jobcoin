@@ -45,7 +45,17 @@ class MjobController extends ControllerH5
         $tempSms[] = array('code' => $code, 'time' => time());
         $this->cache->save('sms_'.date("Ymd").'_'.$mobile, $tempSms);
 
-        $this->reply(true, 0, array('message' => 'success'));
+        $user = \User::findFirstByPhone($mobile);
+        if ($user) {
+            $result = new stdClass();
+            $result->user_type = 'old';
+        }
+        else{
+            $result = new stdClass();
+            $result->user_type = 'new';
+        }
+
+        $this->reply(true, 0, $result);
     }
 
     public function checkphonecodeAction() {
