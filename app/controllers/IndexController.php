@@ -12,11 +12,29 @@ class IndexController extends ControllerBase
         //$this->view->disable();
         //echo '金职链还在开发中';
     }
+    public function enAction()
+    {
+        
+    }
+
+    public function hkAction()
+    {
+        
+    }
+
+    public function apiAction()
+    {
+        
+    }
     
 	public function animationTestAction()
     {
-        //$this->view->disable();
-        //echo '金职链还在开发中';
+        
+    }
+
+    public function faceAction()
+    {
+        
     }
 
 }
