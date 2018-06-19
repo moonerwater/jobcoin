@@ -48,13 +48,64 @@ class MjobController extends ControllerH5
         $this->view->disable();
         $mobile = $this->request->get('mobile', 'string');
         $vcode = $this->request->get('code', 'alphanum');
+        $code_user = $this->request->get('code_user');
         $tempSms = $this->cache->get('sms_'.date("Ymd").'_'.$mobile);
         $tempSms = $tempSms ? $tempSms : array();
         $tempSmsLast = $tempSms[count($tempSms)-1];
+        if (!$this->isPhone($mobile)) {
+            $this->replyFailure('手机号码格式不正确');
+            return '';
+        }
+
         if (!($tempSmsLast['code'] && $tempSmsLast['code'] == $vcode)) {
             $this->replyFailure('验证码错误');
+            return '';
         }
         else {
+            $user = \User::findFirstByPhone($mobile);
+            if ($user) {
+                $user->last_time = time();
+                $user->save();
+
+                $result = new stdClass();
+                $result->user_type = 'old';
+                $this->reply('success', 0, $result);
+                return '';
+            }
+            else{
+                if($code_user){
+                    $usercode = \User::findFirst(" code_system = '$code_user'");
+                    if(!$usercode){
+                        $usercode = \User::findFirst(" phone = '$code_user'");
+                    }
+                }
+                if($usercode){
+                    $code_user = $usercode->code_system;
+                }
+                else{
+                    $code_user = null;
+                }
+
+                $user = new \User();
+                $user->score = 30;
+                $user->jobcoin = 100;
+                $user->code_system = $this->buildCode('user', 6);
+                $user->phone = $mobile;
+                $user->code_user = $code_user;
+                $user->create_time = time();
+                $user->last_time = time();
+                $user->save();
+
+                $result = new stdClass();
+                $result->user_type = 'new';
+                $this->reply('success', 0, $result);
+            }
+            $userLogin = \User::findFirst(array(
+                sprintf(" id = ".$user->id),
+                "columns" => "id, name"
+            ));
+            $this->session->set('userinfo', $userLogin->toArray());
+
             $this->reply(true, 0, array('message' => 'success'));
         }
     }

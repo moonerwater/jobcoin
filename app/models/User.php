@@ -2,7 +2,7 @@
 
 use Phalcon\Mvc\Model;
 
-class Jobseeker extends Model
+class User extends Model
 {
     public function initialize()
     {
@@ -11,6 +11,6 @@ class Jobseeker extends Model
 
     public function getSource()
     {
-        return "jobseeker";
+        return "user";
     }
 }

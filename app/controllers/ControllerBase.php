@@ -28,16 +28,13 @@ class ControllerBase extends Controller
         return $paginator->getPaginate();
     }
 
-    protected function buildCreditId($type) {
-        $mycode = $this->randomString(18);
-        if($type == 'jobseeker'){
-            $obj = \Jobseeker::findFirst(" credit_id = '$mycode' ");
-        }
-        elseif($type == 'company'){
-            $obj = \Company::findFirst(" credit_id = '$mycode' ");
+    protected function buildCode($type, $length=6) {
+        $mycode = $this->randomString($length);
+        if($type == 'user'){
+            $obj = \User::findFirst(" code_system = '$mycode' ");
         }
         if ($obj) {
-            return $this->buildCreditId($type);
+            return $this->buildCode($type, $length);
         }
         return $mycode;
     }
