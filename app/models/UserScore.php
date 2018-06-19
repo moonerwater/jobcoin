@@ -2,7 +2,7 @@
 
 use Phalcon\Mvc\Model;
 
-class Partner extends Model
+class UserScore extends Model
 {
     public function initialize()
     {
@@ -11,6 +11,6 @@ class Partner extends Model
 
     public function getSource()
     {
-        return "partner";
+        return "user_score";
     }
 }

@@ -98,6 +98,22 @@ class MjobController extends ControllerH5
                 $user->last_time = time();
                 $user->save();
 
+                $userscore = new \UserScore();
+                $userscore->user_id = $user->id;
+                $userscore->type = 'reg';
+                $userscore->score = 30;
+                $userscore->create_time = time();
+                $userscore->last_time = time();
+                $userscore->save();
+
+                $userjobcoin = new \UserJobcoin();
+                $userjobcoin->user_id = $user->id;
+                $userjobcoin->type = 'reg';
+                $userjobcoin->jobcoin = 100;
+                $userjobcoin->create_time = time();
+                $userjobcoin->last_time = time();
+                $userjobcoin->save();
+
                 $result = new stdClass();
                 $result->user_type = 'new';
             }
