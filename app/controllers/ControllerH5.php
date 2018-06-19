@@ -1,6 +1,6 @@
 <?php
 
-class ControllerApi extends ControllerBase
+class ControllerH5 extends ControllerBase
 {
 
     protected function initialize()
