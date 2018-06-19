@@ -1,0 +1,236 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}收支记录{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	.mui-table-view-cell:after {
+		left: 0;
+	}
+	.mui-table-view-cell .left {
+		position: relative;
+		left:3rem;
+	}
+	.mui-table-view-cell .left::before {
+		content: "";
+	    position: absolute;
+	    left: -3.2rem;
+	    top: .5rem;
+	    display: block;
+	    width: 2.4rem;
+	    height: 2.4rem;	
+	}
+	.mui-table-view-cell .left.stat1::before {
+		background: url("/public/img/mjob/iae-1.png") no-repeat center;
+		background-size: contain;
+	}
+	.mui-table-view-cell .left.stat2::before {
+		background: url("/public/img/mjob/iae-2.png") no-repeat center;
+		background-size: contain;
+	}
+	.mui-table-view-cell .left.stat3::before {
+		background: url("/public/img/mjob/iae-3.png") no-repeat center;
+		background-size: contain;
+	}
+	.mui-table-view-cell .left.stat4::before {
+		background: url("/public/img/mjob/iae-4.png") no-repeat center;
+		background-size: contain;
+	}
+	.mui-table-view-cell .left.stat5::before {
+		background: url("/public/img/mjob/iae-5.png") no-repeat center;
+		background-size: contain;
+	}
+	.mui-table-view-cell .left h5 {
+		font-size:1.6rem;
+		margin:0;
+		margin-bottom: .5rem;
+		font-weight: 500;
+	}
+	.mui-table-view-cell .left p {
+		font-size:1rem;
+		margin:0;
+		color:#9e9c9c;
+	}
+	.mui-table-view-cell .right {
+		font-size: 1.6rem;
+	    font-weight: 500;
+	    line-height: 3.2rem;
+	}
+	.mui-table-view-cell .right span {
+		color:#1de291;
+		display: inline-block;
+		margin-right: .3rem;
+	}
+	.mui-control-content {
+		background-color: white;
+		min-height: 40rem;
+	}
+	.mui-control-content .mui-loading {
+		margin-top: 50px;
+	}
+	.mui-table-view:after {
+		height: 1px !important;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">收支记录</h1>
+</header>
+
+<div class="mui-content">
+	<div id="slider" class="mui-slider">
+		<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+			<a class="mui-control-item" href="#item1mobile">
+				全部
+			</a>
+			<a class="mui-control-item" href="#item2mobile">
+				部分
+			</a>
+		</div>
+		<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+		<div class="mui-slider-group">
+			<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+				<div id="scroll1" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							 <li class="mui-table-view-cell">
+								<div class="left stat1">
+									<h5>每日登陆</h5>
+									<p>2018-05-30 10:25</p>
+								</div>
+								<div class="right"><span>+50</span>JOB</div>
+							 </li>
+						     <li class="mui-table-view-cell">
+								<div class="left stat1">
+									<h5>每日登陆</h5>
+									<p>2018-05-30 10:25</p>
+								</div>
+								<div class="right"><span>+50</span>JOB</div>
+							 </li>
+							 <li class="mui-table-view-cell">
+								<div class="left stat2">
+									<h5>每日登陆</h5>
+									<p>2018-05-30 10:25</p>
+								</div>
+								<div class="right"><span>+50</span>JOB</div>
+							 </li>
+							 <li class="mui-table-view-cell">
+								<div class="left stat3">
+									<h5>每日登陆</h5>
+									<p>2018-05-30 10:25</p>
+								</div>
+								<div class="right"><span>+50</span>JOB</div>
+							 </li>
+							 <li class="mui-table-view-cell">
+								<div class="left stat3">
+									<h5>每日登陆</h5>
+									<p>2018-05-30 10:25</p>
+								</div>
+								<div class="right"><span>+50</span>JOB</div>
+							 </li>
+							 <li class="mui-table-view-cell">
+								<div class="left stat4">
+									<h5>每日登陆</h5>
+									<p>2018-05-30 10:25</p>
+								</div>
+								<div class="right"><span>+50</span>JOB</div>
+							 </li>
+							 <li class="mui-table-view-cell">
+								<div class="left stat5">
+									<h5>每日登陆</h5>
+									<p>2018-05-30 10:25</p>
+								</div>
+								<div class="right"><span>+50</span>JOB</div>
+							 </li>
+							 <li class="mui-table-view-cell">
+								<div class="left stat1">
+									<h5>每日登陆</h5>
+									<p>2018-05-30 10:25</p>
+								</div>
+								<div class="right"><span>+50</span>JOB</div>
+							 </li>
+							 <li class="mui-table-view-cell">
+								<div class="left stat3">
+									<h5>每日登陆</h5>
+									<p>2018-05-30 10:25</p>
+								</div>
+								<div class="right"><span>+50</span>JOB</div>
+							 </li>
+							 <li class="mui-table-view-cell">
+								<div class="left stat2">
+									<h5>每日登陆</h5>
+									<p>2018-05-30 10:25</p>
+								</div>
+								<div class="right"><span>+50</span>JOB</div>
+							 </li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="item2mobile" class="mui-slider-item mui-control-content">
+				<div id="scroll2" class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<div class="mui-loading">
+							<div class="mui-spinner">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+</div>
+
+<script>
+	var windowHeight = (document.documentElement.clientHeight || document.body.clientHeight) - 44 - 38;
+	var rate = parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px',''));
+	var remRate = windowHeight/rate;
+	//console.log(windowHeight/rate);
+	$('.mui-control-content').css('min-height',remRate+"rem");
+	$(window).resize(function(){
+		$('.mui-control-content').css('min-height',remRate+"rem");
+	})
+
+
+	mui.init({
+		swipeBack: false
+	});
+	(function($) {
+		$('.mui-scroll-wrapper').scroll({
+			indicators: true //是否显示滚动条
+		});
+		var html2 = '<ul class="mui-table-view"><li class="mui-table-view-cell">第二个选项卡子项-1</li><li class="mui-table-view-cell">第二个选项卡子项-2</li><li class="mui-table-view-cell">第二个选项卡子项-3</li><li class="mui-table-view-cell">第二个选项卡子项-4</li><li class="mui-table-view-cell">第二个选项卡子项-5</li></ul>';
+		// var html3 = '<ul class="mui-table-view"><li class="mui-table-view-cell">第三个选项卡子项-1</li><li class="mui-table-view-cell">第三个选项卡子项-2</li><li class="mui-table-view-cell">第三个选项卡子项-3</li><li class="mui-table-view-cell">第三个选项卡子项-4</li><li class="mui-table-view-cell">第三个选项卡子项-5</li></ul>';
+		var item2 = document.getElementById('item2mobile');
+		// var item3 = document.getElementById('item3mobile');
+		document.getElementById('slider').addEventListener('slide', function(e) {
+			if (e.detail.slideNumber === 1) {
+				if (item2.querySelector('.mui-loading')) {
+					setTimeout(function() {
+						item2.querySelector('.mui-scroll').innerHTML = html2;
+					}, 500);
+				}
+			} 
+			// else if (e.detail.slideNumber === 2) {
+			// 	if (item3.querySelector('.mui-loading')) {
+			// 		setTimeout(function() {
+			// 			item3.querySelector('.mui-scroll').innerHTML = html3;
+			// 		}, 500);
+			// 	}
+			// }
+		});
+		var sliderSegmentedControl = document.getElementById('sliderSegmentedControl');
+		$('.mui-input-group').on('change', 'input', function() {
+			if (this.checked) {
+				sliderSegmentedControl.className = 'mui-slider-indicator mui-segmented-control mui-segmented-control-inverted mui-segmented-control-' + this.value;
+				//force repaint
+				sliderProgressBar.setAttribute('style', sliderProgressBar.getAttribute('style'));
+			}
+		});
+	})(mui);
+</script>
+
+{% endblock %}

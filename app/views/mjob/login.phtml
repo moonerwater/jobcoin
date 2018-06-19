@@ -1,0 +1,190 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职岛 - 登录{% endblock %}
+{% block content %}
+<style type="text/css">
+	body, html {
+	    background-color: #1f36bf;
+	}
+	.bg {
+		width: 100%;
+		/*margin:0 auto;*/
+		margin-top:4.11rem;
+		height:22.3rem;
+	}
+	.bg img {
+		max-width: 100%;
+		max-height: 100%;
+	}
+	::-webkit-input-placeholder { /* WebKit browsers */
+    	color:    #647bff;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	    color:    #647bff;
+	}
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+	    color:    #647bff;
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10+ */
+	    color:    #647bff;
+	}
+	.inputbox {
+		width: 70%;
+		margin:0 auto;
+		margin-top:-4.06rem;
+	}
+	.inputbox .rows {
+		border-bottom: 1px solid #647bff;
+		height:2.78rem;
+		margin-bottom: 1.1rem;
+	}
+	.inputbox .rows span,
+	.inputbox .rows input {
+		color:#fff;
+		font-size:1.32rem;
+		height:2.78rem;
+		line-height: 2.78rem;
+		padding:0;
+	}
+	.inputbox .rows input {
+		width:66.66%;
+		/*padding:0 15px;*/
+		border:none;
+		background-color: transparent;
+		margin:0;
+		float:left;
+	}
+	.inputbox .rows button {
+		width: 33.3%;
+		padding: .5rem .8rem;
+		font-size:1rem;
+		background-color: transparent;
+		border:none;
+		border-left:1px solid #647bff;
+		color:#fff;
+		float:left;
+		border-radius: 0;
+	    border-top-left-radius: 0;
+	    border-top-right-radius: 0;
+	    border-bottom-right-radius: 0;
+	    border-bottom-left-radius: 0;
+	    position: relative;
+	    top: -.3rem;
+	    left: -.2rem;
+	}
+	.login {
+		display: block;
+		position: relative;
+		text-decoration: none;
+		text-align: center;
+		font-weight: 700;
+		width: 65%;
+		height: 3.67rem;
+		line-height: 3.67rem;
+		font-size:1.51rem;
+		background-color: #fac82e;
+		color:#fff;
+		border-radius: 3.67rem;
+		margin:0 auto;
+		margin-top:5.64rem;
+		box-shadow: 2px 3px 5px #4e4e4e;
+	}
+	.login span {
+		position: absolute;
+		width: 4.43rem;
+		height: 4.05rem;
+		left: 2rem;
+		bottom: 0;
+		background: url("/public/img/mjob/loginbtn.png") center no-repeat;
+		background-size: cover;
+	}
+	h4{
+		color:#808fe6;
+		text-align: center;
+		font-size:.7rem;
+		margin-top:1rem;
+	}
+	.waiting {
+		color:#afafaf !important;
+	}
+</style>
+
+<div class="container">
+	
+	<div class="bg rel">
+		<img src="/public/img/mjob/login.png" class="auto-center">
+	</div>
+
+	<div class="inputbox">
+		<div class="rows">
+			<span class="col-xs-2">+86</span>
+			<input type="number" name="phone" placeholder="请输入手机号码" class="col-xs-8">
+		</div>
+		<div class="rows">
+			<input type="number" name="phone" placeholder="请输入验证码" style="position: relative;top:-.4rem;">
+			<button class="getcaptcha">发送验证码</button>
+			<button class="waiting none"></button>
+		</div>
+	</div>
+
+	<a href="main" class="login">登  岛<span></span></a>
+
+	<h4>开启即表示同意<a href="#">《用户服务协议》</a></h4>
+</div>
+<script type="text/javascript">
+
+	$('.getcaptcha').on('click',function(){
+		var mobile = $("input[name='phone']").val();
+		if(mobile.length == ''){
+	        //$('input[name="mobile"]').removeClass('success').addClass('error');
+	        //layer.tips('<i class="iconfont icon-close"></i>请输入正确的手机号。',$('input[name="mobile"]') ,{time:3000});
+	        layer.msg('请填写手机号。',{icon: 5});
+	        return false;
+	    }
+		if(mobile.length != 11){
+	        //$('input[name="mobile"]').removeClass('success').addClass('error');
+	        //layer.tips('<i class="iconfont icon-close"></i>请输入正确的手机号。',$('input[name="mobile"]') ,{time:3000});
+	        layer.msg('手机号长度不正确。',{icon: 5});
+	        return false;
+	    }
+	    if(!checkMobile(mobile)){
+	    	//$('input[name="mobile"]').removeClass('success').addClass('error');
+	    	//layer.tips('<i class="iconfont icon-close"></i>请输入正确的手机号。',$('input[name="mobile"]') ,{time:3000});
+	    	layer.msg('请输入正确的手机号。',{icon: 5});
+        	return false;
+        }
+        mobileMsg();
+	});
+
+	var times = 0;
+
+	function mobileMsg(){
+	    if(times<60){
+	        $('.getcaptcha').hide();
+	        $('.waiting').show().text('等待'+(60-times)+'秒');
+	        // $('.getcaptcha').attr('disable','disable').removeClass('getcaptcha').addClass('waiting');
+	        // $('.waiting').text('等待'+(60-times)+'秒');
+	        times = times + 1;
+	        setTimeout(function(){mobileMsg()}, 1000);
+	    }else{
+	        times = 0;
+	        $('.waiting').hide()
+	        $('.getcaptcha').show();
+	        // $('.waiting').removeAttr('disable').removeClass('waiting').addClass('getcaptcha');
+	        // $('.getcaptcha').text('发送验证码');
+	    }
+	}
+
+	function checkMobile( strMobile ) {
+	    var regu = /^[1][3-9][0-9]{9}$/;
+	    var re = new RegExp(regu);
+	    if (re.test(strMobile)) {
+	        return true;  
+	    }
+	    else {
+	        return false;
+	    }
+	};
+
+</script>
+
+{% endblock %}

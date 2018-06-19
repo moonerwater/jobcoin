@@ -1,75 +1,255 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>金职链 - 首页</title>
-	<link href="https://fonts.googleapis.com/css?family=Barlow:400,500,700|Playfair+Display" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="{{url('css/base.css')}}" />
-	<link rel="stylesheet" type="text/css" href="{{url('css/demo1.css')}}" />
-	<script>document.documentElement.className="js";var supportsCssVars=function(){var e,t=document.createElement("style");return t.innerHTML="root: { --tmp-var: bold; }",document.head.appendChild(t),e=!!(window.CSS&&window.CSS.supports&&window.CSS.supports("font-weight","var(--tmp-var)")),t.parentNode.removeChild(t),e};supportsCssVars()||alert("Please view this demo in a modern browser that supports CSS Variables.");</script>
-</head>
-	<body class="demo-1">
-		<svg class="hidden">
-			<symbol id="icon-arrow" viewBox="0 0 24 24">
-				<title>arrow</title>
-				<polygon points="6.3,12.8 20.9,12.8 20.9,11.2 6.3,11.2 10.2,7.2 9,6 3.1,12 9,18 10.2,16.8 "/>
-			</symbol>
-			<symbol id="icon-drop" viewBox="0 0 24 24">
-				<title>drop</title>
-				<path d="M12,21c-3.6,0-6.6-3-6.6-6.6C5.4,11,10.8,4,11.4,3.2C11.6,3.1,11.8,3,12,3s0.4,0.1,0.6,0.3c0.6,0.8,6.1,7.8,6.1,11.2C18.6,18.1,15.6,21,12,21zM12,4.8c-1.8,2.4-5.2,7.4-5.2,9.6c0,2.9,2.3,5.2,5.2,5.2s5.2-2.3,5.2-5.2C17.2,12.2,13.8,7.3,12,4.8z"/><path d="M12,18.2c-0.4,0-0.7-0.3-0.7-0.7s0.3-0.7,0.7-0.7c1.3,0,2.4-1.1,2.4-2.4c0-0.4,0.3-0.7,0.7-0.7c0.4,0,0.7,0.3,0.7,0.7C15.8,16.5,14.1,18.2,12,18.2z"/>
-			</symbol>
-			<symbol id="icon-github" viewBox="0 0 32.6 31.8">
-				<title>github</title>
-				<path d="M16.3,0C7.3,0,0,7.3,0,16.3c0,7.2,4.7,13.3,11.1,15.5c0.8,0.1,1.1-0.4,1.1-0.8c0-0.4,0-1.4,0-2.8c-4.5,1-5.5-2.2-5.5-2.2c-0.7-1.9-1.8-2.4-1.8-2.4c-1.5-1,0.1-1,0.1-1c1.6,0.1,2.5,1.7,2.5,1.7c1.5,2.5,3.8,1.8,4.7,1.4c0.1-1.1,0.6-1.8,1-2.2c-3.6-0.4-7.4-1.8-7.4-8.1c0-1.8,0.6-3.2,1.7-4.4C7.4,10.7,6.8,9,7.7,6.8c0,0,1.4-0.4,4.5,1.7c1.3-0.4,2.7-0.5,4.1-0.5c1.4,0,2.8,0.2,4.1,0.5c3.1-2.1,4.5-1.7,4.5-1.7c0.9,2.2,0.3,3.9,0.2,4.3c1,1.1,1.7,2.6,1.7,4.4c0,6.3-3.8,7.6-7.4,8c0.6,0.5,1.1,1.5,1.1,3c0,2.2,0,3.9,0,4.5c0,0.4,0.3,0.9,1.1,0.8c6.5-2.2,11.1-8.3,11.1-15.5C32.6,7.3,25.3,0,16.3,0z"/>
-			</symbol>
-			<symbol id="icon-keyboard" viewBox="0 0 100 70">
-				<title>keyboard</title>
-				<!-- https://thenounproject.com/term/keyboard/783/ by Paul te Kortschot from the Noun Project -->
-				<path d="M 60.94,1.83 39.22,1.83 C 36.71,1.83 34.67,3.86 34.67,6.376 L 34.67,28.1 C 34.67,30.61 36.71,32.65 39.22,32.65 L 60.94,32.65 C 63.45,32.65 65.5,30.61 65.5,28.1 L 65.5,6.376 C 65.5,3.86 63.45,1.83 60.94,1.83 Z M 44.79,18.63 50.08,11.74 55.37,18.63 Z" opacity="0.2"/>
-				<path d="M 60.86,36.75 39.14,36.75 C 36.63,36.75 34.59,38.79 34.59,41.3 L 34.59,63.02 C 34.59,65.53 36.63,67.57 39.14,67.57 L 60.86,67.57 C 63.38,67.57 65.41,65.53 65.41,63.02 L 65.41,41.3 C 65.42,38.79 63.38,36.75 60.86,36.75 Z M 50.08,57.45 44.79,50.55 55.37,50.55 Z" opacity="0.2" />
-				<path d="M 95.45,36.75 73.73,36.75 C 71.22,36.75 69.18,38.79 69.18,41.3 L 69.18,63.02 C 69.18,65.53 71.22,67.57 73.73,67.57 L 95.45,67.57 C 97.97,67.57 100,65.53 100,63.02 L 100,41.3 C 100,38.79 97.97,36.75 95.45,36.75 Z M 83.4,57.45 83.4,46.86 90.3,52.16 Z" />
-				<path d="M 26.27,36.75 4.55,36.75 C 2.037,36.75 0,38.79 0,41.3 L 0,63.02 C 0,65.53 2.037,67.57 4.55,67.57 L 26.27,67.57 C 28.78,67.57 30.82,65.53 30.82,63.02 L 30.82,41.3 C 30.82,38.79 28.78,36.75 26.27,36.75 Z M 16.69,57.45 9.79,52.16 16.69,46.86 Z" />
-			</symbol>
-		</svg>
-		<main>
-			<div class="content content--fixed">
-				
-				
-			</div>
-			<div class="content">
-				<canvas class="scene scene--full" id="scene"></canvas>
-				<script type="x-shader/x-vertex" id="wrapVertexShader">
-					attribute float size;
-					attribute vec3 color;
-					varying vec3 vColor;
-					void main() {
-						vColor = color;
-						vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-						gl_PointSize = size * ( 350.0 / - mvPosition.z );
-						gl_Position = projectionMatrix * mvPosition;
-					}
-				</script>
-				<script type="x-shader/x-fragment" id="wrapFragmentShader">
-					varying vec3 vColor;
-					uniform sampler2D texture;
-					void main(){
-						vec4 textureColor = texture2D( texture, gl_PointCoord );
-						if ( textureColor.a < 0.3 ) discard;
-						vec4 color = vec4(vColor.xyz, 1.0) * textureColor;
-						gl_FragColor = color;
-					}
-				</script>
-				<div class="content__inner">
-					<h2 class="content__title">网站建设中...</h2>
-					<h3 class="content__subtitle">JOBCoin Beta v1.0</h2>
+{% extends "common/layout-index.phtml" %}
+{% block title  %}金职链 职业信用开放平台 - 首页{% endblock %}
+{% block header %}{{ partial('common/layout-header')}}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{url('css/particles/normalize.css')}}"/>
+<!-- <link rel="stylesheet" type="text/css" href="{{url('css/particles/default.css')}}"/>
+<link rel="stylesheet" type="text/css" href="{{url('css/particles/style.css')}}"/> -->
+<link rel="stylesheet" type="text/css" href="{{url('css/jquery.mCustomScrollbar.css')}}"/>
+<link rel="stylesheet" type="text/css" href="{{url('css/index/cn.css')}}"/>
+
+<div class="rows" id="F1">
+	<div class="container">
+		<div class="f1text">
+			<h2>基于区块链</h2>
+			<h2>去中心化的职业信用</h2>
+			<h2>开放平台</h2>
+			<p>金职链（JOBChain）通过开放接口跨应用聚合B用户及C用户职业信用数据碎片，同步数据块的哈希值到以太坊网络中进行广播，形成多维完善且不可篡改的用户职业信用画像。基于金职链提供的职业信用基础设施，各职业类应用及产品无需自行搭建繁杂的区块链底层基础，只需调用金职链构建的平台接口，即可接入并共同构建这个基于区块链的职业类信用生态。</p>
+			<a href="javascript:;">白皮书</a>
+		</div>
+		<div class="item1 abo" id="Item1"><div class="animation1 action1"></div></div>
+		<div class="item1 abo" id="Item2"><div class="animation1 action2"></div></div>
+		<div class="item1 abo" id="Item3"><div class="animation1 action3"></div></div>
+		<div class="item1 abo" id="Item4"><div class="animation1 action4"></div></div>
+		<div class="item2 abo" id="Item5"></div>
+		<div class="item2 abo" id="Item6"></div>
+		<div class="item3 abo" id="Item7"></div>
+	</div>
+</div>
+<div class="rows" id="F2">
+	<div class="container">
+		<h3>记录用户历史职业信用数据的职业信用开放平台</h3>
+		<h2>去中心化 <span>·</span> 不可篡改 <span>·</span> 智能合约</h2>
+		<img src="/public/img/index/f2.png">
+	</div>
+</div>
+<div class="rows" id="F3">
+	<div class="container">
+		<h2>招聘、应聘即挖矿</h2>
+		<p>JOB币将作为多个信任主体之间促进多方协作的交流单位，以智能合约约束着招聘方与应聘方的信用行为。金职链激励更多的信任主体将自身的职业信用记录到金职链职业信用开放平台中，同时为信用数据购买方提供更有保障及更有效率的信用数据消费方案</p>
+		<img src="/public/img/index/f3.png">
+	</div>
+</div>
+<div class="rows" id="F4">
+	<div id="F4particles"></div>
+	<div class="container">
+		<div class="towerbox">
+			<div class="ob2 abo t2"><img src="/public/img/index/f4-2.png"></div>
+			<div class="ob2 abo t3"><img src="/public/img/index/f4-3.png"></div>
+			<div class="ob2 abo t4"><img src="/public/img/index/f4-3.png"></div>
+			<div class="ob1 abo t1"><img src="/public/img/index/f4-1.png"></div>
+		</div>
+		<h2>金职链-JOBChain</h2>
+		<h2>职业信用开放平台·平台接口</h2>
+		<div class="F4link">
+			<a href="/index/api" class="left">金职链平台接口></a>
+			<a href="javascript:;" class="right">JOB币挖矿规则></a>
+		</div>
+	</div>
+</div>
+<div class="rows" id="F5">
+	<div class="container">
+		<div class="titlerow r1">创始团队</div>
+		<div class="peoplerow">
+			<div class="peoplebox">
+				<div class="boxs left">
+					<div class="headimg">
+						<img src="/public/img/index/zhongshaofeng.png">
+					</div>
+					<h4>钟绍峰</h4>
+					<p>挚金资本联合创始人</p>
+					<p>爱兼职网创始人</p>
+				</div>
+				<div class="boxs left">
+					<div class="headimg">
+						<img src="/public/img/index/xuminjie.png">
+					</div>
+					<h4>徐敏杰</h4>
+					<p>埃森哲咨询（香港）谷歌项目成员</p>
+					<p>香港中文大学信息工程硕士</p>
+				</div>
+				<div class="boxs left">
+					<div class="headimg"></div>
+					<h4>×</h4>
+					<p>×</p>
+					<p>×</p>
 				</div>
 			</div>
-		</main>
-		<script src="{{url('js/demo.js')}}"></script>
-		<script src="{{url('js/three.min.js')}}"></script>
-		<script src="{{url('js/TweenMax.min.js')}}"></script>
-		<script src="{{url('js/demo1.js')}}"></script>
-	</body>
-</html>
+		</div>
+		<div class="titlerow r2">顾问团队</div>
+		<div class="peoplerow">
+			<div class="peoplebox">
+				<div class="boxs left">
+					<div class="headimg"></div>
+					<h4>×</h4>
+					<p>×</p>
+					<p>×</p>
+				</div>
+				<div class="boxs left">
+					<div class="headimg"></div>
+					<h4>×</h4>
+					<p>×</p>
+					<p>×</p>
+				</div>
+				<div class="boxs left">
+					<div class="headimg"></div>
+					<h4>×</h4>
+					<p>×</p>
+					<p>×</p>
+				</div>
+			</div>
+		</div>
+		<div class="titlerow r3">投资机构</div>
+		<div class="textrow">
+			<div class="left">云狮基金</div>
+			<div class="left">松鼠基金</div>
+			<div class="left">灵狮基金</div>
+			<div class="left">灯火区块链</div>
+		</div>
+	</div>
+</div>
+<div class="rows" id="F6">
+	<div class="container">
+		<div class="tit">
+			<img src="/public/img/index/f6.png">
+		</div>
+		<h2 id="F7">基于金职链职业信用开放平台的落地应用示例</h2>
+		<h3>累计已链接<span>302000</span>位用户的职业信用数据</h3>
+		<div class="connection">
+			<div class="connectionrows">
+				<div class="boxs left">
+					<div class="imgbox">
+						<img src="/public/img/index/connection1.png" class="auto-center">
+					</div>
+					<h4>爱兼职网</h4>
+					<p>爱兼职网累计已开通17个城市地区兼职网，其中包括北京爱兼职网、上海爱兼职网、广州爱兼职网、深圳爱兼职网等，服务超过15000个企业招聘用户，累计服务500000+个兼职求职者</p>
+				</div>
+				<div class="boxs left">
+					<div class="imgbox">
+						<img src="/public/img/index/connection2.jpg" class="auto-center">
+					</div>
+					<h4>大学生实习网</h4>
+					<p>大学生实习网是一个专注于大学生实习招聘的垂直招聘网站，拥有130000+大学实习生用户，为超过500家来自各行各业的500强、行业巨头、独角兽企业提供实习招聘服务</p>
+				</div>
+				<div class="boxs left">
+					<div class="imgbox">
+						<img src="/public/img/index/connection3.png" class="auto-center">
+					</div>
+					<h4>美魅</h4>
+					<p>美魅是一个搭建模特和商家的撮合交易平台，以实名制体系为基础，提供真实、可靠、快捷的模特信息及周边服务，为模特提供最好的通告平台、最优的运营模式和更多、更快的成名机会，目前已经有120000+模特用户</p>
+				</div>
+				<div class="boxs left">
+					<div class="imgbox">
+						
+					</div>
+					<h4>兼职之家</h4>
+					<p>兼职之家为每一位招聘方及报名兼职的求职方建立基于区块链技术的双向智能合约，真实且不可篡改地将招聘方及求职方的评价与信用记录在区块链上，基于招聘方和求职方公开透明的信用记录，帮助求职方选到信用更好的招聘方，也帮助招聘方找到信用更好求职方</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="rows" id="F8">
+	<div class="container">
+		<h2>CONTACTS</h2>
+		<div class="contactsrow">
+			<div class="box">
+				<a href="javascript:;"><img src="/public/img/index/f7-1.png" class="auto-center"></a>
+				<a href="javascript:;"><img src="/public/img/index/f7-2.png" class="auto-center"></a>
+				<a href="javascript:;"><img src="/public/img/index/f7-3.png" class="auto-center"></a>
+				<a href="javascript:;"><img src="/public/img/index/f7-4.png" class="auto-center"></a>
+				<a href="javascript:;"><img src="/public/img/index/f7-5.png" class="auto-center"></a>
+				<a href="javascript:;"><img src="/public/img/index/f7-6.png" class="auto-center"></a>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="{{url('js/particles/particles.js')}}"></script>
+<script type="text/javascript" src="{{url('js/particles/app.js')}}"></script>
+<script type="text/javascript" src="{{url('js/jquery.mousewheel.min.js')}}"></script>
+<script type="text/javascript" src="{{url('js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+<script type="text/javascript">
+	// $(document).scroll( function(){
+	//     var me = arguments.callee; //匿名函数可以 通过 arguments.callee 调用自己
+	//     me.doc = me.doc || $(document); //缓存 $(document);
+	//     me.head = me.head || $('header');
+	//     me.lastTop = me.lastTop || me.doc.scrollTop();
+	//     if( me.doc.scrollTop() < 20 ||  me.doc.scrollTop() > me.lastTop ){
+	//         //向下 或再 页面顶部，放在 头部
+	//         me.head.css({ position : 'absolute' });
+	//     }else if( me.doc.scrollTop() < me.lastTop  ){
+	//         //向上，悬浮
+	//         me.head.css({ position : 'fixed' });
+	//     }
+	//     me.lastTop = me.doc.scrollTop();
+	// });
+	
+	// document.addEventListener("scroll",function () {
+	//     var scrolllenth = document.getElementById("F2").getBoundingClientRect().top;
+	//     document.getElementById("Header").style.background='rgba(21,0,141,'+scrolllenth+')';
+	// });
+	// 
+	$(document).ready(function(){
+
+		var $root = $('html, body');
+		$("Header a.position").on('click',function(){
+			//$(this).addClass('selected').siblings().removeClass('selected');
+			$root.animate({
+		        scrollTop: $( $.attr(this, 'href') ).offset().top
+		    }, 500);
+		    return false;
+		});
+
+		$(window).scroll(function(){
+			var top =  $(window).scrollTop();
+			if(top <= 100){
+				$("header").stop().animate({height:"126px"},200);
+				$("header .headerbox").stop().animate({marginTop:"52px"},200);
+			} else {
+				$("header").stop().animate({height:"74px"},200);
+				$("header .headerbox").stop().animate({marginTop:"0px"},200);
+			}
+			// if(top > 101 || top <= 200){
+			// 	$("header").animate({height:"123px"},200);
+			// 	$("header .headerbox").animate({marginTop:"49px"},200);
+			// }
+
+			for (i = 1;i < 9;i++){       
+				if($("#F"+i).offset().top - 400 <= top){ 
+					$("#F"+i+i).addClass('selected').siblings().removeClass('selected');
+				}
+			}         
+		});
+
+		// (function($){
+		// 	$(window).load(function(){
+		// 		$("body").mCustomScrollbar({
+		// 			scrollInertia :80,
+		// 			scrollButtons:{
+		// 				enable:true,
+		// 				scrollSpeed:200
+		// 			},
+		// 			//horizontalScroll : true,
+		// 			advanced:{ 
+		// 				autoExpandHorizontalScroll:true
+		// 			},
+		// 		});
+		// 	});
+		// })(jQuery);
+	
+
+	});
+
+</script>
+{% endblock %}

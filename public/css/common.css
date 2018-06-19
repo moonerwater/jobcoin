@@ -1,0 +1,30 @@
+.rel {
+	position: relative;
+}
+.abo {
+	position: absolute;
+}
+.left {
+	float:left;
+}
+.right {
+	float:right;
+}
+.cls {
+	clear:both;
+}
+.auto-center {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin:auto;
+}
+img.auto-center {
+	max-width: 100%;
+	max-height: 100%;
+}
+.none {
+	display: none;
+}

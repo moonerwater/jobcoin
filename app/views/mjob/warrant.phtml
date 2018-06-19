@@ -1,0 +1,100 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}授权设置{% endblock %}
+
+
+{% block content %}
+<style type="text/css">
+	body,html,.mui-content {
+		height:100%;
+	}
+	.container p {
+		font-size:1.14rem;
+		color:#65676e;
+		margin-top: 2.85rem;
+		margin-bottom: 1.71rem;
+		line-height: 1.8rem;
+	}
+	.mui-table-view .mui-media-object {
+		border-radius: 50%;
+	}
+	p.mui-ellipsis span {
+		color:#f44a4a;
+	}
+	button.mui-pull-right {
+		padding: 6px 6px;
+		font-size: 1rem;
+	}
+	.mui-media-body {
+		font-size:1.43rem;
+	}
+	.mui-table-view-cell p {
+		font-size:1rem;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">授权设置</h1>
+</header>
+
+
+<div class="mui-content">
+	<div class="container">
+		<p>你可以取消授权以下数据项，取消授权后，相当于剪断了授权数据与你本人之间的关联，同时授权的数据也会销毁，并且该数据项累计的算力将会剔除，请谨慎操作。</p>
+	</div>
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell mui-media">
+			<a href="javascript:;" class="">
+				<img class="mui-media-object mui-pull-left" src="/public/img/mjob/subject3.png">
+				<div class="mui-media-body">
+					学信网
+					<p class="mui-ellipsis">取消授权后，算力将会<span>-50<span></p>
+				</div>
+				<button type="button" class="mui-btn mui-btn-danger mui-pull-right" data-id="1">取消授权</button>
+			</a>
+		</li>
+		<li class="mui-table-view-cell mui-media">
+			<a href="javascript:;">
+				<img class="mui-media-object mui-pull-left" src="/public/img/mjob/subject3.png">
+				<div class="mui-media-body">
+					学信网
+					<p class="mui-ellipsis">取消授权后，算力将会<span>-50<span></p>
+				</div>
+				<button type="button" class="mui-btn mui-btn-danger mui-pull-right" data-id="1">取消授权</button>
+			</a>
+		</li>
+		<li class="mui-table-view-cell mui-media">
+			<a href="javascript:;">
+				<img class="mui-media-object mui-pull-left" src="/public/img/mjob/subject3.png">
+				<div class="mui-media-body">
+					学信网
+					<p class="mui-ellipsis">取消授权后，算力将会<span>-50<span></p>
+				</div>
+				<button type="button" class="mui-btn mui-btn-danger mui-pull-right" data-id="1">取消授权</button>
+			</a>
+		</li>
+
+	</ul>
+</div>
+
+<script type="text/javascript">
+
+	$('button.mui-btn-danger').on('tap',function(){ 
+		var dom = $(this).parents('li');
+		var id = $(this).attr('data-id');
+		var btnArray = ['放弃', '确定'];
+		mui.confirm("确认取消该项数据授权？", '取消后算力将会下降', btnArray, function(e) {
+			if (e.index == 1) {
+				//info.innerText = '你刚确认MUI是个好框架';
+				console.log(id)
+				dom.remove();
+			} else {
+				//info.innerText = 'MUI没有得到你的认可，继续加油'
+				//console.log('停留')
+			}
+		})
+	});
+
+</script>
+
+{% endblock %}

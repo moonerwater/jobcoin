@@ -1,0 +1,159 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}关注微信{% endblock %}
+
+
+{% block content %}
+<style type="text/css">
+	html,body {
+		background: #efeff4;
+	}
+	.bannertit {
+		padding: 2.34rem;
+		background: #1f36bf;
+	}
+	.bannertit h3 {
+		font-size:1.33rem;
+		color:#fff;
+		text-align: center;
+		margin:0;
+		margin-bottom: .76rem;
+	}
+	.bannertit h3 span {
+		color:#1de291;
+	}
+	.bannertit p:first-child {
+		margin-top:3.1rem;
+	}
+	.bannertit p {
+		margin-bottom: .82rem;
+		color:#bcc6ff;
+		font-size:1.14rem;
+	}
+	.bannertit hr {
+		background: #5e72e5;        
+	    border: none;        
+	    height: 1px; 
+	}
+	.bannertit h5 {
+		color:#8193ff;
+		font-size:1rem;
+		margin:0;
+	}
+	.vcodebox h4 {
+		text-align: center;
+		font-size:1.33rem;
+		margin-top:1.52rem;
+		margin-bottom: 3.1rem;
+	}
+	.pwd-box{  
+        width:90%;  
+        padding-left: 1px;  
+        position: relative;   
+        border-radius: 3px;  
+		overflow:hidden;
+		margin: 0 auto;
+    	margin-top: 1.5rem;
+    }  
+    .pwd-box input[type="tel"]{  
+        width: 99%;  
+        height: 45px;  
+        color: transparent;  
+        position: absolute;  
+        top: 0;  
+        left: 0;  
+        border: none;  
+        font-size: 18px;  
+        opacity: 0;  
+        z-index: 1;  
+        letter-spacing: 35px;  
+    }  
+    .fake-box {
+    	width: 23rem;
+    	margin:0 auto;
+    }
+    .fake-box input{  
+        width: 3.4rem;
+	    height: 3.6rem;
+	    border: none;
+	    border-bottom: 1px solid #e5e5e5;
+	    text-align: center;
+	    font-size: 1.8rem;
+	    padding: 0;
+    }
+    .mui-btn-block {
+    	height: 4.62rem;
+	    border-radius: 4.62rem;
+	    font-size: 2rem;
+	    width: 60%;
+	    margin: 0 auto;
+	    border: 1px solid #1de291;
+	    background-color: #1de291;
+	    margin-top: 2rem;
+    }
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">关注微信</h1>
+</header>
+
+<div class="mui-content">
+	<div class="bannertit">
+		<h3>按照如下步骤完成关注微信公众号</h3>
+		<h3>即可获得算力<span>+10</span></h3>
+		<p style="margin-top:3.1rem;">1、在微信公众号中搜索"金职链"并关注</p>
+		<p>2、在金职链公众号中输入"提升算力"获得验证码</p>
+		<p>3、在下方输入验证码，验证成功后即可获得算力</p>
+		<hr>
+		<h5>注：每个金职岛账号只有一次领取机会</h5>
+	</div>
+	<div class="vcodebox">
+		<h4>请输入6位验证码</h4>
+		<div class="pwd-box">  
+		    <input type="tel" maxlength="6" class="pwd-input" id="pwd-input">  
+		    <div class="fake-box">  
+		        <input type="text" readonly="">  
+		        <input type="text" readonly="">  
+		        <input type="text" readonly="">  
+		        <input type="text" readonly="">  
+		        <input type="text" readonly="">  
+		        <input type="text" readonly="">  
+		    </div>  
+		</div>
+		<button type="button" id='confirmBtn' class="mui-btn mui-btn-success mui-btn-block">确   认</button>
+	</div>
+</div>
+<script>  
+	var $input = $(".fake-box input");
+	var vcode;
+    $("#pwd-input").on("input", function() {  
+        var pwd = $(this).val().trim();  
+        for (var i = 0, len = pwd.length; i < len; i++) {  
+            $input.eq("" + i + "").val(pwd[i]);  
+        }  
+        $input.each(function() {  
+            var index = $(this).index();  
+            if (index >= len) {  
+                $(this).val("");  
+            }  
+        });  
+        if (len == 6) {  
+        	vcode = pwd;
+            console.log(vcode);
+        }  
+    }); 
+
+    document.getElementById("confirmBtn").addEventListener('tap', function() {
+		var btnArray = ['取消', '去看看'];
+		mui.confirm("您的挖矿算力<span style='color:#1de291;font-size:2rem;'>+10</span>，去看看？", '成功获得', btnArray, function(e) {
+			if (e.index == 1) {
+				//info.innerText = '你刚确认MUI是个好框架';
+				console.log('跳走')
+			} else {
+				//info.innerText = 'MUI没有得到你的认可，继续加油'
+				console.log('停留')
+			}
+		})
+	});
+</script>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}我的资产{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	body,html,.mui-content {
+		height:100%;
+	}
+	.banner {
+		height: 8.35rem;
+		position: relative;
+		background: #1f36bf url("/public/img/mjob/recordbanner.png") no-repeat center;
+		background-size: 74%;
+	}
+	.banner > div {
+		font-size:3rem;
+		color:#fac82e;
+		text-align: center;
+		width: 100%;
+		height: 4.74rem;
+	}
+	.banner div span {
+		display: inline-block;
+		position: absolute;
+		top:0;
+		left:0;
+		bottom: 0;
+		right:0;
+		margin:auto;
+		top: 3.5rem;
+		width: 8.35rem;
+		height: 1.3rem;
+		font-size:1rem;
+		color:#aab6ff;
+	}
+	h3 {
+		margin-top: 1.85rem;
+		font-size:1.33rem;
+		text-align: left;
+		color:#65676e;
+		font-weight: 700;
+	}
+	div.line {
+		background: #fac82e;
+		width: 10%;
+		height: .3rem;
+		/*margin:0 auto;*/
+	}
+	p {
+		margin-top:1.45rem;
+		font-size:1.14rem;
+		color:#98999e;
+		line-height: 1.8rem;
+	}
+</style>
+
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">我的资产</h1>
+	<a class="mui-pull-right" href="iae">收支记录</a>
+</header>
+
+<div class="mui-content">
+	<div class="banner">
+		<div class="auto-center">13245641<span>JOB币总数</span></div>
+	</div>
+	<div class="container">
+		<h3>JOB币简介</h3>
+		<div class="line"></div>
+		<p>JOB是金职基金会在JOBChain（金职链）上发行的T欧肯，不仅具有流通价值，同时在金职链上开发、认证应用、使用链上服务（例如链上转账的旷工费）等需要支付或燃烧JOB，JOB是作为链上应用运行唯一使用到的Token。在金职岛中也可以很方便地利用JOB进行支付结算，如岛上居民之间互相使用JOB进行结算，使用岛上公共服务需要用JOB结算，商家提供的服务也需要JOB来购买等等。</p>
+	</div>
+</div>
+
+
+{% endblock %}

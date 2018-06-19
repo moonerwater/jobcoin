@@ -1,0 +1,96 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}算力记录{% endblock %}
+
+
+{% block content %}
+<style type="text/css">
+	.mui-content>.mui-table-view:first-child {
+		margin-top:0;
+	}
+	.banner {
+		height: 14rem;
+		position: relative;
+		background: #1f36bf url("/public/img/mjob/recordbanner.png") no-repeat center;
+		background-size: contain;
+	}
+	.banner div {
+		font-size:4rem;
+		color:#fac82e;
+		text-align: center;
+		width: 100%;
+		height: 6.74rem;
+	}
+	.banner div img {
+		position: absolute;
+		top:0;
+		left:0;
+		bottom: 0;
+		right:0;
+		margin:auto;
+		top: 4.5rem;
+		width: 8.35rem;
+		height: 1.3rem;
+	}
+	.mui-table-view-cell:after {
+		left: 0;
+	}
+	.mui-table-view-cell .left h5 {
+		font-size:1.5rem;
+		margin:0;
+		margin-bottom: .5rem;
+	}
+	.mui-table-view-cell .left p {
+		font-size:1rem;
+		margin:0;
+		color:#9e9c9c;
+	}
+	.mui-table-view-cell .right {
+		color:#1de291;
+		font-size: 1.6rem;
+	    font-weight: 500;
+	    line-height: 3.2rem;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">算力记录</h1>
+</header>
+
+<div class="mui-content">
+	<div class="banner">
+		<div class="auto-center">13245641<img src="/public/img/mjob/nowpromote.png"></div>
+	</div>
+	<ul class="mui-table-view">
+		 <li class="mui-table-view-cell">
+			<div class="left">
+				<h5>每日登陆</h5>
+				<p>2018-05-30 10:25</p>
+			</div>
+			<div class="right">+50</div>
+		 </li>
+	     <li class="mui-table-view-cell">
+			<div class="left">
+				<h5>每日登陆</h5>
+				<p>2018-05-30 10:25</p>
+			</div>
+			<div class="right">+50</div>
+		 </li>
+		 <li class="mui-table-view-cell">
+			<div class="left">
+				<h5>每日登陆</h5>
+				<p>2018-05-30 10:25</p>
+			</div>
+			<div class="right">+50</div>
+		 </li>
+		 <li class="mui-table-view-cell">
+			<div class="left">
+				<h5>每日登陆</h5>
+				<p>2018-05-30 10:25</p>
+			</div>
+			<div class="right">+50</div>
+		 </li>
+	</ul>
+</div>
+
+{% endblock %}

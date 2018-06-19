@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <title>{% block title  %}{% endblock %}</title>
+        <meta name="keywords" content="金职岛">
+        <meta name="description" content="金职岛">
+        <link rel="stylesheet" type="text/css" href="{{url('css/mjob/mui.min.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{url('css/mjob/icons-extra.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{url('css/mjob/app.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{url('css/bootstrap.min.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{url('css/common.css')}}"/>
+        <script type="text/javascript" src="{{url('js/jquery.min.js')}}"></script>
+        <script type="text/javascript" src="{{url('js/layer.js')}}"></script>
+        <script type="text/javascript" src="{{url('js/mjob/mui.min.js')}}"></script>
+        <script type="text/javascript">
+            (function (doc, win) {
+              var docEl = doc.documentElement,
+                // 手机旋转事件,大部分手机浏览器都支持 onorientationchange 如果不支持，可以使用原始的 resize
+                  resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+                  recalc = function () {
+                    //clientWidth: 获取对象可见内容的宽度，不包括滚动条，不包括边框
+                    var clientWidth = docEl.clientWidth;
+                    if (!clientWidth) return;
+                    docEl.style.fontSize = 10 * (clientWidth / 320) + 'px';
+                  };
+             
+              recalc();
+              //判断是否支持监听事件 ，不支持则停止
+              if (!doc.addEventListener) return;
+              //注册翻转事件
+              win.addEventListener(resizeEvt, recalc, false);
+             
+            })(document, window);
+        </script>
+        {% block css %}
+            <style type="text/css">
+                body,html{
+                    background-color: #fefefe;
+                    /*padding:0 20px;*/
+                }
+                a,
+                a:link,
+                a:visited,
+                a:hover,
+                a:active {
+                    text-decoration: none;
+                }
+                header .mui-pull-right {
+                    font-size: 14px;
+                    font-weight: 500;
+                    line-height: 44px;
+                    padding: 0;
+                    text-align: center;
+                    white-space: nowrap;
+                    color: #000;
+                }
+                
+            </style>
+        {% endblock %}
+        {% block js %}
+        {% endblock %}
+    </head>
+<body>
+{% block header %}{% endblock %}
+{% block content %}{% endblock %} 
+{% block footer %}
+
+{% endblock %}
+</body>
+</html>

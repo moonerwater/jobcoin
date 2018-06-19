@@ -8,14 +8,17 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
     <!--兼容性meta end-->
-    <title>金职链 - {% block title  %}{% endblock %}</title>
+    <title>{% block title  %}{% endblock %}</title>
     <meta name="keywords" content="金职链">
     <meta name="description" content="金职链">
     <link rel="stylesheet" type="text/css" href="{{url('css/bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{url('css/common.css')}}"/>
+    <script type="text/javascript" src="{{url('js/jquery.min.js')}}"></script>
     {% block css %}
         <style type="text/css">
             body,html {
-                width: 1920px;
+                width: 100%;
+                font-family: '微软雅黑';
             }
         </style>
     {% endblock %}

@@ -1,0 +1,109 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职岛{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	body, html {
+	    background-color: #1f36bf;
+	}
+	.indexbg {
+		position: absolute;
+		top:0;
+		left:0;
+	}
+	.indexbg img {
+		max-width: 100%;
+		max-height: 100%;
+	}
+	.feature {
+		margin:0 auto;
+		margin-top:29rem;
+		width: 80%; 
+	}
+	.feature .col-xs-4 {
+		width: 33.3%;
+	}
+	.feature .col-xs-4 .imgbox {
+		width: 5.5rem;
+		height: 5.5rem;
+	}
+	.feature .col-xs-4 .imgbox img {
+		max-width: 5.5rem;
+		max-height: 5.5rem;
+	}
+	.feature .col-xs-4 .tit{
+		text-align: center;
+		color:#f8e940;
+		background-color: #3552fc;
+		font-size: 1rem;
+	    height: 1.52rem;
+	    line-height: 1.52rem;
+	    width: 5.5rem;
+	    border-radius: 1.52rem;
+	    margin-top: .8rem;
+	}
+	.loginbtn {
+		display: block;
+		text-decoration: none;
+		text-align: center;
+		font-weight: 700;
+		width: 76%;
+		height: 4.43rem;
+		line-height: 4.43rem;
+		font-size:1.51rem;
+		background-color: #fac82e;
+		color:#1f36bf;
+		border-radius: 4.43rem;
+		margin:0 auto;
+		margin-top:2.2rem;
+	}
+	h2 {
+		font-size:1.04rem;
+		color:#fac82e;
+		text-align: center;
+		margin-top:1rem;
+		margin-bottom: 2.47rem;
+		font-weight: 700;
+    	letter-spacing: 0.1rem;
+	}
+	.index_foot {
+		max-width: 100%;
+		margin-bottom: 2rem;
+	}
+</style>
+
+<div class="indexbg">
+	<img src="/public/img/mjob/index_bg.png">
+</div>
+
+<div class="container rel">
+
+	<div class="feature row">
+		<div class="left col-xs-4">
+			<div class="imgbox rel">
+				<img src="/public/img/mjob/icon1.png" class="auto-center">
+			</div>
+			<div class="tit">区块链身份</div>
+		</div>
+		<div class="left col-xs-4">
+			<div class="imgbox rel">
+				<img src="/public/img/mjob/icon2.png" class="auto-center">
+			</div>
+			<div class="tit">数据挖矿</div>
+		</div>
+		<div class="left col-xs-4">
+			<div class="imgbox rel">
+				<img src="/public/img/mjob/icon3.png" class="auto-center">
+			</div>
+			<div class="tit">丰富玩法</div>
+		</div>
+	</div>
+
+	<a href="login" class="loginbtn">创建 / 登录区块链身份</a>
+
+	<h2>创建成功即送10 JOB币</h2>
+
+	<img src="/public/img/mjob/index_foot.png" class="index_foot">
+</div>
+
+{% endblock %}

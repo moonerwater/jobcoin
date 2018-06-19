@@ -1,0 +1,192 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}提升算力{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	.container {
+		padding-top:44px;
+		background: #eaecf2;
+		overflow: hidden;
+	}
+	.powerrow {
+		margin-top:1.52rem;
+		margin-bottom: .76rem;
+		z-index: 2;
+		position: relative;
+	}
+	.powerrow .right {
+		display: inline-block;
+		width: 7.08rem;
+		height: 2.66rem;
+		border-radius: 2.66rem;
+		font-size:1.14rem;
+		line-height: 2.66rem;
+		text-align: center;
+		background-color: #3552fc;
+		color:#fff;
+		position: relative;
+	}
+	.rankbox {
+		height: 9.93rem;
+		padding:2.53rem 0;
+		background: #fff;
+		border-radius: .5rem;
+		z-index: 2;
+		position: relative;
+	}
+	.rankbox .col-xs-6 h2,
+	.rankbox .col-xs-6 p {
+		text-align: center;
+	}
+	.rankbox .col-xs-6 h2 {
+		font-size:2.78rem;
+		color:#65676e;
+		margin-top:0;
+		margin-bottom: 1.02rem;
+	}
+	.rankbox .col-xs-6 p {
+		font-size:.95rem;
+		margin-bottom: 0;
+		color:#8e8c8c;
+	}
+	.uppromote {
+		margin:1.26rem auto;
+		/*height: 15.8rem;*/
+		padding:2rem 2rem;
+		background: #fff;
+		border-radius: .5rem;
+	}
+	.oribg {
+		width: 82rem;
+		height: 50rem;
+		position: absolute;
+		top: -38rem;
+	    left: -25rem;
+	    border-radius: 50%;
+		background: #1f36bf;
+		z-index:1;
+	}
+	.uppromote h3 {
+		font-size: 1.14rem;
+		color:#65676e;
+		text-align: center;
+		margin:0;
+	}
+	.uppromote div {
+		height: 2.4rem;
+		line-height: 2.4rem;
+		border-radius: 2.4rem;
+		background: #f8e940;
+		text-align: center;
+		width: 75%;
+		color: #96925f;
+		font-size:1rem;
+		margin:0 auto;
+		margin-top:1.2rem;
+		margin-bottom: 1.77rem;
+	}
+	.uppromote p {
+		margin:0;
+		font-size:1rem;
+	}
+	.authentications {
+		border-top:1px solid #dee0ea;
+		background: #fefefe;
+	}
+	.authentications .col-xs-4 {
+		display: block;
+		padding:1.58rem 0;
+		border-right:1px solid #dee0ea;
+		border-bottom: 1px solid #dee0ea;
+	}
+	.authentications .col-xs-4:nth-child(3n){
+		border-right:none;
+	}
+	.authentications .col-xs-4 .imgbox {
+		position: relative;
+		width: 100%;
+		height: 3.92rem;
+	}
+	.authentications .col-xs-4 h4 {
+		text-align: center;
+		font-size:.95rem;
+		color:#9e9c9c;
+		margin:.8rem 0;
+	}
+	.authentications .col-xs-4 .status {
+		width: 100%;
+		height: 1.58rem;
+	}
+
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">提升算力</h1>
+	<a class="mui-pull-right" href="record">算力记录</a>
+</header>
+
+<div class="container rel">
+	<div class="oribg"></div>
+	<div class="powerrow rel">
+		<a href="strategy" class="right" id="promote">算力攻略</a>
+		<div class="cls"></div>
+	</div>
+	<div class="rankbox">
+		<div class="col-xs-6" style="border-right: 2px solid #d7dae7;">
+			<h2>256</h2>
+			<p>我的当前算力</p>
+		</div>
+		<div class="col-xs-6">
+			<h2>651651</h2>
+			<p>我的算力排名</p>
+		</div>
+	</div>
+	<div class="uppromote">
+		<h3>提升挖矿算力,加速获取JOB币</h3>
+		<div>算力越大，挖到的JOB币越多</div>
+		<p>授权以下平台的账户信息，可快速提升算力，并同时获得JOB奖励。金职链致力于用区块链帮助个人用户安全管理和支配自己的职业数据，加密存储不缓存，去中心化管理，真正实现职业数据由自己来安全管理，让自己成为数据的主人。<a href="#">查看更多></a></p>
+	</div>
+</div>
+
+<div class="authentications">
+	<a href="followwechat" class="col-xs-4">
+		<div class="imgbox">
+			<img src="/public/img/mjob/wechat.png" class="auto-center">
+		</div>
+		<h4>关注微信公众号</h4>
+		<div class="status rel">
+			<img src="/public/img/mjob/done.png" class="auto-center">
+		</div>
+	</a>
+	<a href="followwechat" class="col-xs-4">
+		<div class="imgbox">
+			<img src="/public/img/mjob/face.png" class="auto-center">
+		</div>
+		<h4>人脸识别</h4>
+		<div class="status rel">
+			<img src="/public/img/mjob/undone.png" class="auto-center">
+		</div>
+	</a>
+	<a href="followwechat" class="col-xs-4">
+		<div class="imgbox">
+			<img src="/public/img/mjob/xuexin.png" class="auto-center">
+		</div>
+		<h4>学信网认证</h4>
+		<div class="status rel">
+			<img src="/public/img/mjob/undone.png" class="auto-center">
+		</div>
+	</a>
+	<a href="thirdparty" class="col-xs-4">
+		<div class="imgbox">
+			<img src="/public/img/mjob/58.png" class="auto-center">
+		</div>
+		<h4>58同城</h4>
+		<div class="status rel">
+			<img src="/public/img/mjob/undone2.png" class="auto-center">
+		</div>
+	</a>
+	<div class="cls"></div>
+</div>
+
+{% endblock %}

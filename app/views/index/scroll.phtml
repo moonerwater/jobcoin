@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <script type="text/javascript" src="{{url('js/jquery.min.js')}}"></script>
+
+            </head>
+<script type="text/javascript">
+$(function(){
+    
+       $(window).scroll(function(){
+             //为页面添加页面滚动监听事件
+                  var wst =  $(window).scrollTop() //滚动条距离顶端值
+                 for (i=1; i<6; i++){             //加循环
+                  if($("#a"+i).offset().top<=wst){ //判断滚动条位置
+                     $('#nav a').css("background-color","white"); //清除c类
+                     $("#a"+i+i).css("background-color","red");    //给当前导航加c类
+                     }
+                 }         
+      })
+       $('#nav a').click(function(){
+        $('#nav a').css("background-color","white");//清除c类
+        $(this).css("background-color","red");//给当前导航加c类
+        });
+});
+</script>
+<div id="nav" style="position:fixed;width:500px;height:200px; top:10px;right:10px;" >
+<a id="a11" href="#a1" class="c">书籍目录</a>
+<a id="a22" href="#a2">作品试读</a>
+<a id="a33" href="#a3">购买须知</a>
+<a id="a44" href="#a4">注意事项</a>
+<a id="a55" href="#a5">用户点评</a>
+</div>
+<br /><br />
+页面结构如下：
+<div id="a1">测试</div>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  <p>&nbsp;    </p>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  <p>&nbsp;    </p>
+</div>
+<div id="a2">测试</div>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  <p>&nbsp;    </p>
+</div>
+<div id="history">
+
+    <p>history内容</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  <p>&nbsp;    </p>
+</div>
+<div id="a3">测试</div>
+<div id="history">
+
+    <p>history内容</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  <p>&nbsp;    </p>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  <p>&nbsp;    </p>
+</div>
+<div id="a4">测试</div>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  <p>&nbsp;    </p>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  <p>&nbsp;    </p>
+</div>
+<div id="a5">测试
+<p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  <p>&nbsp;    </p>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  <p>&nbsp;    </p>
+
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <p>&nbsp;</p>
+  <p>&nbsp;    </p>
+</div>
+</body></html>

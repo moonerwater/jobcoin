@@ -1,0 +1,94 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}第三方授权{% endblock %}
+
+
+{% block content %}
+<style type="text/css">
+	body, html {
+	    background-color: #fff;
+	}
+	.mui-content {
+		background: #fff;	
+	}
+	.mui-content {
+		padding:3.74rem;
+	}
+	.logobox {
+		height: 8.6rem;
+		width: 100%;
+		margin-top: 4.4rem;
+		margin-bottom: 2.96rem;
+	}
+	.inputbox input {
+		border: none;
+    	border-bottom: 1px solid #efefef;
+	}
+	.mui-btn-block {
+    	height: 4.62rem;
+	    border-radius: 4.62rem;
+	    font-size: 1.6rem;
+	    width: 100%;
+	    margin: 0 auto;
+	    border: 1px solid #1de291;
+	    background-color: #1de291;
+	    margin-top: 2rem;
+    }
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">第三方授权</h1>
+</header>
+
+<div class="mui-content">
+	<div class="logobox rel">
+		<img src="/public/img/mjob/58.png" class="auto-center">
+	</div>
+	<div class="inputbox">
+		<div class="mui-input-row">
+			<input type="text" class="mui-input-clear" placeholder="手机号/账户名称">
+		</div>
+		<div class="mui-input-row mui-password">
+			<input type="password" class="mui-input-password" placeholder="请输入密码">
+		</div>
+	</div>
+	<button type="button" id='confirmBtn' class="mui-btn mui-btn-success mui-btn-block">登  陆</button>
+</div>
+
+
+<script type="text/javascript">
+
+	mui.init();
+
+	var nativeWebview, imm, InputMethodManager;
+	var initNativeObjects = function() {
+		if (mui.os.android) {
+			var main = plus.android.runtimeMainActivity();
+			var Context = plus.android.importClass("android.content.Context");
+			InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
+			imm = main.getSystemService(Context.INPUT_METHOD_SERVICE);
+		} else {
+			nativeWebview = plus.webview.currentWebview().nativeInstanceObject();
+		}
+	};
+	var showSoftInput = function() {
+		if (mui.os.android) {
+			imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+		} else {
+			nativeWebview.plusCallMethod({
+				"setKeyboardDisplayRequiresUserAction": false
+			});
+		}
+		setTimeout(function() {
+			var inputElem = document.querySelector('input');
+			inputElem.focus();
+			inputElem.parentNode.classList.add('mui-active'); //第一个是search，加上激活样式
+		}, 200);
+	};
+	mui.plusReady(function() {
+		initNativeObjects();
+		showSoftInput();
+	});
+
+</script>
+{% endblock %}

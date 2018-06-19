@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"> 
+<title></title> 
+<style> 
+div
+{
+	width:100px;
+	height:100px;
+	background:red;
+	float:left;
+	position:relative;
+
+	animation:myfirst 3s infinite;
+	-webkit-animation:myfirst 3s infinite;
+
+}
+#A {
+
+}
+
+#B {
+	left:100px;
+	animation-delay:2s;
+	-webkit-animation-delay:2s;
+}
+#C {
+	left:200px;
+	animation-delay:4s;
+	-webkit-animation-delay:4s;
+}
+
+@keyframes myfirst
+{
+	0%   {background:red;  top:0px;}
+	50%  {background:blue;  top:50px;}
+	100% {background:red;  top:0px;}
+}
+
+@-webkit-keyframes myfirst /* Safari 和 Chrome */
+{
+	0%   {background:red;  top:0px;}
+	50%  {background:blue;  top:50px;}
+	100% {background:red;  top:0px;}
+}
+</style>
+</head>
+<body>
+
+<div id="A"></div>
+<div id="B"></div>
+<div id="C"></div>
+</body>
+</html>

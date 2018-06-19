@@ -1,0 +1,254 @@
+{% extends "common/layout-index.phtml" %}
+{% block title  %}金職鏈 職業信用開放平臺 - 首頁{% endblock %}
+{% block header %}{{ partial('common/layout-header_hk')}}{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{url('css/particles/normalize.css')}}"/>
+<!-- <link rel="stylesheet" type="text/css" href="{{url('css/particles/default.css')}}"/>
+<link rel="stylesheet" type="text/css" href="{{url('css/particles/style.css')}}"/> -->
+<link rel="stylesheet" type="text/css" href="{{url('css/jquery.mCustomScrollbar.css')}}"/>
+<link rel="stylesheet" type="text/css" href="{{url('css/index/cn.css')}}"/>
+
+<div class="rows" id="F1">
+	<div class="container">
+		<div class="f1text">
+			<h2>基於區塊鏈</h2>
+			<h2>去中心化的職業信用</h2>
+			<h2>開放平臺</h2>
+			<p>金職鏈（JOBChain）通過開放接口跨應用聚合B用戶及C用戶職業信用數據碎片，同步數據塊的哈希值到以太坊網絡中進行廣播，形成多維完善且不可篡改的用戶職業信用畫像。基於金職鏈提供的職業信用基礎設施，各職業類應用及產品無需自行搭建繁雜的區塊鏈底層基礎，只需調用金職鏈構建的平臺接口，即可接入並共同構建這個基於區塊鏈的職業類信用生態。</p>
+			<a href="javascript:;">白皮書</a>
+		</div>
+		<div class="item1 abo" id="Item1"><div class="animation1 action1"></div></div>
+		<div class="item1 abo" id="Item2"><div class="animation1 action2"></div></div>
+		<div class="item1 abo" id="Item3"><div class="animation1 action3"></div></div>
+		<div class="item1 abo" id="Item4"><div class="animation1 action4"></div></div>
+		<div class="item2 abo" id="Item5"></div>
+		<div class="item2 abo" id="Item6"></div>
+		<div class="item3 abo" id="Item7"></div>
+	</div>
+</div>
+<div class="rows" id="F2">
+	<div class="container">
+		<h3>記錄用戶歷史職業信用數據的職業信用開放平臺</h3>
+		<h2>去中心化 <span>·</span> 不可篡改 <span>·</span> 智能合約</h2>
+		<img src="/public/img/index/f2tr.png">
+	</div>
+</div>
+<div class="rows" id="F3">
+	<div class="container">
+		<h2>招聘、應聘即挖礦</h2>
+		<p>JOB幣將作為多個信任主體之間促進多方協作的交流單位，以智能合約約束著招聘方與應聘方的信用行為。金職鏈激勵更多的信任主體將自身的職業信用記錄到金職鏈職業信用開放平臺中，同時為信用數據購買方提供更有保障及更有效率的信用數據消費方案</p>
+		<img src="/public/img/index/f3tr.png">
+	</div>
+</div>
+<div class="rows" id="F4">
+	<div id="F4particles"></div>
+	<div class="container">
+		<div class="towerbox">
+			<div class="ob2 abo t2"><img src="/public/img/index/f4-2.png"></div>
+			<div class="ob2 abo t3"><img src="/public/img/index/f4-3.png"></div>
+			<div class="ob2 abo t4"><img src="/public/img/index/f4-3.png"></div>
+			<div class="ob1 abo t1"><img src="/public/img/index/f4-1.png"></div>
+		</div>
+		<h2>金職鏈-JOBChain</h2>
+		<h2>職業信用開放平臺·平臺接口</h2>
+		<div class="F4link">
+			<a href="/index/api" class="left">金職鏈平臺接口></a>
+			<a href="javascript:;" class="right">JOB幣挖礦規則></a>
+		</div>
+	</div>
+</div>
+<div class="rows" id="F5">
+	<div class="container">
+		<div class="titlerow r1">創始團隊</div>
+		<div class="peoplerow">
+			<div class="peoplebox">
+				<div class="boxs left">
+					<div class="headimg">
+						<img src="/public/img/index/zhongshaofeng.png"></div>
+					<h4>鐘紹峰</h4>
+					<p>摯金資本聯合創始人</p>
+					<p>愛兼職網創始人</p>
+				</div>
+				<div class="boxs left">
+					<div class="headimg">
+						<img src="/public/img/index/xuminjie.png">
+					</div>
+					<h4>徐敏傑</h4>
+					<p>埃森哲咨詢（香港）谷歌項目成員</p>
+					<p>香港中文大學信息工程碩士</p>
+				</div>
+				<div class="boxs left">
+					<div class="headimg"></div>
+					<h4>×</h4>
+					<p>×</p>
+					<p>×</p>
+				</div>
+			</div>
+		</div>
+		<div class="titlerow r2">顧問團隊</div>
+		<div class="peoplerow">
+			<div class="peoplebox">
+				<div class="boxs left">
+					<div class="headimg"></div>
+					<h4>×</h4>
+					<p>×</p>
+					<p>×</p>
+				</div>
+				<div class="boxs left">
+					<div class="headimg"></div>
+					<h4>×</h4>
+					<p>×</p>
+					<p>×</p>
+				</div>
+				<div class="boxs left">
+					<div class="headimg"></div>
+					<h4>×</h4>
+					<p>×</p>
+					<p>×</p>
+				</div>
+			</div>
+		</div>
+		<div class="titlerow r3">投資機構</div>
+		<div class="textrow">
+			<div class="left">雲獅基金</div>
+			<div class="left">松鼠基金</div>
+			<div class="left">靈獅基金</div>
+			<div class="left">燈火區塊鏈</div>
+		</div>
+	</div>
+</div>
+<div class="rows" id="F6">
+	<div class="container">
+		<div class="tit">
+			<img src="/public/img/index/f6tr.png">
+		</div>
+		<h2 id="F7">基於金職鏈職業信用開放平臺的落地應用示例</h2>
+		<h3>累計已鏈接<span>302000</span>位用戶的職業信用數據</h3>
+		<div class="connection">
+			<div class="connectionrows">
+				<div class="boxs left">
+					<div class="imgbox">
+						<img src="/public/img/index/connection1.png" class="auto-center">
+					</div>
+					<h4>愛兼職網</h4>
+					<p>愛兼職網累計已開通17個城市地區兼職網，其中包括北京愛兼職網、上海愛兼職網、廣州愛兼職網、深圳愛兼職網等，服務超過15000個企業招聘用戶，累計服務500000+個兼職求職者</p>
+				</div>
+				<div class="boxs left">
+					<div class="imgbox">
+						<img src="/public/img/index/connection2.jpg" class="auto-center">
+					</div>
+					<h4>大學生實習網</h4>
+					<p>大學生實習網是壹個專註於大學生實習招聘的垂直招聘網站，擁有130000+大學實習生用戶，為超過500家來自各行各業的500強、行業巨頭、獨角獸企業提供實習招聘服務</p>
+				</div>
+				<div class="boxs left">
+					<div class="imgbox">
+						<img src="/public/img/index/connection3.png" class="auto-center">
+					</div>
+					<h4>美魅</h4>
+					<p>美魅是壹個搭建模特和商家的撮合交易平臺，以實名制體系為基礎，提供真實、可靠、快捷的模特信息及周邊服務，為模特提供最好的通告平臺、最優的運營模式和更多、更快的成名機會，目前已經有120000+模特用戶</p>
+				</div>
+				<div class="boxs left">
+					<div class="imgbox">
+						
+					</div>
+					<h4>兼職之家</h4>
+					<p>兼職之家為每壹位招聘方及報名兼職的求職方建立基於區塊鏈技術的雙向智能合約，真實且不可篡改地將招聘方及求職方的評價與信用記錄在區塊鏈上，基於招聘方和求職方公開透明的信用記錄，幫助求職方選到信用更好的招聘方，也幫助招聘方找到信用更好求職方</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="rows" id="F8">
+	<div class="container">
+		<h2>CONTACTS</h2>
+		<div class="contactsrow">
+			<div class="box">
+				<a href="javascript:;"><img src="/public/img/index/f7-1.png" class="auto-center"></a>
+				<a href="javascript:;"><img src="/public/img/index/f7-2.png" class="auto-center"></a>
+				<a href="javascript:;"><img src="/public/img/index/f7-3.png" class="auto-center"></a>
+				<a href="javascript:;"><img src="/public/img/index/f7-4.png" class="auto-center"></a>
+				<a href="javascript:;"><img src="/public/img/index/f7-5.png" class="auto-center"></a>
+				<a href="javascript:;"><img src="/public/img/index/f7-6.png" class="auto-center"></a>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript" src="{{url('js/particles/particles.js')}}"></script>
+<script type="text/javascript" src="{{url('js/particles/app.js')}}"></script>
+<script type="text/javascript" src="{{url('js/jquery.mousewheel.min.js')}}"></script>
+<script type="text/javascript" src="{{url('js/jquery.mCustomScrollbar.concat.min.js')}}"></script>
+<script type="text/javascript">
+	// $(document).scroll( function(){
+	//     var me = arguments.callee; //匿名函数可以 通过 arguments.callee 调用自己
+	//     me.doc = me.doc || $(document); //缓存 $(document);
+	//     me.head = me.head || $('header');
+	//     me.lastTop = me.lastTop || me.doc.scrollTop();
+	//     if( me.doc.scrollTop() < 20 ||  me.doc.scrollTop() > me.lastTop ){
+	//         //向下 或再 页面顶部，放在 头部
+	//         me.head.css({ position : 'absolute' });
+	//     }else if( me.doc.scrollTop() < me.lastTop  ){
+	//         //向上，悬浮
+	//         me.head.css({ position : 'fixed' });
+	//     }
+	//     me.lastTop = me.doc.scrollTop();
+	// });
+	
+	// document.addEventListener("scroll",function () {
+	//     var scrolllenth = document.getElementById("F2").getBoundingClientRect().top;
+	//     document.getElementById("Header").style.background='rgba(21,0,141,'+scrolllenth+')';
+	// });
+	// 
+	$(document).ready(function(){
+
+		var $root = $('html, body');
+		$("Header a.position").on('click',function(){
+			//$(this).addClass('selected').siblings().removeClass('selected');
+			$root.animate({
+		        scrollTop: $( $.attr(this, 'href') ).offset().top
+		    }, 500);
+		    return false;
+		});
+
+		$(window).scroll(function(){
+			var top =  $(window).scrollTop();
+			if(top <= 100){
+				$("header").stop().animate({height:"126px"},200);
+				$("header .headerbox").stop().animate({marginTop:"52px"},200);
+			} else {
+				$("header").stop().animate({height:"74px"},200);
+				$("header .headerbox").stop().animate({marginTop:"0px"},200);
+			}
+			// if(top > 101 || top <= 200){
+			// 	$("header").animate({height:"123px"},200);
+			// 	$("header .headerbox").animate({marginTop:"49px"},200);
+			// }
+
+			for (i = 1;i < 9;i++){       
+				if($("#F"+i).offset().top - 400 <= top){ 
+					$("#F"+i+i).addClass('selected').siblings().removeClass('selected');
+				}
+			}         
+		});
+
+		// (function($){
+		// 	$(window).load(function(){
+		// 		$("body").mCustomScrollbar({
+		// 			scrollInertia :80,
+		// 			scrollButtons:{
+		// 				enable:true,
+		// 				scrollSpeed:200
+		// 			},
+		// 			//horizontalScroll : true,
+		// 			advanced:{ 
+		// 				autoExpandHorizontalScroll:true
+		// 			},
+		// 		});
+		// 	});
+		// })(jQuery);
+	
+
+	});
+
+</script>
+{% endblock %}

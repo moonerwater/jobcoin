@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <!--兼容性meta 让浏览器以webkit内核打开网页 start-->
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <!--兼容性meta end-->
+    <script type="text/javascript" src="{{url('js/jquery.min.js')}}"></script>
+    <style type="text/css">
+    	#showImage {
+    		max-height: 400px;
+    		max-width: 400px;
+    	}
+
+    </style>
+</head>
+<body>
+	<input type="file" accept="image/*" onchange="imgChange(event)" id="file">
+	<img src="" id="showImage" alt="">
+</body>
+</html>
+
+<script type="text/javascript">
+	var base;
+
+	var appid = "10132821";
+	var mode = "1";
+
+	function imgChange(e) {
+	    //console.info(e.target.files[0]);//图片文件
+	    //var dom = $("#file");
+	    //console.info(dom.value);//这个是文件的路径 C:\fakepath\icon (5).png
+	    //console.log(e.target.value);//这个也是文件的路径和上面的dom.value是一样的
+	    var reader = new FileReader();
+	    reader.onload = (function (file) {
+	        return function (e) {
+	            //console.log(this.result); //这个就是base64的数据了
+	            $("#showImage")[0].src=this.result;
+	            base = this.result;
+	            console.log(base);
+
+	            $.post("http://api.youtu.qq.com/youtu/api/detectface",{
+	            	"app_id":appid,
+	            	"image":base,
+	            	"mode":mode
+	            },function(data){
+	            	console.log(data);
+	            },'json');
+
+	        };
+	    })(e.target.files[0]);
+	    reader.readAsDataURL(e.target.files[0]);
+	    //console.log(base);
+	}
+</script>

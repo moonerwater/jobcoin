@@ -1,0 +1,56 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}算力攻略{% endblock %}
+
+
+{% block content %}
+<style type="text/css">
+	.bg {
+		height: 28rem;
+		background: url(/public/img/mjob/index_bg.png) center 0 no-repeat;
+    	background-size: cover;
+	}
+	h3 {
+		margin-top: 2.85rem;
+		font-size:1.9rem;
+		text-align: center;
+		color:#1120bd;
+		font-weight: 700;
+	}
+	div.line {
+		background: #fac82e;
+		width: 10%;
+		height: .3rem;
+		margin:0 auto;
+	}
+	p {
+		margin-top:1.45rem;
+		font-size:1.14rem;
+		color:#98999e;
+		line-height: 1.8rem;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">算力攻略</h1>
+</header>
+
+<div class="mui-content">
+	<div class="bg"></div>
+	<div class="container">
+		<h3>什么是JOB币？</h3>
+		<div class="line"></div>
+		<p>JOB是金职基金会在JOBChain（金职链）上发行的T欧肯，不仅具有流通价值，同时在金职链上开发、认证应用、使用链上服务（例如链上转账的旷工费）等需要支付或燃烧JOB，JOB是作为链上应用运行唯一使用到的Token。在金职岛中也可以很方便地利用JOB进行支付结算，如岛上居民之间互相使用JOB进行结算，使用岛上公共服务需要用JOB结算，商家提供的服务也需要JOB来购买等等。JOB总量有限，且越往后面产出量越少，随着时间的推移获取难度越来越大，前期开始参与挖矿更有优势。</p>
+		<h3>算力越高，挖矿速度越快</h3>
+		<div class="line"></div>
+		<p>算力是用户挖矿获取JOB币的影响因子，同一时段内，算力越高，获得的JOB币越多。举个例子：每日释放的基础JOB币总数恒定C用户每日挖到的JOB币=C x 该用户当前算力/所有用户算力总和释放但未被领取的JOB币C1会滚动到当天再次释放出去</p>
+		<h3>如何提升算力，加速挖矿？</h3>
+		<div class="line"></div>
+		<p>①完善实名身份信息，可快速提高算力<br>
+	②第三方平台授权    通过授权学信网/智联招聘、前程无忧等职业类第三方平台的账户，JOBChain将采集到居民的身份要素和职业特质，完善你的区块链职业身份的同时，可快速提升挖矿的算力，该方式是最快提升算力的方式。<br>
+	③每日登陆、及时收取挖出的JOB币每日登陆、及时收取挖出的JOB币等积极用户行为也会持续提升算力。点滴积累，勤劳致富！<br>
+	④参与金职岛的建设未来金职岛将推出更多的应用和服务，参与金职岛的建设，体验新的应用和服务也能提升算力。</p>
+	</div>
+</div>
+
+{% endblock %}

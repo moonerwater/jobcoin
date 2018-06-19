@@ -1,0 +1,117 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}我的身份{% endblock %}
+
+
+{% block content %}
+<style type="text/css">
+	body,html,.mui-content {
+		height:100%;
+	}
+	.imgbox {
+		width: 7.09rem;
+		height: 7.09rem;
+		margin:0 auto;
+		margin-top:2.66rem;
+		margin-bottom: 1.9rem;
+	}
+	.mui-icon,
+	.mui-icon-extra {
+	    display: inline-block;
+	    margin-right: .5rem;
+	    position: relative;
+	    top: .1rem;
+	}
+	.mui-table-view-cell:after {
+		left: 0;
+	}
+	h5 {
+		font-size:1rem;
+		margin-bottom:.5rem;
+		margin-top:2.4rem;
+	}
+	.user span.mui-pull-right {
+		color:#cfd0d5;
+		position: relative;
+    	top: .3rem;
+	}
+	.mui-table-view {
+		border-radius: 4px;
+	}
+	.mui-table-view:before,
+	.mui-table-view:after {
+		height: 0;
+	}
+	.usericon {
+		display: inline-block;
+		margin-right: .5rem;
+		width: 1.5rem;
+		height: 1.5rem;
+		position: relative;
+		top: .3rem;
+	}
+	.usericon.user-1 {
+		background: url(/public/img/mjob/user-1.png) no-repeat center;
+    	background-size: contain;
+	}
+	.usericon.user-2 {
+		background: url(/public/img/mjob/ideicon4.png) no-repeat center;
+    	background-size: contain;
+	}
+	.usericon.user-3 {
+		background: url(/public/img/mjob/user-3.png) no-repeat center;
+    	background-size: contain;
+	}
+	.usericon.user-4 {
+		background: url(/public/img/mjob/ideicon3.png) no-repeat center;
+    	background-size: contain;
+	}
+	.usericon.user-5 {
+		background: url(/public/img/mjob/user-5.png) no-repeat center;
+    	background-size: contain;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">我的身份</h1>
+</header>
+
+<div class="mui-content">
+	<div class="container">
+		<div class="imgbox rel">
+			<img src="/public/img/mjob/face.png" class="auto-center">
+		</div>
+		<ul class="mui-table-view user">
+			 <li class="mui-table-view-cell">
+			 	<span class="user-1 usericon"></span>
+			 	姓名
+			 	<span class="mui-pull-right">*正恩</span>
+			 </li>
+	         <li class="mui-table-view-cell">
+	         	<span class="user-2 usericon"></span>
+			 	身份证号
+			 	<span class="mui-pull-right">44030******6598</span>
+			 </li>
+		</ul>
+		<h5>验证一下信息享受更高的数据权限</h5>
+		<ul class="mui-table-view verification">
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right">
+					<span class="user-3 usericon"></span>人脸识别
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right">
+					<span class="user-4 usericon"></span>绑定钱包
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a class="mui-navigate-right">
+					<span class="user-5 usericon"></span>关注微信公众号
+				</a>
+			</li>
+		</ul>
+	</div>
+</div>
+
+{% endblock %}
