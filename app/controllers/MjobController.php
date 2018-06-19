@@ -7,9 +7,13 @@ class MjobController extends ControllerH5
         parent::initialize();
     }
 
-    public function indexAction()
-    {
-        
+    public function indexAction() {
+
+    }
+
+    public function logoutAction() {
+        $this->session->remove('userinfo');
+        $this->response->redirect('mjob/index');
     }
 
     public function getphonecodeAction() {
@@ -69,8 +73,6 @@ class MjobController extends ControllerH5
 
                 $result = new stdClass();
                 $result->user_type = 'old';
-                $this->reply('success', 0, $result);
-                return '';
             }
             else{
                 if($code_user){
@@ -98,7 +100,6 @@ class MjobController extends ControllerH5
 
                 $result = new stdClass();
                 $result->user_type = 'new';
-                $this->reply('success', 0, $result);
             }
             $userLogin = \User::findFirst(array(
                 sprintf(" id = ".$user->id),
@@ -106,18 +107,16 @@ class MjobController extends ControllerH5
             ));
             $this->session->set('userinfo', $userLogin->toArray());
 
-            $this->reply(true, 0, array('message' => 'success'));
+            $this->reply('success', 0, $result);
         }
     }
 
-    public function loginAction()
-    {
-        
+    public function loginAction() {
+        $this->checkUserGoMain();
     }
 
-    public function mainAction()
-    {
-        
+    public function mainAction() {
+        $this->checkNoUserGoLogin();
     }
 
     public function promoteAction()

@@ -21,5 +21,23 @@ class ControllerH5 extends ControllerBase
         $this->view->setVar('today', date('Y-m-d'));
     }
 
+    protected function checkNoUserGoLogin(){
+        if($this->userinfo){
+
+        }
+        else{
+            $this->response->redirect('mjob/index');
+        }
+    }
+
+    protected function checkUserGoMain(){
+        if($this->userinfo){
+            $this->response->redirect('mjob/main');
+        }
+        else{
+
+        }
+    }
+
 
 }
