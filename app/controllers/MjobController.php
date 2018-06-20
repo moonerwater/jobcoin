@@ -78,11 +78,16 @@ class MjobController extends ControllerH5
         else {
             $user = \User::findFirstByPhone($mobile);
             if ($user) {
+                $login_score = 0;
+                if(date('Ymd') != date('Ymd', $user->last_time)){
+                    $login_score = 1;
+                }
                 $user->last_time = time();
                 $user->save();
 
                 $result = new stdClass();
                 $result->user_type = 'old';
+                $result->login_score = $login_score;
             }
             else{
                 if($code_user){
@@ -126,6 +131,7 @@ class MjobController extends ControllerH5
 
                 $result = new stdClass();
                 $result->user_type = 'new';
+                $result->login_score = 0;
             }
             $userLogin = \User::findFirst(array(
                 sprintf(" id = ".$user->id),
