@@ -197,11 +197,99 @@ class MjobController extends ControllerH5
         }
     }
 
-    public function getscoreAction() {
+    public function getjobcoinnoAction() {
         $this->checkNoUserGoLogin();
         $userid = $this->userinfo['id'];
-        echo $userid;
+        $total_score = $this->getTotalScore();
 
+        $canget = number_format(100*$this->userinfo['score']/$total_score, 2);
+        $stime = strtotime('-3 days');
+        $etime = time();
+        $scorelist = \UserScoreList::query()->columns('create_time')->where(' user_id = '.$userid)->orderBy('create_time desc')->execute()->toArray();
+        if($scorelist){
+            if($scorelist[0]['create_time'] > $stime){
+                $stime = $scorelist[0]['create_time'];
+            }
+        }
+        if($this->userinfo['create_time'] > $stime){
+            $stime = $this->userinfo['create_time'];
+        }
+        //echo $stime;
+
+        //8小时放一次，每次放6个晶体，每8小时放出100个job币。
+        for($mytime = $stime+3600*8; $mytime<=$etime; $mytime+=3600*8){
+            //
+            $money_total=($canget < 0.1) ? 0.1 : $canget;
+            $personal_num=6;
+            $min_money=0.01;
+            $money_right=$money_total;
+            $randMoney=[];
+            for($i=1;$i<=$personal_num;$i++){
+                if($i== $personal_num){
+                    $money=$money_right;
+                }else{
+                    $max=$money_right*100 - ($personal_num - $i ) * $min_money *100;
+                    $money= rand($min_money*100,$max) /100;
+                    $money=sprintf("%.2f",$money);
+                }
+                $randMoney[]=$money;
+                $money_right=$money_right - $money;
+                $money_right=sprintf("%.2f",$money_right);
+            }
+            shuffle($randMoney);
+            //
+            foreach($randMoney as $k => $v){
+                $userscorelist = new \UserScoreList();
+                $userscorelist->user_id = $userid;
+                $userscorelist->jobcoinno = uniqid().$this->randomString(4);
+                $userscorelist->jobcoin = $v;
+                $userscorelist->create_time = $mytime;
+                $userscorelist->last_time = $mytime;
+                $userscorelist->save();
+            }
+        }
+        //
+        $userscorelist = \UserScoreList::find(array( "user_id = :user_id: and is_get = 'N' ", 'bind'=>array('user_id'=>$userid), 'columns'=>'jobcoinno, jobcoin'));
+        $result = $userscorelist->toArray();
+        $this->reply('success', 0, $result);
+    }
+
+    public function editjobcoinnoAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+        $jobcoinno = trim($this->request->get('jobcoinno'));
+
+        $userscorelist =\UserScoreList::findFirst([" user_id = ?1 and jobcoinno = ?2 and is_get = 'N' ", 'bind'=>[ 1=>$userid, 2=>$jobcoinno ] ]);
+        if (!$userscorelist) {
+            $this->replyFailure('no this jobcoinno');
+            return '';
+        }
+        $userscorelist->is_get = 'Y';
+        $userscorelist->last_time = time();
+        if(!$userscorelist->save()){
+            $this->replyFailure('save is error');
+            return '';
+        }
+        else{
+            $user = \User::findFirstById($userid);
+            $user->jobcoin += $userscorelist->jobcoin;
+            $user->last_time = time();
+            $user->save();
+
+
+            $userjobcoin = new \UserJobcoin();
+            $userjobcoin->user_id = $userid;
+            $userjobcoin->type = 'mining';
+            $userjobcoin->jobcoin = $userscorelist->jobcoin;
+            $userjobcoin->create_time = time();
+            $userjobcoin->last_time = time();
+            $userjobcoin->save();
+
+            //
+            $result = new stdClass();
+            $result->jobcoinno = $jobcoinno;
+            $this->reply('success', 0, $result);
+        }
     }
 
     public function loginAction() {

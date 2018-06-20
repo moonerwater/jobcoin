@@ -42,5 +42,14 @@ class ControllerH5 extends ControllerBase
         }
     }
 
+    protected function getTotalScore(){
+        $user = \User::find();
+        $score = 0;
+        foreach($user as $k => $v){
+            $score += $v->score;
+        }
+        return $score;
+    }
+
 
 }
