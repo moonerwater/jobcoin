@@ -78,16 +78,8 @@ class MjobController extends ControllerH5
         else {
             $user = \User::findFirstByPhone($mobile);
             if ($user) {
-                $login_score = 0;
-                if(date('Ymd') != date('Ymd', $user->last_time)){
-                    $login_score = 1;
-                }
-                $user->last_time = time();
-                $user->save();
-
                 $result = new stdClass();
                 $result->user_type = 'old';
-                $result->login_score = $login_score;
             }
             else{
                 if($code_user){
@@ -195,6 +187,35 @@ class MjobController extends ControllerH5
 
             $this->reply('success', 0, $result);
         }
+    }
+
+    public function checktodayloginAction(){
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $user = \User::findFirstById($userid);
+
+        $login_score = 0;
+        if(date('Ymd') != date('Ymd', $user->last_time)){
+            $login_score = 1;
+            $user->score += 1;
+
+            $userscore = new \UserScore();
+            $userscore->user_id = $user->id;
+            $userscore->type = 'login';
+            $userscore->score = 1;
+            $userscore->create_time = time();
+            $userscore->last_time = time();
+            $userscore->save();
+        }
+        $user->last_time = time();
+        $user->save();
+
+
+        $result = new stdClass();
+        $result->login_score = $login_score;
+
+        $this->reply('success', 0, $result);
     }
 
     public function getjobcoinnoAction() {
