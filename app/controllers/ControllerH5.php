@@ -12,7 +12,10 @@ class ControllerH5 extends ControllerBase
             $this->response->redirect('inspiration/list/please');
         }*/
         if($this->userinfo){
-            $userinfo = \User::findFirst(" id = ".$this->userinfo['id'])->toArray();
+            $userinfo = \User::findFirst(" id = ".$this->userinfo['id']);
+            if($userinfo){
+                $userinfo = $userinfo->toArray();
+            }
             $this->userinfo = $userinfo;
         }
         $this->view->setVar('userinfo', $userinfo);

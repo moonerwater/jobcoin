@@ -132,6 +132,60 @@ class MjobController extends ControllerH5
                 $result = new stdClass();
                 $result->user_type = 'new';
                 $result->reg_score = 30;
+
+                //邀请时的奖励
+                if($code_user){
+                    $user = \User::findFirst(" code_system = '$code_user'");
+                    if($user){
+                        //一级
+                        $user->jobcoin += 20;
+                        $user->candy += 10;
+                        $user->save();
+
+                        $userjobcoin = new \UserJobcoin();
+                        $userjobcoin->user_id = $user->id;
+                        $userjobcoin->type = 'regfor1';
+                        $userjobcoin->jobcoin = 20;
+                        $userjobcoin->create_time = time();
+                        $userjobcoin->last_time = time();
+                        $userjobcoin->save();
+
+                        $usercandy = new \UserCandy();
+                        $usercandy->user_id = $user->id;
+                        $usercandy->type = 'regfor1';
+                        $usercandy->candy = 10;
+                        $usercandy->create_time = time();
+                        $usercandy->last_time = time();
+                        $usercandy->save();
+
+                        //二级
+                        $code_user = $user->code_user;
+                        $user = \User::findFirst(" code_system = '$code_user'");
+                        if($user){
+                            $user->jobcoin += 10;
+                            $user->candy += 5;
+                            $user->save();
+
+                            $userjobcoin = new \UserJobcoin();
+                            $userjobcoin->user_id = $user->id;
+                            $userjobcoin->type = 'regfor2';
+                            $userjobcoin->jobcoin = 10;
+                            $userjobcoin->create_time = time();
+                            $userjobcoin->last_time = time();
+                            $userjobcoin->save();
+
+                            $usercandy = new \UserCandy();
+                            $usercandy->user_id = $user->id;
+                            $usercandy->type = 'regfor2';
+                            $usercandy->candy = 5;
+                            $usercandy->create_time = time();
+                            $usercandy->last_time = time();
+                            $usercandy->save();
+                        }
+
+                    }
+                }
+
             }
             $userLogin = \User::findFirst(array(
                 sprintf(" id = ".$user->id),
