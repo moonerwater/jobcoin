@@ -197,6 +197,13 @@ class MjobController extends ControllerH5
         }
     }
 
+    public function getscoreAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+        echo $userid;
+
+    }
+
     public function loginAction() {
         $this->checkUserGoMain();
     }

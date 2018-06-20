@@ -2,7 +2,7 @@
 
 use Phalcon\Mvc\Model;
 
-class Job extends Model
+class UserScoreList extends Model
 {
     public function initialize()
     {
@@ -11,6 +11,6 @@ class Job extends Model
 
     public function getSource()
     {
-        return "job";
+        return "user_score_list";
     }
 }
