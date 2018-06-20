@@ -131,7 +131,7 @@ class MjobController extends ControllerH5
 
                 $result = new stdClass();
                 $result->user_type = 'new';
-                $result->login_score = 0;
+                $result->reg_score = 30;
             }
             $userLogin = \User::findFirst(array(
                 sprintf(" id = ".$user->id),
