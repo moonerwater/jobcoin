@@ -319,6 +319,46 @@ class MjobController extends ControllerH5
 
     public function mainAction() {
         $this->checkNoUserGoLogin();
+        //
+        //$this->view->disable();
+        $userid = $this->userinfo['id'];
+
+        //
+        $data = array();
+        $data['score'] = $this->userinfo['score'];
+        //
+        $user = \User::find(array('', 'order' => 'score desc, id asc'));
+        foreach($user as $k => $v){
+            if($v->id == $userid){
+                $data['scorerank'] = $k+1;
+            }
+        }
+        //
+        $todaycount = \UserScoreList::find("is_get = 'Y' and last_time >= ".strtotime(date("Y-m-d")))->count();
+        $totalcount = \UserScoreList::find("is_get = 'Y'")->count();
+        $data['todaycount'] = $todaycount;
+        $data['totalcount'] = $totalcount;
+        //
+        $data['time'] = date("Y-m-d H:i");
+        //
+        $user = \User::find(array('', 'order' => 'score desc, id asc', 'limit'=>5));
+        $data['userlist'] = $user->toArray();
+        //
+        $totaluser = \User::find('')->count();
+        $data['totaluser'] = $totaluser;
+        $data['totalvip'] = $data['totaluser'] <=1000 ? $data['totaluser'] : 1000;
+        //
+        $user = \User::find(array('', 'order' => 'id asc'));
+        foreach($user as $k => $v){
+            if($v->id == $userid){
+                $data['userrank'] = $k+1;
+            }
+        }
+        //
+        $data['username'] = $this->userinfo['name'];
+
+        //print_r($data);
+        $this->view->setVar('data', $data);
     }
 
     public function promoteAction()

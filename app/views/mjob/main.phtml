@@ -577,7 +577,7 @@
 								<div class="container">
 									<div class="powerrow">
 										<div class="left">
-											<span class="mintit"></span><span class="power showpower">255</span>
+											<span class="mintit"></span><span class="power showpower">{{ data['score'] }}</span>
 										</div>
 										<a href="strategy" class="right">算力攻略</a>
 										<div class="cls"></div>
@@ -630,24 +630,24 @@
 										<div class="line"></div>
 										<div class="row">
 											<div class="col-xs-6 left">我的当前挖矿能力</div>
-											<div class="col-xs-6 right yellowtype showpower">255</div>
+											<div class="col-xs-6 right yellowtype showpower">{{ data['score'] }}</div>
 										</div>
 										<div class="row">
 											<div class="col-xs-6 left">我的挖矿算力排名</div>
-											<div class="col-xs-6 right yellowtype " id="Myrank">56165165</div>
+											<div class="col-xs-6 right yellowtype " id="Myrank">{{ data['scorerank'] }}</div>
 										</div>
 										<div class="row">
 											<div class="col-xs-6 left">今日全民挖矿次数</div>
-											<div class="col-xs-6 right yellowtype " id="Todaymining">543452452</div>
+											<div class="col-xs-6 right yellowtype " id="Todaymining">{{ data['todaycount'] }}</div>
 										</div>
 										<div class="row">
 											<div class="col-xs-6 left">累计全民挖矿次数</div>
-											<div class="col-xs-6 right yellowtype " id="Allmining">245245227855</div>
+											<div class="col-xs-6 right yellowtype " id="Allmining">{{ data['totalcount'] }}</div>
 										</div>
 										<hr>
 									</div>
 									<div class="ranking datalist" style="padding-bottom: 5rem;">
-										<h2 class='rel'>全岛挖矿排行<span class="yellowtype">更新于 <span id='time'>2018-5-5 19.00</span></span></h2>
+										<h2 class='rel'>全岛挖矿排行<span class="yellowtype">更新于 <span id='time'>{{ data['time'] }}</span></span></h2>
 										<div class="line"></div>
 										<table class="ranktable">
 										    <thead>
@@ -658,31 +658,13 @@
 											    </tr>
 										    </thead>
 										    <tbody>
+											{% for key, item in data['userlist'] %}
 											    <tr>
-											        <td class="rank">1</td>
-											        <td class="name">Bangalore</td>
-											        <td class="yellowtype power">165165156</td>
+											        <td class="rank">{{ key+1 }}</td>
+											        <td class="name">{{ item['code_system'] }}</td>
+											        <td class="yellowtype power">{{ item['score'] }}</td>
 											    </tr>
-											    <tr>
-											        <td class="rank">2</td>
-											        <td class="name">Mumbai</td>
-											        <td class="yellowtype power">165165156</td>
-											    </tr>
-											    <tr>
-											        <td class="rank">3</td>
-											        <td class="name">Mumbai</td>
-											        <td class="yellowtype power">165165156</td>
-											    </tr>
-											    <tr>
-											        <td class="rank">4</td>
-											        <td class="name">Mumbai</td>
-											        <td class="yellowtype power">165165156</td>
-											    </tr>
-											    <tr>
-											        <td class="rank">5</td>
-											        <td class="name">Mumbai</td>
-											        <td class="yellowtype power">165165156</td>
-											    </tr>
+											{% endfor %}
 										  </tbody>
 										</table>
 									</div>
@@ -703,11 +685,11 @@
 											<div class="myfriends">
 												<div class="row row-2">
 													<div class="col-xs-6">
-														<h3>25484521</h3>
+														<h3>{{ data['totaluser'] }}</h3>
 														<p>金职岛总人口</p>
 													</div>
 													<div class="col-xs-6">
-														<h3>542534</h3>
+														<h3>{{ data['totalvip'] }}</h3>
 														<p>创世居民</p>
 													</div>
 												</div>
@@ -744,8 +726,8 @@
 														<a href="identity" style="padding:0;">
 															<img class="mui-media-object mui-pull-left" src="/public/img/mjob/face.png">
 															<div class="mui-media-body">
-																张三
-																<p class="mui-ellipsis">金职岛第541548位居民</p>
+																{{ data['username'] }}
+																<p class="mui-ellipsis">金职岛第{{ data['userrank'] }}位居民</p>
 															</div>
 														</a>
 													</li>

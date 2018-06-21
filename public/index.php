@@ -1,6 +1,7 @@
 <?php
 
 error_reporting(E_ALL & ~E_NOTICE);
+date_default_timezone_set('PRC');
 ini_set('display_errors','On'); //上线后删除
 
 use Phalcon\Mvc\Application;
