@@ -489,7 +489,12 @@
 				float:left;
 				position: absolute;
 				width: 6.26rem;
-				height: 9.63rem;
+				height: 9.63rem;	
+			}
+			.minesbox .mines .animatebox {
+				position: relative;
+				animation: myfloat 2s infinite;
+    			-webkit-animation: myfloat 2s infinite;
 			}
 			.minesbox .mines .mineimg {
 				width: 6.26rem;
@@ -544,6 +549,17 @@
 			}
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				color: #374fff !important;
+			}
+
+			@keyframes myfloat {
+				0%   {top:0px;}
+				50%  {top:-.3rem;}
+				100% {top:0px;}
+			}
+			@-webkit-keyframes myfloat {
+				0%   {top:0px;}
+				50%  {top:-.3rem;}
+				100% {top:0px;}
 			}
 		</style>
 
@@ -794,14 +810,21 @@
 	<script type="text/javascript" src="{{url('js/mjob/mui.pullToRefresh.material.js')}}"></script>
 	<script>
 
+			//矿显示数量
+			var minenum = 6;
+			//显示范围
+			var HRange = 16-7.98-2.15+0.5;
+			var WRange = parseFloat($('.minesbox').css('width').replace('px','')) / parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px','')) - 6.26;
+			//var k = parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px',''));
+			//console.log(HRange,WRange);
+
 			function checkMines(){
 				var len;
 				$('.minesbox').each(function(){
 					len = $(this).find('.mines').length;
 					//console.log(len)
 					if(len == 0) {
-						$('.hasmine').hide();
-						$('.nomine').fadeIn(500);
+						getjobcoinno();
 					} else {
 						$('.nomine').hide();
 						$('.hasmine').show();
@@ -812,27 +835,28 @@
 			function getjobcoinno(){
 				$.get('/mjob/getjobcoinno',function(data){
 					if(data.reason == "success"){
-						for(var i = 0; i < minenum; i++){
-							var left = (Math.random()*WRange+1)+"rem";
-							var top1 = (Math.random()*HRange+1)+"rem";
-							console.log(data.result[i].jobcoinno,data.result[i].jobcoin)
-							var dom = "<div class='mines' data-mineid='"+data.result[i].jobcoinno+"' style='left:"+left+";top:"+top1+";'>"
-									+		"<div class='mineimg'></div>"
-									+		"<div class='minenum'>"+data.result[i].jobcoin+"</div>"
-									+ "</div>";
-							$('.minesbox').append(dom);
+						if(data.result.length != 0){
+							for(var i = 0; i < minenum; i++){
+								var left = (Math.random()*WRange+1)+"rem";
+								var top1 = (Math.random()*HRange+1)+"rem";
+								console.log(data.result[i].jobcoinno,data.result[i].jobcoin)
+								var dom = "<div class='mines none' data-mineid='"+data.result[i].jobcoinno+"' style='left:"+left+";top:"+top1+";'>"
+										+    "<div class='animatebox'>"
+										+		"<div class='mineimg'></div>"
+										+		"<div class='minenum'>"+data.result[i].jobcoin+"</div>"
+										+    "</div>"
+										+ "</div>";
+								$('.minesbox').append(dom);
+								$('.mines').fadeIn(500);
+								//checkMines();
+							}
+						} else {
+							$('.hasmine').hide();
+							$('.nomine').fadeIn(500);
 						}
-						//checkMines();
 					}
 				},'json');
 			}
-			
-			var minenum = 6;
-			var HRange = 16-7.98-2.15+0.5;
-			var WRange = parseFloat($('.minesbox').css('width').replace('px','')) / parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px','')) - 6.26;
-			//var k = parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px',''));
-			//console.log(HRange,WRange);
-
 
 			$(function(){
 				if($.cookie('regscore') > 0){
@@ -846,6 +870,26 @@
 					},'json');
 				}
 				getjobcoinno();
+			});
+
+			$(document).on('tap','.mines',function(){
+				console.log('aaa')
+				var _this = $(this);
+				var id = _this.attr('data-mineid');
+				$.get('/mjob/editjobcoinno',{'jobcoinno':id},function(data){
+					if(data.reason == "success"){
+						_this.animate({
+							transform:"scale(0.2,0.2)",
+							left:"-3rem",
+							top:"20rem",
+							opacity:"0"
+						},800,"linear",function(){
+							_this.remove();
+							checkMines();
+						});
+					}
+				},'json');
+				
 			});
 
 			
@@ -862,17 +906,7 @@
 			// 	checkMines();
 			// }
 
-			$('.mines').on('tap',function(){
-				$(this).animate({
-					transform:"scale(0.2,0.2)",
-					left:"-3rem",
-					top:"20rem",
-					opacity:"0"
-				},800,"linear",function(){
-					$(this).remove();
-					checkMines();
-				});
-			});
+			
 
 
 			mui.init();
