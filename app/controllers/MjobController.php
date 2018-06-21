@@ -361,6 +361,32 @@ class MjobController extends ControllerH5
         $this->view->setVar('data', $data);
     }
 
+    public function assetsAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+        //
+        $data = array();
+        $data['jobcoin'] = $this->userinfo['jobcoin'];
+        //
+        $this->view->setVar('data', $data);
+    }
+
+    public function iaeAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+        //
+        $userjobcoin = \UserJobcoin::find(array('user_id ='.$userid, 'order' => 'create_time desc'));
+        $userjobcoin = $userjobcoin->toArray();
+        foreach($userjobcoin as $k => $v){
+            $userjobcoin[$k]['time'] = date('Y-m-d H:i:s', $v['create_time']);
+        }
+        $data['userjobcoin'] = $userjobcoin;
+        //
+        $this->view->setVar('data', $data);
+    }
+
     public function promoteAction() {
         $this->checkNoUserGoLogin();
         //
@@ -400,12 +426,17 @@ class MjobController extends ControllerH5
         $this->view->setVar('data', $data);
     }
 
-    public function followwechatAction()
-    {
-        
+    public function inviteAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+        $data = array();
+        $data['code_system'] = $this->userinfo['code_system'];
+        //
+        $this->view->setVar('data', $data);
     }
 
-    public function inviteAction()
+    public function followwechatAction()
     {
         
     }
@@ -431,16 +462,6 @@ class MjobController extends ControllerH5
     }
 
     public function dataplateAction()
-    {
-        
-    }
-
-    public function assetsAction()
-    {
-        
-    }
-
-    public function iaeAction()
     {
         
     }

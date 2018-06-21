@@ -93,76 +93,33 @@
 				<div id="scroll1" class="mui-scroll-wrapper">
 					<div class="mui-scroll">
 						<ul class="mui-table-view">
-							 <li class="mui-table-view-cell">
-								<div class="left stat1">
-									<h5>每日登陆</h5>
-									<p>2018-05-30 10:25</p>
-								</div>
-								<div class="right"><span>+50</span>JOB</div>
-							 </li>
-						     <li class="mui-table-view-cell">
-								<div class="left stat1">
-									<h5>每日登陆</h5>
-									<p>2018-05-30 10:25</p>
-								</div>
-								<div class="right"><span>+50</span>JOB</div>
-							 </li>
-							 <li class="mui-table-view-cell">
-								<div class="left stat2">
-									<h5>每日登陆</h5>
-									<p>2018-05-30 10:25</p>
-								</div>
-								<div class="right"><span>+50</span>JOB</div>
-							 </li>
-							 <li class="mui-table-view-cell">
-								<div class="left stat3">
-									<h5>每日登陆</h5>
-									<p>2018-05-30 10:25</p>
-								</div>
-								<div class="right"><span>+50</span>JOB</div>
-							 </li>
-							 <li class="mui-table-view-cell">
-								<div class="left stat3">
-									<h5>每日登陆</h5>
-									<p>2018-05-30 10:25</p>
-								</div>
-								<div class="right"><span>+50</span>JOB</div>
-							 </li>
-							 <li class="mui-table-view-cell">
-								<div class="left stat4">
-									<h5>每日登陆</h5>
-									<p>2018-05-30 10:25</p>
-								</div>
-								<div class="right"><span>+50</span>JOB</div>
-							 </li>
-							 <li class="mui-table-view-cell">
-								<div class="left stat5">
-									<h5>每日登陆</h5>
-									<p>2018-05-30 10:25</p>
-								</div>
-								<div class="right"><span>+50</span>JOB</div>
-							 </li>
-							 <li class="mui-table-view-cell">
-								<div class="left stat1">
-									<h5>每日登陆</h5>
-									<p>2018-05-30 10:25</p>
-								</div>
-								<div class="right"><span>+50</span>JOB</div>
-							 </li>
-							 <li class="mui-table-view-cell">
-								<div class="left stat3">
-									<h5>每日登陆</h5>
-									<p>2018-05-30 10:25</p>
-								</div>
-								<div class="right"><span>+50</span>JOB</div>
-							 </li>
-							 <li class="mui-table-view-cell">
-								<div class="left stat2">
-									<h5>每日登陆</h5>
-									<p>2018-05-30 10:25</p>
-								</div>
-								<div class="right"><span>+50</span>JOB</div>
-							 </li>
+							{% for key, item in data['userjobcoin'] %}
+								<li class="mui-table-view-cell">
+									{% if item['type'] == 'reg' %}
+										<div class="left stat4">
+									{% elseif item['type'] == 'mining' %}
+										<div class="left stat1">
+									{% elseif item['type'] == 'regfor1' %}
+										<div class="left stat3">
+									{% elseif item['type'] == 'regfor2' %}
+										<div class="left stat2">
+									{% endif %}
+										<h5>
+											{% if item['type'] == 'reg' %}
+												注册
+											{% elseif item['type'] == 'mining' %}
+												挖矿
+											{% elseif item['type'] == 'regfor1' %}
+												邀请一级好友
+											{% elseif item['type'] == 'regfor2' %}
+												邀请二级好友
+											{% endif %}
+										</h5>
+										<p>{{ item['time'] }}</p>
+									</div>
+									<div class="right"><span>+{{ item['jobcoin'] }}</span>JOB</div>
+								</li>
+							{% endfor %}
 						</ul>
 					</div>
 				</div>
