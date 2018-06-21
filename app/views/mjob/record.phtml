@@ -59,37 +59,24 @@
 
 <div class="mui-content">
 	<div class="banner">
-		<div class="auto-center">13245641<img src="/public/img/mjob/nowpromote.png"></div>
+		<div class="auto-center">{{ data['score'] }}<img src="/public/img/mjob/nowpromote.png"></div>
 	</div>
 	<ul class="mui-table-view">
-		 <li class="mui-table-view-cell">
-			<div class="left">
-				<h5>每日登陆</h5>
-				<p>2018-05-30 10:25</p>
-			</div>
-			<div class="right">+50</div>
-		 </li>
-	     <li class="mui-table-view-cell">
-			<div class="left">
-				<h5>每日登陆</h5>
-				<p>2018-05-30 10:25</p>
-			</div>
-			<div class="right">+50</div>
-		 </li>
-		 <li class="mui-table-view-cell">
-			<div class="left">
-				<h5>每日登陆</h5>
-				<p>2018-05-30 10:25</p>
-			</div>
-			<div class="right">+50</div>
-		 </li>
-		 <li class="mui-table-view-cell">
-			<div class="left">
-				<h5>每日登陆</h5>
-				<p>2018-05-30 10:25</p>
-			</div>
-			<div class="right">+50</div>
-		 </li>
+		{% for key, item in data['userscore'] %}
+			<li class="mui-table-view-cell">
+				<div class="left">
+					<h5>
+						{% if item['type'] == 'reg' %}
+							注册
+						{% elseif item['type'] == 'login' %}
+							每日登录
+						{% endif %}
+					</h5>
+					<p>{{ item['time'] }}</p>
+				</div>
+				<div class="right">+{{ item['score'] }}</div>
+			</li>
+		{% endfor %}
 	</ul>
 </div>
 

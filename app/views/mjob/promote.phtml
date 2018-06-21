@@ -134,11 +134,11 @@
 	</div>
 	<div class="rankbox">
 		<div class="col-xs-6" style="border-right: 2px solid #d7dae7;">
-			<h2>256</h2>
+			<h2>{{ data['score'] }}</h2>
 			<p>我的当前算力</p>
 		</div>
 		<div class="col-xs-6">
-			<h2>651651</h2>
+			<h2>{{ data['scorerank'] }}</h2>
 			<p>我的算力排名</p>
 		</div>
 	</div>
@@ -156,7 +156,24 @@
 		</div>
 		<h4>关注微信公众号</h4>
 		<div class="status rel">
-			<img src="/public/img/mjob/done.png" class="auto-center">
+			{% if data['user']['check_weixin'] == 'Y' %}
+				<img src="/public/img/mjob/done.png" class="auto-center">
+			{% else %}
+				<img src="/public/img/mjob/undone.png" class="auto-center">
+			{% endif %}
+		</div>
+	</a>
+	<a href="followwechat" class="col-xs-4">
+		<div class="imgbox">
+			<img src="/public/img/mjob/face.png" class="auto-center">
+		</div>
+		<h4>实名认证</h4>
+		<div class="status rel">
+			{% if data['user']['check_idcard'] == 'Y' %}
+				<img src="/public/img/mjob/done.png" class="auto-center">
+			{% else %}
+				<img src="/public/img/mjob/undone.png" class="auto-center">
+			{% endif %}
 		</div>
 	</a>
 	<a href="followwechat" class="col-xs-4">
@@ -165,7 +182,11 @@
 		</div>
 		<h4>人脸识别</h4>
 		<div class="status rel">
-			<img src="/public/img/mjob/undone.png" class="auto-center">
+			{% if data['user']['check_face'] == 'Y' %}
+				<img src="/public/img/mjob/done.png" class="auto-center">
+			{% else %}
+				<img src="/public/img/mjob/undone.png" class="auto-center">
+			{% endif %}
 		</div>
 	</a>
 	<a href="followwechat" class="col-xs-4">
@@ -174,7 +195,11 @@
 		</div>
 		<h4>学信网认证</h4>
 		<div class="status rel">
-			<img src="/public/img/mjob/undone.png" class="auto-center">
+			{% if data['user']['check_chsi'] == 'Y' %}
+				<img src="/public/img/mjob/done.png" class="auto-center">
+			{% else %}
+				<img src="/public/img/mjob/undone.png" class="auto-center">
+			{% endif %}
 		</div>
 	</a>
 	<a href="thirdparty" class="col-xs-4">
@@ -183,7 +208,11 @@
 		</div>
 		<h4>58同城</h4>
 		<div class="status rel">
-			<img src="/public/img/mjob/undone2.png" class="auto-center">
+			{% if data['user']['check_58'] == 'Y' %}
+				<img src="/public/img/mjob/done.png" class="auto-center">
+			{% else %}
+				<img src="/public/img/mjob/undone.png" class="auto-center">
+			{% endif %}
 		</div>
 	</a>
 	<div class="cls"></div>

@@ -361,14 +361,43 @@ class MjobController extends ControllerH5
         $this->view->setVar('data', $data);
     }
 
-    public function promoteAction()
-    {
-        
+    public function promoteAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+        $data = array();
+        $data['score'] = $this->userinfo['score'];
+        //
+        $user = \User::find(array('', 'order' => 'score desc, id asc'));
+        foreach($user as $k => $v){
+            if($v->id == $userid){
+                $data['scorerank'] = $k+1;
+            }
+        }
+        $data['user'] = $this->userinfo;
+        //
+        $this->view->setVar('data', $data);
+    }
+
+    public function strategyAction() {
+        $this->checkNoUserGoLogin();
     }
     
-    public function recordAction()
-    {
-        
+    public function recordAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+        $data = array();
+        $data['score'] = $this->userinfo['score'];
+        //
+        $userscore = \UserScore::find(array('user_id ='.$userid, 'order' => 'create_time desc'));
+        $userscore = $userscore->toArray();
+        foreach($userscore as $k => $v){
+            $userscore[$k]['time'] = date('Y-m-d H:i:s', $v['create_time']);
+        }
+        $data['userscore'] = $userscore;
+        //
+        $this->view->setVar('data', $data);
     }
 
     public function followwechatAction()
@@ -397,11 +426,6 @@ class MjobController extends ControllerH5
     }
 
     public function identityAction()
-    {
-        
-    }
-
-    public function strategyAction()
     {
         
     }
