@@ -104,23 +104,23 @@
 
 <div class="mui-content">
 	<div class="banner">
-		<div class="auto-center">21NG23<span>我的邀请码</span></div>
+		<div class="auto-center">{{ data['code_system'] }}<span>我的邀请码</span></div>
 	</div>
 	<div class="container rel">
 		<div class="box">
 			<div class="myfriends">
 				<div class="title">我的战绩</div>
 				<div class="row row-1">
-					<div class="col-xs-6">一级好友数<span>5</span></div>
-					<div class="col-xs-6">二级好友数<span>8</span></div>
+					<div class="col-xs-6">一级好友数<span>{{ data['count1'] }}</span></div>
+					<div class="col-xs-6">二级好友数<span>{{ data['count2'] }}</span></div>
 				</div>
 				<div class="row row-2">
 					<div class="col-xs-6">
-						<h3>0.5</h3>
+						<h3>{{ data['jobcoin'] }}</h3>
 						<p>累计获得JOB币</p>
 					</div>
 					<div class="col-xs-6">
-						<h3>800</h3>
+						<h3>{{ data['candy'] }}</h3>
 						<p>累计获得Candy</p>
 					</div>
 				</div>

@@ -356,6 +356,7 @@ class MjobController extends ControllerH5
         }
         //
         $data['username'] = $this->userinfo['name'];
+        $data['username'] = $data['username'] ? $data['username'] : $this->userinfo['phone'];
 
         //print_r($data);
         $this->view->setVar('data', $data);
@@ -433,6 +434,51 @@ class MjobController extends ControllerH5
         $data = array();
         $data['code_system'] = $this->userinfo['code_system'];
         //
+        $user = \User::find("code_user = '".$data['code_system']."'");
+        $user = $user->toArray();
+        $data['count1'] = count($user);
+        $data['count2'] = 0;
+        foreach($user as $k => $v){
+            $usercount = \User::find("code_user = '".$v['code_system']."'")->count();
+            $data['count2'] += $usercount;
+        }
+        //
+        $data['jobcoin'] = 0;
+        $userjobcoin = \UserJobcoin::find(array('user_id ='.$userid." and (type = 'regfor1' or type = 'regfor2')", 'order' => 'create_time desc'));
+        $userjobcoin = $userjobcoin->toArray();
+        foreach($userjobcoin as $k => $v){
+            $data['jobcoin'] += $v['jobcoin'];
+        }
+
+        $data['candy'] = 0;
+        $usercandy = \UserCandy::find(array('user_id ='.$userid." and (type = 'regfor1' or type = 'regfor2')", 'order' => 'create_time desc'));
+        $usercandy = $usercandy->toArray();
+        foreach($usercandy as $k => $v){
+            $data['candy'] += $v['candy'];
+        }
+
+        //
+        $this->view->setVar('data', $data);
+    }
+
+    public function invitecardAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+        $data = array();
+        $data['code_system'] = $this->userinfo['code_system'];
+        //
+        $user = \User::find(array('', 'order' => 'id asc'));
+        foreach($user as $k => $v){
+            if($v->id == $userid){
+                $data['userrank'] = $k+1;
+            }
+        }
+        //
+        $data['username'] = $this->userinfo['name'];
+        $data['username'] = $data['username'] ? $data['username'] : $this->userinfo['phone'];
+
+        //
         $this->view->setVar('data', $data);
     }
 
@@ -462,11 +508,6 @@ class MjobController extends ControllerH5
     }
 
     public function dataplateAction()
-    {
-        
-    }
-
-    public function invitecardAction()
     {
         
     }
