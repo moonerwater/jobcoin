@@ -313,6 +313,29 @@ class MjobController extends ControllerH5
         }
     }
 
+    public function checkchsiAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+        //
+        $username = $this->request->get('username', 'string');
+        $password = $this->request->get('password', 'string');
+
+        if (!$username) {
+            $this->replyFailure('没有用户名');
+            return '';
+        }
+
+        if (!$password) {
+            $this->replyFailure('没有密码');
+            return '';
+        }
+
+        putenv("PHANTOMJS_EXECUTABLE=/usr/local/bin/phantomjs");//引入phantomjs
+        exec("/usr/local/bin/casperjs /var/www/html/casperjs/chsi.js $username $password $userid", $output);;//此处我使用的都是绝对路径
+        print_r($output);
+
+    }
+
     public function loginAction() {
         $this->checkUserGoMain();
     }
