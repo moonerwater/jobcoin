@@ -798,7 +798,7 @@
 				var len;
 				$('.minesbox').each(function(){
 					len = $(this).find('.mines').length;
-					console.log(len)
+					//console.log(len)
 					if(len == 0) {
 						$('.hasmine').hide();
 						$('.nomine').fadeIn(500);
@@ -808,24 +808,59 @@
 					}
 				});
 			}
+
+			function getjobcoinno(){
+				$.get('/mjob/getjobcoinno',function(data){
+					if(data.reason == "success"){
+						for(var i = 0; i < minenum; i++){
+							var left = (Math.random()*WRange+1)+"rem";
+							var top1 = (Math.random()*HRange+1)+"rem";
+							console.log(data.result[i].jobcoinno,data.result[i].jobcoin)
+							var dom = "<div class='mines' data-mineid='"+data.result[i].jobcoinno+"' style='left:"+left+";top:"+top1+";'>"
+									+		"<div class='mineimg'></div>"
+									+		"<div class='minenum'>"+data.result[i].jobcoin+"</div>"
+									+ "</div>";
+							$('.minesbox').append(dom);
+						}
+						//checkMines();
+					}
+				},'json');
+			}
 			
-			var minenum = 3;
+			var minenum = 6;
 			var HRange = 16-7.98-2.15+0.5;
 			var WRange = parseFloat($('.minesbox').css('width').replace('px','')) / parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px','')) - 6.26;
 			//var k = parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px',''));
-			console.log(HRange,WRange)
+			//console.log(HRange,WRange);
 
-			for(var i = 0; i < minenum; i++){
-				var left = (Math.random()*WRange+1)+"rem";
-				var top1 = (Math.random()*HRange+1)+"rem";
-				console.log(left,top1)
-				var dom = "<div class='mines' data-mineid='"+i+"' style='left:"+left+";top:"+top1+";'>"
-						+		"<div class='mineimg'></div>"
-						+		"<div class='minenum'>0.00035</div>"
-						+ "</div>";
-				$('.minesbox').append(dom);
-				checkMines();
-			}
+
+			$(function(){
+				if($.cookie('regscore') > 0){
+					layer.msg("新用户注册，算力+"+$.cookie('regscore')+"。",{icon: 6,time:3500});
+					$.cookie('regscore', null);
+				} else {
+					$.get('/mjob/checktodaylogin',function(data){
+						if(data.reason == "success" && data.result.login_score != '0') {
+							layer.msg("每日登陆，算力+"+data.result.login_score+"。",{icon: 6,time:3500});
+						}
+					},'json');
+				}
+				getjobcoinno();
+			});
+
+			
+
+			// for(var i = 0; i < minenum; i++){
+			// 	var left = (Math.random()*WRange+1)+"rem";
+			// 	var top1 = (Math.random()*HRange+1)+"rem";
+			// 	//console.log(left,top1)
+			// 	var dom = "<div class='mines' data-mineid='"+i+"' style='left:"+left+";top:"+top1+";'>"
+			// 			+		"<div class='mineimg'></div>"
+			// 			+		"<div class='minenum'>0.00035</div>"
+			// 			+ "</div>";
+			// 	$('.minesbox').append(dom);
+			// 	checkMines();
+			// }
 
 			$('.mines').on('tap',function(){
 				$(this).animate({

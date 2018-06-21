@@ -120,39 +120,123 @@
 			<input type="number" name="phone" placeholder="请输入手机号码" class="col-xs-8">
 		</div>
 		<div class="rows">
-			<input type="number" name="phone" placeholder="请输入验证码" style="position: relative;top:-.4rem;">
+			<input type="number" name="captcha" placeholder="请输入验证码" style="position: relative;top:-.4rem;">
 			<button class="getcaptcha">发送验证码</button>
 			<button class="waiting none"></button>
 		</div>
+		<div class="rows none inviterow">
+			<span class="col-xs-4">邀请码：</span>
+			<input type="text" name="invitecode" placeholder="请输入邀请码" class="col-xs-8">
+		</div>
 	</div>
 
-	<a href="main" class="login">登  岛<span></span></a>
+	<a href="#" class="login">登  岛<span></span></a>
 
 	<h4>开启即表示同意<a href="#">《用户服务协议》</a></h4>
 </div>
 <script type="text/javascript">
 
-	$('.getcaptcha').on('click',function(){
+	var invite;
+	var user_type;
+
+	$(function(){
+		var urlArr = window.location.href.split('?');
+	    var rulesA = urlArr[1];
+	    if(rulesA){
+	    	console.log(rulesA);
+	    	var rulesB = rulesA.split('=');
+	    	var rulesC = rulesB[1];
+	    	invite = rulesC;
+	    }
+	});
+
+	$('.getcaptcha').on('tap',function(){
 		var mobile = $("input[name='phone']").val();
 		if(mobile.length == ''){
-	        //$('input[name="mobile"]').removeClass('success').addClass('error');
-	        //layer.tips('<i class="iconfont icon-close"></i>请输入正确的手机号。',$('input[name="mobile"]') ,{time:3000});
 	        layer.msg('请填写手机号。',{icon: 5});
 	        return false;
 	    }
 		if(mobile.length != 11){
-	        //$('input[name="mobile"]').removeClass('success').addClass('error');
-	        //layer.tips('<i class="iconfont icon-close"></i>请输入正确的手机号。',$('input[name="mobile"]') ,{time:3000});
 	        layer.msg('手机号长度不正确。',{icon: 5});
 	        return false;
 	    }
 	    if(!checkMobile(mobile)){
-	    	//$('input[name="mobile"]').removeClass('success').addClass('error');
-	    	//layer.tips('<i class="iconfont icon-close"></i>请输入正确的手机号。',$('input[name="mobile"]') ,{time:3000});
 	    	layer.msg('请输入正确的手机号。',{icon: 5});
         	return false;
         }
-        mobileMsg();
+
+        $.get('/mjob/getphonecode',{'mobile':mobile},function(data){
+        	console.log(invite)
+			if(data.reason == true){
+				//user_type = data.result.user_type;
+				if(data.result.user_type == "new") {
+					if(invite){
+						$("input[name='invitecode']").val(invite);
+						$('.inviterow').show();
+					} else {
+						$("input[name='invitecode']").val('');
+						$('.inviterow').show();
+					}
+				} else {
+					$("input[name='invitecode']").val('');
+					$('.inviterow').hide();
+				}
+				mobileMsg();
+			} else {
+				layer.msg(data.reason,{icon: 5});
+			}
+		},'json');
+	});
+
+
+	$('.login').on('tap',function(){
+		var mobile = $("input[name='phone']").val();
+		var code = $("input[name='captcha']").val();
+
+		if(mobile.length == ''){
+	        layer.msg('请填写手机号。',{icon: 5});
+	        return false;
+	    }
+		if(mobile.length != 11){
+	        layer.msg('手机号长度不正确。',{icon: 5});
+	        return false;
+	    }
+	    if(!checkMobile(mobile)){
+	    	layer.msg('请输入正确的手机号。',{icon: 5});
+        	return false;
+        }
+        if(code.length == ''){
+	        layer.msg('请填写验证码。',{icon: 5});
+	        return false;
+	    }
+	    if(code.length != 4){
+	        layer.msg('验证码长度不正确。',{icon: 5});
+	        return false;
+	    }
+
+	    $.get('/mjob/checkphonecode',{
+	    	'mobile':mobile ,
+	    	'code':code ,
+	    	'code_user':$("input[name='invitecode']").val()
+	    },function(data){
+	    	if(data.reason == "success"){
+	    		if(data.result.user_type == "new"){
+	    			$.cookie('regscore', data.result.reg_score, { expires: 1 });
+	    			window.location.href = 'main';
+	    		} else {
+	    			window.location.href = 'main';
+	    			//window.location.href = 'main' + "?login_score="+ data.result.login_score;
+	    		}
+	    		// setCookie(mobile,'first','23:59:59',function(){
+	      //           //layer.msg("每日登陆，算力+"+10+"。",{icon: 6,time:3500});
+	      //           alert('cookie过期了');
+	      //       });
+	     		//$.cookie('usertype', 'data.result.user_type', { expires: 7 });
+	    	} else {
+	    		layer.msg(data.reason,{icon: 5});
+	    	}
+	    },'json');
+
 	});
 
 	var times = 0;
