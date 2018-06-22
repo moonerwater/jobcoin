@@ -202,6 +202,51 @@
 				margin-right: 1rem;
 				display: block;
 			}
+			.subjectrow span.goldenup {
+				position: absolute;
+			    display: block;
+			    width: 1rem;
+			    height: 2rem;
+			    left: 2.2rem;
+			    top: 1rem;
+			    background: url(/public/img/mjob/subject1.png) center no-repeat;
+			    background-size: contain;
+			    z-index: 3;
+			    animation: goldenUp linear .5s 1;
+    			-webkit-animation: goldenUp linear .5s 1;
+			}
+			@keyframes goldenUp {
+				0%   {top:0px;}
+				50%  {top:-3rem;}
+				100% {top:1rem;}
+			}
+			@-webkit-keyframes goldenUp {
+				0%   {top:0px;}
+				50%  {top:-3rem;}
+				100% {top:1rem;}
+			}
+			.subjectrow span.showgold {
+				position: absolute;
+			    display: block;
+			    width: 5rem;
+			    height: 1rem;
+			    font-size:1rem;
+			    text-align: center;
+			    color:#e7e7e7;
+			    left: .1rem;
+			    top: -1.5rem;
+			    z-index: 4;
+			    animation: showGold linear 1.2s 1;
+    			-webkit-animation: showGold linear 1.2s 1;
+			}
+			@keyframes showGold {
+				0%   {top:-1.5rem;}
+				100% {top:-5rem;opacity: 0;}
+			}
+			@-webkit-keyframes showGold {
+				0%   {top:-1.5rem;}
+				100% {top:-5rem;opacity: 0;}
+			}
 			.subjectrow .subject .radius {
 				width: 4.17rem;
 				height: 4.17rem;
@@ -451,7 +496,7 @@
 			}
 			#tabbar-with-contact .mui-table-view .mui-media-body {
 				margin-top: 1.2rem;
-    			font-size: 2.28rem;
+    			font-size: 2rem;
 			}
 			#tabbar-with-contact .rules a.mui-navigate-right span {
 				display: inline-block;
@@ -495,6 +540,16 @@
 				position: relative;
 				animation: myfloat 2s infinite;
     			-webkit-animation: myfloat 2s infinite;
+			}
+			@keyframes myfloat {
+				0%   {top:0px;}
+				50%  {top:-.3rem;}
+				100% {top:0px;}
+			}
+			@-webkit-keyframes myfloat {
+				0%   {top:0px;}
+				50%  {top:-.3rem;}
+				100% {top:0px;}
 			}
 			.minesbox .mines .mineimg {
 				width: 6.26rem;
@@ -549,18 +604,126 @@
 			}
 			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
 				color: #374fff !important;
-			}
+			}	
+			@-webkit-keyframes rotate_pacman_half_up {
+			  0% {
+			    -webkit-transform: rotate(270deg);
+			            transform: rotate(270deg); }
 
-			@keyframes myfloat {
-				0%   {top:0px;}
-				50%  {top:-.3rem;}
-				100% {top:0px;}
+			  50% {
+			    -webkit-transform: rotate(360deg);
+			            transform: rotate(360deg); }
+
+			  100% {
+			    -webkit-transform: rotate(270deg);
+			            transform: rotate(270deg); } }
+
+			@keyframes rotate_pacman_half_up {
+			  0% {
+			    -webkit-transform: rotate(270deg);
+			            transform: rotate(270deg); }
+
+			  50% {
+			    -webkit-transform: rotate(360deg);
+			            transform: rotate(360deg); }
+
+			  100% {
+			    -webkit-transform: rotate(270deg);
+			            transform: rotate(270deg); } }
+
+			@-webkit-keyframes rotate_pacman_half_down {
+			  0% {
+			    -webkit-transform: rotate(90deg);
+			            transform: rotate(90deg); }
+
+			  50% {
+			    -webkit-transform: rotate(0deg);
+			            transform: rotate(0deg); }
+
+			  100% {
+			    -webkit-transform: rotate(90deg);
+			            transform: rotate(90deg); } }
+
+			@keyframes rotate_pacman_half_down {
+			  0% {
+			    -webkit-transform: rotate(90deg);
+			            transform: rotate(90deg); }
+
+			  50% {
+			    -webkit-transform: rotate(0deg);
+			            transform: rotate(0deg); }
+
+			  100% {
+			    -webkit-transform: rotate(90deg);
+			            transform: rotate(90deg); } }
+
+			@-webkit-keyframes pacman-balls {
+			  75% {
+			    opacity: 0.7; }
+
+			  100% {
+			    -webkit-transform: translate(-100px, -6.25px);
+			            transform: translate(-100px, -6.25px); } }
+
+			@keyframes pacman-balls {
+			  75% {
+			    opacity: 0.7; }
+
+			  100% {
+			    -webkit-transform: translate(-100px, -6.25px);
+			            transform: translate(-100px, -6.25px); } }
+
+			.pacman {
+			    width: 6rem;
+    			height: 48rem;
 			}
-			@-webkit-keyframes myfloat {
-				0%   {top:0px;}
-				50%  {top:-.3rem;}
-				100% {top:0px;}
-			}
+			  .pacman > div:nth-child(2) {
+			    -webkit-animation: pacman-balls 1s 0s infinite linear;
+			            animation: pacman-balls 1s 0s infinite linear; }
+			  .pacman > div:nth-child(3) {
+			    -webkit-animation: pacman-balls 1s 0.33s infinite linear;
+			            animation: pacman-balls 1s 0.33s infinite linear; }
+			  .pacman > div:nth-child(4) {
+			    -webkit-animation: pacman-balls 1s 0.66s infinite linear;
+			            animation: pacman-balls 1s 0.66s infinite linear; }
+			  .pacman > div:nth-child(5) {
+			    -webkit-animation: pacman-balls 1s 0.99s infinite linear;
+			            animation: pacman-balls 1s 0.99s infinite linear; }
+			  .pacman > div:first-of-type {
+			    width: 0px;
+			    height: 0px;
+			    border-right: 25px solid transparent;
+			    border-top: 25px solid #ffde00;
+			    border-left: 25px solid #ffde00;
+			    border-bottom: 25px solid #ffde00;
+			    border-radius: 25px;
+			    -webkit-animation: rotate_pacman_half_up 0.5s 0s infinite;
+			            animation: rotate_pacman_half_up 0.5s 0s infinite; }
+			  .pacman > div:nth-child(2) {
+			    width: 0px;
+			    height: 0px;
+			    border-right: 25px solid transparent;
+			    border-top: 25px solid #ffde00;
+			    border-left: 25px solid #ffde00;
+			    border-bottom: 25px solid #ffde00;
+			    border-radius: 25px;
+			    -webkit-animation: rotate_pacman_half_down 0.5s 0s infinite;
+			            animation: rotate_pacman_half_down 0.5s 0s infinite;
+			    margin-top: -50px; }
+			  .pacman > div:nth-child(3), .pacman > div:nth-child(4), .pacman > div:nth-child(5), .pacman > div:nth-child(6) {
+			    background-color: #ffde00;
+			    width: 15px;
+			    height: 15px;
+			    border-radius: 100%;
+			    margin: 2px;
+			    width: 10px;
+			    height: 10px;
+			    position: absolute;
+			    -webkit-transform: translate(0, -6.25px);
+			        -ms-transform: translate(0, -6.25px);
+			            transform: translate(0, -6.25px);
+			    top: 25px;
+			    left: 100px; }
 		</style>
 
 		<!-- <header class="mui-bar mui-bar-nav">
@@ -588,7 +751,7 @@
 											<img src="/public/img/mjob/mining.png" class="mining">
 											<p class="pmining">正在挖矿中…</p>
 										</div>
-										<div class="hasmine">
+										<div class="hasmine ">
 											<p class="ptext">72小时内不领取近况将消失</p>
 											<div class="minesbox">
 												<!-- <div class="mines">
@@ -597,8 +760,17 @@
 												</div> -->
 											</div>
 										</div>
+										<div class="loader-inner pacman auto-center">
+									        <div></div>
+									        <div></div>
+									        <div></div>
+									        <div></div>
+									        <div></div>
+								        </div>
 									</div>
 									<div class="subjectrow">
+										<!-- <span class="showgold">+10.00</span> -->
+										<!-- <span class="goldenup"></span> -->
 										<a href="assets" class="subject left">
 											<div class="radius rel">
 												<img src="/public/img/mjob/subject1.png" class="auto-center">
@@ -622,7 +794,7 @@
 									<div class="news">
 										<a href="#">
 											<span>头条</span>
-											金职链每周进展通报（05.14-05.20）
+											金职岛开放注册，开启挖矿狂欢！
 										</a>
 									</div>
 									<div class="miningdata datalist">
@@ -723,13 +895,11 @@
 											<div class="myfriends">
 												<ul class="mui-table-view">
 													<li class="mui-table-view-cell mui-media">
-														<a href="identity" style="padding:0;">
-															<img class="mui-media-object mui-pull-left" src="/public/img/mjob/face.png">
-															<div class="mui-media-body">
-																{{ data['username'] }}
-																<p class="mui-ellipsis">金职岛第{{ data['userrank'] }}位居民</p>
-															</div>
-														</a>
+														<img class="mui-media-object mui-pull-left" src="/public/img/mjob/face.png">
+														<div class="mui-media-body">
+															{{ data['username'] }}
+															<p class="mui-ellipsis">金职岛第{{ data['userrank'] }}位居民</p>
+														</div>
 													</li>
 												</ul>
 											</div>
@@ -745,13 +915,13 @@
 															<span class="ident2"></span>我的资产
 														</a>
 													</li>
-													<li class="mui-table-view-cell">
+													<li class="mui-table-view-cell none">
 														<a href="#" class="mui-navigate-right">
 															<span class="ident3"></span>金职钱包
 														</a>
 													</li>
 													<li class="mui-table-view-cell">
-														<a href="#" class="mui-navigate-right">
+														<a href="identity" class="mui-navigate-right">
 															<span class="ident4"></span>实名信息
 														</a>
 													</li>
@@ -799,43 +969,70 @@
 			var WRange = parseFloat($('.minesbox').css('width').replace('px','')) / parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px','')) - 6.26;
 			//var k = parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px',''));
 			//console.log(HRange,WRange);
+			//console.log(parseFloat($('.minesbox').css('width').replace('px','')),parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px','')))
+			//本地储存金矿
+			var result = {};
 
 			function checkMines(){
 				var len;
 				$('.minesbox').each(function(){
 					len = $(this).find('.mines').length;
 					//console.log(len)
-					if(len == 0) {
-						getjobcoinno();
+					if(result.length != 0){
+						if(len == 0) {
+							showMines();
+							//$('.hasmine').hide();
+							//$('.nomine').fadeIn(500);
+						} 
+						// else {
+						// 	$('.nomine').hide();
+						// 	$('.hasmine').show();
+						// }
 					} else {
-						$('.nomine').hide();
-						$('.hasmine').show();
+						$('.hasmine').hide();
+						$('.nomine').fadeIn(500);
+						//getjobcoinno();
 					}
 				});
 			}
 
+			function showMines(){
+				for(var i = 0; i < minenum; i++){
+					var left = (Math.random()*WRange+1)+"rem";
+					var top1 = (Math.random()*HRange+1)+"rem";
+					var dom = "<div class='mines none' data-id='"+i+"' data-mineid='"+result[i].jobcoinno+"' data-mine='"+result[i].jobcoin+"' style='left:"+left+";top:"+top1+";'>"
+							+    "<div class='animatebox'>"
+							+		"<div class='mineimg'></div>"
+							+		"<div class='minenum'>"+result[i].jobcoin+"</div>"
+							+    "</div>"
+							+ "</div>";
+					$('.minesbox').append(dom);
+					$('.mines').fadeIn(500);
+					checkMines();
+				}
+			}
+
 			function getjobcoinno(){
+				$('.minesbox').empty();
+				$('.nomine').hide();
+				$('.hasmine').hide();
+				$('.pacman').show();
 				$.get('/mjob/getjobcoinno',function(data){
 					if(data.reason == "success"){
+						$('.pacman').hide();
 						if(data.result.length != 0){
-							for(var i = 0; i < minenum; i++){
-								var left = (Math.random()*WRange+1)+"rem";
-								var top1 = (Math.random()*HRange+1)+"rem";
-								console.log(data.result[i].jobcoinno,data.result[i].jobcoin)
-								var dom = "<div class='mines none' data-mineid='"+data.result[i].jobcoinno+"' style='left:"+left+";top:"+top1+";'>"
-										+    "<div class='animatebox'>"
-										+		"<div class='mineimg'></div>"
-										+		"<div class='minenum'>"+data.result[i].jobcoin+"</div>"
-										+    "</div>"
-										+ "</div>";
-								$('.minesbox').append(dom);
-								$('.mines').fadeIn(500);
-								//checkMines();
-							}
+							result = data.result;
+							showMines();
+							$('.nomine').hide();
+							$('.hasmine').fadeIn(500);
 						} else {
 							$('.hasmine').hide();
 							$('.nomine').fadeIn(500);
 						}
+					} else {
+						$('.pacman').hide();
+						$('.hasmine').hide();
+						$('.nomine').fadeIn(500);
 					}
 				},'json');
 			}
@@ -855,24 +1052,47 @@
 			});
 
 			$(document).on('tap','.mines',function(){
-				console.log('aaa')
 				var _this = $(this);
-				var id = _this.attr('data-mineid');
-				$.get('/mjob/editjobcoinno',{'jobcoinno':id},function(data){
+				var id = _this.attr('data-id');
+				var mid = _this.attr('data-mineid');
+				var mine = _this.attr('data-mine');
+
+				$.get('/mjob/editjobcoinno',{'jobcoinno':mid},function(data){
 					if(data.reason == "success"){
-						_this.animate({
-							transform:"scale(0.2,0.2)",
-							left:"-3rem",
-							top:"20rem",
-							opacity:"0"
-						},800,"linear",function(){
-							_this.remove();
-							checkMines();
-						});
+						console.log('done')
 					}
 				},'json');
+
+				_this.animate({
+					transform:"scale(0.2,0.2)",
+					left:"-1rem",
+					top:"16rem",
+					opacity:"0"
+				},800,"linear",function(){
+					result.splice(id,1)
+					console.log(result);
+					_this.remove();
+					checkMines();
+				});
+
+				$('.subjectrow').prepend("<span class='goldenup' id="+mid+"></span>");
+				setTimeout("$('#"+mid+"').remove()",500);
+
+				function domGold(){
+					$('.subjectrow').prepend("<span class='showgold' id='"+mid+id+"'>+"+mine+"</span>");
+				}
+
+				setTimeout(domGold(),1100);
+				setTimeout("$('#"+mid+id+"').remove()",1100);
 				
 			});
+
+			// $('.showpower').on('tap',function(){
+			// 	$('.subjectrow').prepend("<span class='goldenup' id="+mid+"></span>");
+			// 	setTimeout("$('#"+mid+"').remove())",900);
+			// 	setTimeout("$('.subjectrow').prepend('<span class='showgold' id="+mid+id+"></span>'')",1000);
+			// 	setTimeout("$('#"+mid+id+"').remove())",3000);
+			// })
 
 			
 
@@ -911,7 +1131,7 @@
 								callback: function() {
 									var self = this;
 									setTimeout(function() {
-										reload();
+										getjobcoinno();
 										console.log('down')
 										self.endPullDownToRefresh();
 									}, 1000);
@@ -944,12 +1164,12 @@
 				});
 			})(mui);
 
-			function reload(){
-				$('.showpower').text((Math.floor(Math.random()*1001)).toString());
-				$('#Myrank').text((Math.floor(Math.random()*100001)).toString());
-				$('#Todaymining').text((Math.floor(Math.random()*10000001)).toString());
-				$('#Allmining').text((Math.floor(Math.random()*100000001)).toString());
-			}
-			reload();
+			// function reload(){
+			// 	$('.showpower').text((Math.floor(Math.random()*1001)).toString());
+			// 	$('#Myrank').text((Math.floor(Math.random()*100001)).toString());
+			// 	$('#Todaymining').text((Math.floor(Math.random()*10000001)).toString());
+			// 	$('#Allmining').text((Math.floor(Math.random()*100000001)).toString());
+			// }
+			// reload();
 		</script>
 {% endblock %}

@@ -69,6 +69,26 @@
 		background: url(/public/img/mjob/user-5.png) no-repeat center;
     	background-size: contain;
 	}
+	.mui-btn-block {
+	    height: 4.62rem;
+	    border-radius: 4.62rem;
+	    font-size: 1.6rem;
+	    width: 80%;
+	    margin: 0 auto;
+	    border: 1px solid #1de291;
+	    background-color: #1de291;
+	    margin-top: 2rem;
+	}
+	.mui-table-view-cell input {
+		width: 60%;
+		height:100%;
+		border:none;
+		margin:0;
+		padding:0;
+		position: relative;
+		top:.4rem;
+		text-align: right;
+	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -85,16 +105,19 @@
 			 <li class="mui-table-view-cell">
 			 	<span class="user-1 usericon"></span>
 			 	姓名
-			 	<span class="mui-pull-right">*正恩</span>
+			 	<span class="mui-pull-right none">*正恩</span>
+			 	<input type="text" name="name" value="金正恩" placeholder="请输入姓名" class="mui-pull-right">
 			 </li>
 	         <li class="mui-table-view-cell">
 	         	<span class="user-2 usericon"></span>
 			 	身份证号
-			 	<span class="mui-pull-right">44030******6598</span>
+			 	<span class="mui-pull-right none">44030******6598</span>
+			 	<input type="text" name="cardid" value="440301199102088997" placeholder="请输入身份证号码" class="mui-pull-right">
 			 </li>
 		</ul>
-		<h5>验证一下信息享受更高的数据权限</h5>
-		<ul class="mui-table-view verification">
+		<h5><a href="#">验证一下信息享受更高的数据权限</a></h5>
+		<button type="button" id="confirmBtn" class="mui-btn mui-btn-success mui-btn-block">验证身份</button>
+		<ul class="mui-table-view verification none">
 			<li class="mui-table-view-cell">
 				<a class="mui-navigate-right">
 					<span class="user-3 usericon"></span>人脸识别
@@ -113,5 +136,45 @@
 		</ul>
 	</div>
 </div>
+
+<script type="text/javascript">
+	function checkname(val) {
+	    var regx = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/;
+	    if(regx.test(val))
+	    {
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
+
+	function checkcardid(val) {
+	    var regx = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  
+	    if(regx.test(val))
+	    {
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
+
+	$('#confirmBtn').on('tap',function(){
+		var name = $("input[name='name']").val();
+		var cardid = $("input[name='cardid']").val();
+		if(name.length == ''){
+	        layer.msg('请填写姓名。',{icon: 5});
+	        return false;
+	    }
+	    if(!checkname(name)){
+	    	layer.msg('请输入正确的姓名。',{icon: 5});
+        	return false;
+        }
+	    if(!checkcardid(cardid)){
+	    	layer.msg('身份证格式不正确',{icon: 5});
+        	return false;
+        }
+        layer.msg('验证通过',{icon: 1});
+	});
+</script>
 
 {% endblock %}
