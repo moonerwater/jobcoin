@@ -213,4 +213,14 @@ class ControllerBase extends Controller
         return $array;
     }
 
+    protected function fileToBase64($file){
+        $base64_file = '';
+        if(file_exists($file)){
+            $mime_type= mime_content_type($file);
+            $base64_data = base64_encode(file_get_contents($file));
+            $base64_file = 'data:'.$mime_type.';base64,'.$base64_data;
+        }
+        return $base64_file;
+    }
+
 }

@@ -30,6 +30,7 @@ var brower = require('casper').create({
 brower.start();
 var args = brower.cli.args;
 
+
 brower.thenOpen('https://account.chsi.com.cn/passport/login');
 
 
@@ -62,21 +63,28 @@ brower.then(function getcode(){
                 var img22 = $("img.xjxx-img").attr('src');
                 return img22;
             })
-            this.echo(url22);
-            this.captureSelector('/var/www/html/casperjs/chsi/data_'+args[2]+'.png', 'html');
-            var savestr = '{"status":"login success", "data_url":"/var/www/html/casperjs/chsi/data_'+args[2]+'.png"}';
+            if(url22) {
+                this.captureSelector('/var/www/html/casperjs/chsi/data_'+args[2]+'.png', 'html');
+                savestr = '{"status":"login success", "data_url":"/var/www/html/casperjs/chsi/data_'+args[2]+'.png"}';
+                var fs = require('fs');
+                fs.write('/var/www/html/casperjs/chsi/result_'+args[2]+'.txt', savestr, 'w');
+            }
+
+        });
+    }
+    else if(captcha > 0) {
+        this.click('#captcha');
+        brower.wait(4000, function () {
+            this.captureSelector('/var/www/html/casperjs/chsi/code_'+args[2]+'.png', '#stu_reg_vcode_anchor');
+            savestr = '{"status":"need code", "data_url":"/var/www/html/casperjs/chsi/code_'+args[2]+'.png"}';
             var fs = require('fs');
             fs.write('/var/www/html/casperjs/chsi/result_'+args[2]+'.txt', savestr, 'w');
         });
     }
-    if(captcha > 0) {
-        this.click('#captcha');
-        brower.wait(4000, function () {
-            this.captureSelector('/var/www/html/casperjs/chsi/code_'+args[2]+'.png', '#stu_reg_vcode_anchor');
-        });
-    }
+
 
 });
+
 
 
 
