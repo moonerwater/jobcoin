@@ -319,6 +319,7 @@ class MjobController extends ControllerH5
         //
         $username = $this->request->get('username', 'string');
         $password = $this->request->get('password', 'string');
+        $code = $this->request->get('code', 'string');
 
         if (!$username) {
             $this->replyFailure('没有用户名');
@@ -330,14 +331,26 @@ class MjobController extends ControllerH5
             return '';
         }
 
-        //putenv("PHANTOMJS_EXECUTABLE=/usr/local/bin/phantomjs");//引入phantomjs
-        //exec("/usr/local/bin/casperjs /var/www/html/casperjs/chsi.js $username $password $userid");//此处我使用的都是绝对路径
+        if(!$code){
+            putenv("PHANTOMJS_EXECUTABLE=/usr/local/bin/phantomjs");//引入phantomjs
+            exec("/usr/local/bin/casperjs /var/www/html/casperjs/chsi.js $username $password $userid");//此处我使用的都是绝对路径
+        }
 
         $file_path = '/var/www/html/casperjs/chsi/result_'.$userid.'.txt';
         if(file_exists($file_path)){
             $str = file_get_contents($file_path);
             $str = str_replace("\r\n","<br />",$str);
             $str = json_decode($str);
+            //
+            if($code) {
+                $str->code = $code;
+                $strcode = json_encode($str, 320);
+
+                $myfile = fopen($file_path, "w");
+                fwrite($myfile, $strcode);
+                fclose($myfile);
+            }
+            //
             $str->imgbase64 = $this->fileToBase64($str->data_url);
             $this->reply('success', 0, $str);
         }

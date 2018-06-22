@@ -4,8 +4,8 @@ var brower = require('casper').create({
     clientScripts:  [
         '/var/www/html/casperjs/jquery.js'
     ],
-    waitTimeout: 25000,
-    stepTimeout: 25000,
+    waitTimeout: 300000,
+    stepTimeout: 300000,
     verbose: true,
     logLevel: "info",  //debug info  error
     viewportSize: {
@@ -28,7 +28,7 @@ var brower = require('casper').create({
 });
 
 brower.start();
-var args = brower.cli.args;
+args = brower.cli.args;
 
 
 brower.thenOpen('https://account.chsi.com.cn/passport/login');
@@ -56,7 +56,7 @@ brower.then(function getcode(){
         var browserinspect = document.querySelectorAll('#browserinspect').length;
         return browserinspect;
     })
-    //this.echo(captcha);
+    this.echo('captcha'+captcha);
     if(browserinspect > 0) {
         brower.thenOpen('https://my.chsi.com.cn/archive/gdjy/xj/show.action',function(){
             url22 = this.evaluate(function(){
@@ -79,13 +79,71 @@ brower.then(function getcode(){
             savestr = '{"status":"need code", "data_url":"/var/www/html/casperjs/chsi/code_'+args[2]+'.png"}';
             var fs = require('fs');
             fs.write('/var/www/html/casperjs/chsi/result_'+args[2]+'.txt', savestr, 'w');
+            brower.wait(5000, getCodeAjax);
         });
     }
 
 
 });
 
+function getCodeAjax(){
+    var cookiefile = '/var/www/html/casperjs/chsi/result_'+args[2]+'.txt';
+    this.echo(cookiefile);
+    var fs = require('fs');
+    if(fs.exists(cookiefile)){
+        var cookies = JSON.parse(fs.read(cookiefile));
+        if(cookies.code){
+            this.echo(cookies.code);
+            this.echo('get code ajax end');
 
+            brower.then(function clickLogin(){
+                this.fill("form#fm1",{
+                    'username':args[0],
+                    'password':args[1],
+                    'captcha':cookies.code
+                },false);
+
+                this.click('.btn_login');
+            });
+
+            brower.wait(4000, function waitLogin() {
+                this.echo("I've waited for 4 second.");
+            });
+
+            brower.then(function getcode(){
+                browserinspect = this.evaluate(function(){
+                    var browserinspect = document.querySelectorAll('#browserinspect').length;
+                    return browserinspect;
+                })
+                this.echo('browserinspect'+browserinspect);
+                if(browserinspect > 0) {
+                    brower.thenOpen('https://my.chsi.com.cn/archive/gdjy/xj/show.action',function(){
+                        url22 = this.evaluate(function(){
+                            var img22 = $("img.xjxx-img").attr('src');
+                            return img22;
+                        })
+                        if(url22) {
+                            this.captureSelector('/var/www/html/casperjs/chsi/data_'+args[2]+'.png', 'html');
+                            savestr = '{"status":"login success", "data_url":"/var/www/html/casperjs/chsi/data_'+args[2]+'.png"}';
+                            var fs = require('fs');
+                            fs.write('/var/www/html/casperjs/chsi/result_'+args[2]+'.txt', savestr, 'w');
+                        }
+
+                    });
+                }
+                else{
+                    savestr = '{"status":"error", "data_url":""}';
+                    var fs = require('fs');
+                    fs.write('/var/www/html/casperjs/chsi/result_'+args[2]+'.txt', savestr, 'w');
+                }
+            });
+
+            return;
+        }
+    }
+
+    brower.wait(5000, getCodeAjax);
+}
 
 
 brower.run();
