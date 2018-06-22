@@ -535,4 +535,9 @@ class MjobController extends ControllerH5
         
     }
 
+    public function chsiAction()
+    {
+        
+    }
+
 }
