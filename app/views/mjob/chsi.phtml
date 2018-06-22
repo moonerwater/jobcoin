@@ -105,7 +105,17 @@
 	        layer.msg('请填写密码。',{icon: 5});
 	        return false;
 	    }
-        layer.msg('验证通过',{icon: 1});
+
+	    $("input[name='username']").attr('disabled','disabled');
+		$("input[name='password']").attr('disabled','disabled');
+		//$("input[name='captcha']").attr('disable','disable');
+        $.post('http://www.jobchain.us/mjob/checkchsi',{"username":username,"password":password,"code":captcha},function(data){
+        	if(data){
+        		
+        	} else {
+
+        	}
+        },'json')
 	});
 
 </script>
