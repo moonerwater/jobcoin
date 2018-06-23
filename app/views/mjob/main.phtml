@@ -1068,22 +1068,24 @@
 					left:"-1rem",
 					top:"16rem",
 					opacity:"0"
-				},800,"linear",function(){
+				},500,"linear",function(){
 					result.splice(id,1)
 					console.log(result);
 					_this.remove();
 					checkMines();
+
+					function domGold(){
+						$('.subjectrow').prepend("<span class='showgold' id='"+mid+id+"'>+"+mine+"</span>");
+					}
+
+					setTimeout(domGold(),1100);
+					setTimeout("$('#"+mid+id+"').remove()",1100);
 				});
 
 				$('.subjectrow').prepend("<span class='goldenup' id="+mid+"></span>");
 				setTimeout("$('#"+mid+"').remove()",500);
 
-				function domGold(){
-					$('.subjectrow').prepend("<span class='showgold' id='"+mid+id+"'>+"+mine+"</span>");
-				}
-
-				setTimeout(domGold(),1100);
-				setTimeout("$('#"+mid+id+"').remove()",1100);
+				
 				
 			});
 

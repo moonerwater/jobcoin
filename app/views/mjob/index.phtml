@@ -99,7 +99,7 @@
 		</div>
 	</div>
 
-	<a href="#" class="loginbtn">创建 / 登录区块链身份</a>
+	<a href="login?invitecode={{ invitecode }}" class="loginbtn">创建 / 登录区块链身份</a>
 
 	<h2>创建成功即送10 JOB币</h2>
 
@@ -107,22 +107,22 @@
 </div>
 <script type="text/javascript">
 
-	var invite;
+	// var invite;
 
-	$(function(){
-		var urlArr = window.location.href.split('?');
-	    var rulesA = urlArr[1];
-	    if(rulesA){
-	    	console.log(rulesA);
-	    	invite = ('?'+rulesA).replace("#","");
-	    } else {
-	    	invite = '';
-	    }
-	});
+	// $(function(){
+	// 	var urlArr = window.location.href.split('?');
+	//     var rulesA = urlArr[1];
+	//     if(rulesA){
+	//     	console.log(rulesA);
+	//     	invite = ('?'+rulesA).replace("#","");
+	//     } else {
+	//     	invite = '';
+	//     }
+	// });
 
-	$('.loginbtn').on('tap',function(){
-		window.location.href = "login"+invite;
-	})
+	// $('.loginbtn').on('tap',function(){
+	// 	window.location.href = "login"+invite;
+	// })
 
 </script>
 

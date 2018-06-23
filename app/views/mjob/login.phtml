@@ -126,7 +126,7 @@
 		</div>
 		<div class="rows none inviterow">
 			<span class="col-xs-4">邀请码：</span>
-			<input type="text" name="invitecode" placeholder="请输入邀请码" class="col-xs-8">
+			<input type="text" name="invitecode" value="{{ invitecode }}" placeholder="请输入邀请码" class="col-xs-8">
 		</div>
 	</div>
 
@@ -136,19 +136,20 @@
 </div>
 <script type="text/javascript">
 
-	var invite;
 	var user_type;
 
-	$(function(){
-		var urlArr = window.location.href.split('?');
-	    var rulesA = urlArr[1];
-	    if(rulesA){
-	    	console.log(rulesA);
-	    	var rulesB = rulesA.split('=');
-	    	var rulesC = rulesB[1];
-	    	invite = rulesC;
-	    }
-	});
+	//var invite = '{{ invitecode }}';
+
+	// $(function(){
+	// 	var urlArr = window.location.href.split('?');
+	//     var rulesA = urlArr[1];
+	//     if(rulesA){
+	//     	console.log(rulesA);
+	//     	var rulesB = rulesA.split('=');
+	//     	var rulesC = rulesB[1];
+	//     	invite = rulesC;
+	//     }
+	// });
 
 	$('.getcaptcha').on('tap',function(){
 		var mobile = $("input[name='phone']").val();
@@ -165,23 +166,17 @@
         	return false;
         }
 
+        $(this).attr('disabled','disabled');
         $.get('/mjob/getphonecode',{'mobile':mobile},function(data){
-        	console.log(invite)
-			if(data.reason == true){
+			if(data.error_code == '0'){
+				mobileMsg();
 				//user_type = data.result.user_type;
 				if(data.result.user_type == "new") {
-					if(invite){
-						$("input[name='invitecode']").val(invite);
-						$('.inviterow').show();
-					} else {
-						$("input[name='invitecode']").val('');
-						$('.inviterow').show();
-					}
+					$('.inviterow').show();
 				} else {
 					$("input[name='invitecode']").val('');
 					$('.inviterow').hide();
 				}
-				mobileMsg();
 			} else {
 				layer.msg(data.reason,{icon: 5});
 			}
@@ -252,6 +247,7 @@
 	    }else{
 	        times = 0;
 	        $('.waiting').hide()
+	        $('.getcaptcha').removeAttr('disabled');
 	        $('.getcaptcha').show();
 	        // $('.waiting').removeAttr('disable').removeClass('waiting').addClass('getcaptcha');
 	        // $('.getcaptcha').text('发送验证码');

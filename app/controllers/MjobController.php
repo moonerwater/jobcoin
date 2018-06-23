@@ -8,7 +8,8 @@ class MjobController extends ControllerH5
     }
 
     public function indexAction() {
-
+        $invitecode = $this->request->get('invitecode', 'string');
+        $this->view->setVar('invitecode', $invitecode);
     }
 
     public function logoutAction() {
@@ -350,6 +351,8 @@ class MjobController extends ControllerH5
 
     public function loginAction() {
         $this->checkUserGoMain();
+        $invitecode = $this->request->get('invitecode', 'string');
+        $this->view->setVar('invitecode', $invitecode);
     }
 
     public function mainAction() {
