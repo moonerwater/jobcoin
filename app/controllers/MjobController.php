@@ -105,6 +105,7 @@ class MjobController extends ControllerH5
                 $user->create_time = time();
                 $user->last_time = time();
                 $user->save();
+                $newid = $user->id;
 
                 $userscore = new \UserScore();
                 $userscore->user_id = $user->id;
@@ -181,7 +182,7 @@ class MjobController extends ControllerH5
 
             }
             $userLogin = \User::findFirst(array(
-                sprintf(" id = ".$user->id),
+                sprintf(" id = ".$newid),
                 "columns" => "id, name"
             ));
             $this->session->set('userinfo', $userLogin->toArray());
