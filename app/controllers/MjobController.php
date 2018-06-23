@@ -81,6 +81,8 @@ class MjobController extends ControllerH5
             if ($user) {
                 $result = new stdClass();
                 $result->user_type = 'old';
+
+                $userid = $user->id;
             }
             else{
                 if($code_user){
@@ -105,7 +107,7 @@ class MjobController extends ControllerH5
                 $user->create_time = time();
                 $user->last_time = time();
                 $user->save();
-                $newid = $user->id;
+                $userid = $user->id;
 
                 $userscore = new \UserScore();
                 $userscore->user_id = $user->id;
@@ -182,7 +184,7 @@ class MjobController extends ControllerH5
 
             }
             $userLogin = \User::findFirst(array(
-                sprintf(" id = ".$newid),
+                sprintf(" id = ".$userid),
                 "columns" => "id, name"
             ));
             $this->session->set('userinfo', $userLogin->toArray());
