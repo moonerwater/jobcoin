@@ -313,13 +313,16 @@ class MjobController extends ControllerH5
         }
     }
 
-    public function checkchsiAction() {
-        $this->checkNoUserGoLogin();
-        $userid = $this->userinfo['id'];
+    public function addchsiuserAction() {
+        $userid = $this->request->get('userid');
         //
         $username = $this->request->get('username', 'string');
         $password = $this->request->get('password', 'string');
-        $code = $this->request->get('code', 'string');
+
+        if (!$userid) {
+            $this->replyFailure('没有用户id');
+            return '';
+        }
 
         if (!$username) {
             $this->replyFailure('没有用户名');
@@ -330,11 +333,52 @@ class MjobController extends ControllerH5
             $this->replyFailure('没有密码');
             return '';
         }
+        putenv("PHANTOMJS_EXECUTABLE=/usr/local/bin/phantomjs");//引入phantomjs
+        exec("/usr/local/bin/casperjs /var/www/html/casperjs/chsi.js $username $password $userid");//此处我使用的都是绝对路径
 
-        if(!$code){
-            putenv("PHANTOMJS_EXECUTABLE=/usr/local/bin/phantomjs");//引入phantomjs
-            exec("/usr/local/bin/casperjs /var/www/html/casperjs/chsi.js $username $password $userid");//此处我使用的都是绝对路径
+        $result = new stdClass();
+        $result->userid = $userid;
+
+        $this->reply('success', 0, $result);
+
+    }
+
+    public function addchsicodeAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+        //
+        $code = $this->request->get('code', 'string');
+        if (!$code) {
+            $this->replyFailure('没有验证码');
+            return '';
         }
+        $file_path = '/var/www/html/casperjs/chsi/result_'.$userid.'.txt';
+        if(file_exists($file_path)){
+            $str = file_get_contents($file_path);
+            $str = str_replace("\r\n","<br />",$str);
+            $str = json_decode($str);
+            $str->code = $code;
+            $strcode = json_encode($str, 320);
+
+            $myfile = fopen($file_path, "w");
+            fwrite($myfile, $strcode);
+            fclose($myfile);
+
+            $result = new stdClass();
+            $result->code = $code;
+
+            $this->reply('success', 0, $result);
+        }
+        else{
+            $this->replyFailure('error');
+            return '';
+        }
+    }
+
+    public function getchsiresultAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+        //
 
         $file_path = '/var/www/html/casperjs/chsi/result_'.$userid.'.txt';
         if(file_exists($file_path)){
@@ -342,16 +386,10 @@ class MjobController extends ControllerH5
             $str = str_replace("\r\n","<br />",$str);
             $str = json_decode($str);
             //
-            if($code) {
-                $str->code = $code;
-                $strcode = json_encode($str, 320);
-
-                $myfile = fopen($file_path, "w");
-                fwrite($myfile, $strcode);
-                fclose($myfile);
+            if($str->data_url) {
+                $str->imgbase64 = $this->fileToBase64($str->data_url);
             }
             //
-            $str->imgbase64 = $this->fileToBase64($str->data_url);
             $this->reply('success', 0, $str);
         }
         else{

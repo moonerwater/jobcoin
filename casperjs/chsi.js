@@ -4,8 +4,8 @@ var brower = require('casper').create({
     clientScripts:  [
         '/var/www/html/casperjs/jquery.js'
     ],
-    waitTimeout: 300000,
-    stepTimeout: 300000,
+    waitTimeout: 10000,
+    stepTimeout: 10000,
     verbose: true,
     logLevel: "info",  //debug info  error
     viewportSize: {
@@ -29,6 +29,7 @@ var brower = require('casper').create({
 
 brower.start();
 args = brower.cli.args;
+use_time  = 0;
 
 
 brower.thenOpen('https://account.chsi.com.cn/passport/login');
@@ -141,7 +142,14 @@ function getCodeAjax(){
             return;
         }
     }
-
+    use_time += 5;
+    if(use_time > 60){
+        savestr = '{"status":"error", "data_url":""}';
+        var fs = require('fs');
+        fs.write('/var/www/html/casperjs/chsi/result_'+args[2]+'.txt', savestr, 'w');
+        return;
+    }
+    this.echo(use_time);
     brower.wait(5000, getCodeAjax);
 }
 

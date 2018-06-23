@@ -1,1 +1,0 @@
-{"status":"need code", "data_url":"/var/www/html/casperjs/chsi/code_18.png","code":"132456"}
