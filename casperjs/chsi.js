@@ -143,7 +143,7 @@ function getCodeAjax(){
         }
     }
     use_time += 5;
-    if(use_time > 60){
+    if(use_time > 180){
         savestr = '{"status":"error", "data_url":""}';
         var fs = require('fs');
         fs.write('/var/www/html/casperjs/chsi/result_'+args[2]+'.txt', savestr, 'w');
