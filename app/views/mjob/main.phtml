@@ -980,6 +980,8 @@
 					//console.log(len)
 					if(result.length != 0){
 						if(len == 0) {
+							// $('.hasmine').hide();
+							// $('.nomine').fadeIn(500);
 							showMines();
 							//$('.hasmine').hide();
 							//$('.nomine').fadeIn(500);
@@ -1022,6 +1024,7 @@
 						$('.pacman').hide();
 						if(data.result.length != 0){
 							result = data.result;
+							minenum = result.length >= minenum ? minenum : result.length;
 							showMines();
 							$('.nomine').hide();
 							$('.hasmine').fadeIn(500);
@@ -1133,6 +1136,7 @@
 								callback: function() {
 									var self = this;
 									setTimeout(function() {
+										minenum = 6 ;
 										getjobcoinno();
 										console.log('down')
 										self.endPullDownToRefresh();
