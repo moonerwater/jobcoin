@@ -608,6 +608,15 @@ class MjobController extends ControllerH5
         $this->view->setVar('data', $data);
     }
 
+    public function chsiAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+        if($this->userinfo['check_chsi'] == 'Y'){
+            $this->response->redirect('mjob/index');
+        }
+    }
+
     public function followwechatAction()
     {
         
@@ -634,11 +643,6 @@ class MjobController extends ControllerH5
     }
 
     public function dataplateAction()
-    {
-        
-    }
-
-    public function chsiAction()
     {
         
     }
