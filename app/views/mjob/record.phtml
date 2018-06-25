@@ -70,6 +70,8 @@
 							注册
 						{% elseif item['type'] == 'login' %}
 							每日登录
+						{% elseif item['type'] == 'chsi' %}
+							学信网授权
 						{% endif %}
 					</h5>
 					<p>{{ item['time'] }}</p>

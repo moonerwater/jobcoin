@@ -395,6 +395,40 @@ class MjobController extends ControllerH5
             }
             //
             $this->reply('success', 0, $str);
+
+            if($str->status == 'login success'){
+                $str->status = 'login success ed';
+                $img_base64 = $str->imgbase64;
+                unset($str->imgbase64);
+                $strcode = json_encode($str, 320);
+
+                $myfile = fopen($file_path, "w");
+                fwrite($myfile, $strcode);
+                fclose($myfile);
+
+                //
+                $user = \User::findFirstById($userid);
+                $user->check_chsi = 'Y';
+                $user->score += 40;
+                $user->last_time = time();
+                $user->save();
+
+                $userscore = new \UserScore();
+                $userscore->user_id = $user->id;
+                $userscore->type = 'chsi';
+                $userscore->score = 40;
+                $userscore->create_time = time();
+                $userscore->last_time = time();
+                $userscore->save();
+
+                $userdatachsi = new \UserDataChsi();
+                $userdatachsi->user_id = $user->id;
+                $userdatachsi->img_base64 = $img_base64;
+                $userdatachsi->create_time = time();
+                $userdatachsi->last_time = time();
+                $userdatachsi->save();
+
+            }
         }
         else{
             $this->replyFailure('error');

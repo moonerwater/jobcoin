@@ -1,1 +1,1 @@
-{"status":"error", "data_url":""}
+{"status":"login success ed","data_url":"/var/www/html/casperjs/chsi/data_25.png"}
