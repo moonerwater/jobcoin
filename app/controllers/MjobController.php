@@ -274,7 +274,7 @@ class MjobController extends ControllerH5
             }
         }
         //
-        $userscorelist = \UserScoreList::find(array( "user_id = :user_id: and is_get = 'N' ", 'bind'=>array('user_id'=>$userid), 'columns'=>'jobcoinno, jobcoin'));
+        $userscorelist = \UserScoreList::find(array( "user_id = :user_id: and is_get = 'N' and create_time >= ".strtotime('-3 days'), 'bind'=>array('user_id'=>$userid), 'columns'=>'jobcoinno, jobcoin'));
         $result = $userscorelist->toArray();
         $this->reply('success', 0, $result);
     }
