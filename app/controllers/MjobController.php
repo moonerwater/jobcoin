@@ -636,14 +636,38 @@ class MjobController extends ControllerH5
             return '';
         }
 
-        $idcard = new \Idcard();
-        $result = $idcard->sendIdcard($imgbase64);
-        if($result['error_code'] == 0 && $result['result']['realname'] && $result['result']['idcard']){
+        $url = 'https://aip.baidubce.com/oauth/2.0/token';
+        $post_data['grant_type']       = 'client_credentials';
+        $post_data['client_id']      = 'iokoqaKX1nGWi7VSstR3RSMu';
+        $post_data['client_secret'] = '3KckyUS1yVZrVUlQFx8DUchuDk31QnOI';
+        $o = "";
+        foreach ( $post_data as $k => $v )
+        {
+            $o.= "$k=" . urlencode( $v ). "&" ;
+        }
+        $post_data = substr($o,0,-1);
+
+        $res = $this->request_post($url, $post_data);
+        $result = json_decode($res,true);
+
+        $token = $result['access_token'];
+        $url = 'https://aip.baidubce.com/rest/2.0/ocr/v1/idcard?access_token=' . $token;
+        $img = $imgbase64;
+        $bodys = array(
+            "detect_direction" => true,
+            "id_card_side" => 'front',
+            "detect_risk" => true,
+            "image" => $img
+        );
+        $res = $this->request_post($url, $bodys);
+        $result = json_decode($res,true);
+
+        if($result['error_code'] == 0 && $result['words_result']['姓名']['words'] && $result['words_result']['公民身份号码']['words']){
             //
             $user = \User::findFirstById($userid);
             $user->check_idcard = 'Y';
-            $user->name = $result['result']['realname'];
-            $user->idcard = $result['result']['idcard'];
+            $user->name = $result['words_result']['姓名']['words'];
+            $user->idcard = $result['words_result']['公民身份号码']['words'];
             $user->score += 30;
             $user->last_time = time();
             $user->save();
@@ -658,7 +682,7 @@ class MjobController extends ControllerH5
 
             $userdataidcard = new \UserDataIdcard();
             $userdataidcard->user_id = $user->id;
-            $userdataidcard->attr = json_encode($result['result'], 320);
+            $userdataidcard->attr = json_encode($result['words_result'], 320);
             $userdataidcard->create_time = time();
             $userdataidcard->last_time = time();
             $userdataidcard->save();
@@ -667,7 +691,7 @@ class MjobController extends ControllerH5
 
         }
         else{
-            $this->replyFailure($result['reason']);
+            $this->replyFailure($result['error_msg']);
         }
 
     }
@@ -683,25 +707,6 @@ class MjobController extends ControllerH5
             return '';
         }
 
-        function request_post($url = '', $param = '') {
-            if (empty($url) || empty($param)) {
-                return false;
-            }
-
-            $postUrl = $url;
-            $curlPost = $param;
-            $curl = curl_init();//初始化curl
-            curl_setopt($curl, CURLOPT_URL,$postUrl);//抓取指定网页
-            curl_setopt($curl, CURLOPT_HEADER, 0);//设置header
-            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
-            curl_setopt($curl, CURLOPT_POST, 1);//post提交方式
-            curl_setopt($curl, CURLOPT_POSTFIELDS, $curlPost);
-            $data = curl_exec($curl);//运行curl
-            curl_close($curl);
-
-            return $data;
-        }
-
         $url = 'https://aip.baidubce.com/oauth/2.0/token';
         $post_data['grant_type']       = 'client_credentials';
         $post_data['client_id']      = 'Dru3IW8xggMHfhNiDwwQCELn';
@@ -713,7 +718,7 @@ class MjobController extends ControllerH5
         }
         $post_data = substr($o,0,-1);
 
-        $res = request_post($url, $post_data);
+        $res = $this->request_post($url, $post_data);
         $result = json_decode($res,true);
 
         $token = $result['access_token'];
@@ -723,7 +728,7 @@ class MjobController extends ControllerH5
             'image_type' => "BASE64",
             'image' => $img
         );
-        $res = request_post($url, $bodys);
+        $res = $this->request_post($url, $bodys);
         $result = json_decode($res,true);
 
         if($result['error_code'] == 0 && $result['result']){
