@@ -115,6 +115,22 @@
         -ms-filter: 'alpha(opacity=0)';
         font-size: 200px;
     }
+    h4 {
+		color: #a7a5a5;
+	    text-align: center;
+	    font-size: 1.4rem;
+	    margin-top: 3rem;
+    }
+    h4 span {
+    	display: inline-block;
+    	width: 1.4rem;
+	    height: 1.4rem;
+	    margin-left: 1rem;
+	    position: relative;
+	    top: .2rem;
+    	background: url('/public/img/mjob/ok.png') no-repeat center;
+    	background-size: contain;
+    }
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -124,6 +140,7 @@
 
 <div class="mui-content">
 	<div class="container">
+		{% if userinfo['check_idcard'] != 'Y' %}
 		<div class="imgbox rel">
 			<img src="/public/img/mjob/face.png" class="auto-center" id="showImage">
 		</div>
@@ -135,8 +152,24 @@
 		</div>
 		
 		<h5>*请点击上方按钮，上传清晰的身份证正面图片。</h5>
+		<h5>*上传的图片上限大小为4Mb。</h5>
 		<h5>*上传完成之后，无需填写姓名与身份证，可直接点击开始验证。</h5>
+		{% endif %}
 		<ul class="mui-table-view user">
+			 {% if userinfo['check_idcard'] == 'Y' %}
+			 <li class="mui-table-view-cell">
+			 	<span class="user-1 usericon"></span>
+			 	姓名
+			 	<span class="mui-pull-right ">{{ userinfo['name'] }}</span>
+			 	<!-- <input type="text" name="name" value="金正恩" placeholder="请输入姓名" class="mui-pull-right none"> -->
+			 </li>
+	         <li class="mui-table-view-cell">
+	         	<span class="user-2 usericon"></span>
+			 	身份证号
+			 	<span class="mui-pull-right ">{{ userinfo['idcard'] }}</span>
+			 	<!-- <input type="text" name="cardid" value="440301199102088997" placeholder="请输入身份证号码" class="mui-pull-right none"> -->
+			 </li>
+			 {% else %}
 			 <li class="mui-table-view-cell">
 			 	<span class="user-1 usericon"></span>
 			 	姓名
@@ -149,9 +182,14 @@
 			 	<span class="mui-pull-right ">无</span>
 			 	<!-- <input type="text" name="cardid" value="440301199102088997" placeholder="请输入身份证号码" class="mui-pull-right none"> -->
 			 </li>
+			 {% endif %}
 		</ul>
 		<!-- <h5><a href="#">验证一下信息享受更高的数据权限</a></h5> -->
+		{% if userinfo['check_idcard'] != 'Y' %}
 		<button type="button" id="confirmBtn" class="mui-btn mui-btn-success mui-btn-block">开始验证</button>
+		{% else %}
+		<h4>验证通过<span></span></h4>
+		{% endif %}
 		<ul class="mui-table-view verification none">
 			<li class="mui-table-view-cell">
 				<a class="mui-navigate-right">
@@ -173,57 +211,50 @@
 </div>
 
 <script type="text/javascript">
-	// function checkname(val) {
-	//     var regx = /^[\u4E00-\u9FA5\uf900-\ufa2d·s]{2,20}$/;
-	//     if(regx.test(val))
-	//     {
-	//         return true;
-	//     } else {
-	//         return false;
-	//     }
-	// }
-
-	// function checkcardid(val) {
-	//     var regx = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;  
-	//     if(regx.test(val))
-	//     {
-	//         return true;
-	//     } else {
-	//         return false;
-	//     }
-	// }
 
 	var base;
+	var indexload;
 
 	function imgChange(e) {
-	    //console.info(e.target.files[0]);//图片文件
-	    //var dom = $("#file");
-	    //console.info(dom.value);//这个是文件的路径 C:\fakepath\icon (5).png
-	    //console.log(e.target.value);//这个也是文件的路径和上面的dom.value是一样的
 	    var reader = new FileReader();
 	    reader.onload = (function (file) {
 	        return function (e) {
+	            //console.log(e.total)
+	        	if(e.total>4*1024*1024){
+			        //alert('上传的图片的大于4M,请重新选择');
+			        layer.msg('上传的图片的大于4M,请重新选择。',{icon: 5});
+			        return false;
+		        } else {
 	            //console.log(this.result); //这个就是base64的数据了
-	            $("#showImage")[0].src=this.result;
-	            base = this.result;
-	            console.log(base);
-
-	            // $.post("http://api.youtu.qq.com/youtu/api/detectface",{
-	            // 	"app_id":appid,
-	            // 	"image":base,
-	            // 	"mode":mode
-	            // },function(data){
-	            // 	console.log(data);
-	            // },'json');
-
+		            $("#showImage")[0].src=this.result;
+		            var arr = this.result.split(',');
+		            base = arr[1];
+		            console.log(base);
+	            }
 	        };
 	    })(e.target.files[0]);
 	    reader.readAsDataURL(e.target.files[0]);
-	    //console.log(base);
 	}
 	
 	$('#confirmBtn').on('tap',function(){
-		console.log(base);
+		if(!base){
+			layer.msg('您尚未上传照片。',{icon: 5});
+			return false;
+		} else {
+			indexload = layer.load(2, {
+			  shade: [0.4,'#000'] //0.1透明度的白色背景
+			});
+			$.post('/mjob/checkidcardimg',{'imgbase64':base},function(data){
+				if(data.error_code == '0'){
+					layer.close(indexload);
+					layer.msg('验证成功。',{icon: 1});
+					setTimeout("window.location.reload()",2000);
+				} else {
+					layer.close(indexload);
+					layer.msg("识别失败，请上传清晰的身份证正面图片。",{icon: 5});
+				}
+			},'json');
+		}
 	});
 </script>
 
