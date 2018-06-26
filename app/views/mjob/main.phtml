@@ -905,7 +905,7 @@
 											</div>
 											<div class="rules">
 												<ul class="mui-table-view">
-													<li class="mui-table-view-cell">
+													<li class="mui-table-view-cell none">
 														<a href="dataplate" class="mui-navigate-right">
 															<span class="ident1"></span>我的数据
 														</a>
@@ -975,14 +975,22 @@
 
 			function checkMines(){
 				var len;
+				
 				$('.minesbox').each(function(){
 					len = $(this).find('.mines').length;
 					//console.log(len)
 					if(result.length != 0){
 						if(len == 0) {
+							result.splice(0,6)
+							minenum = result.length >= minenum ? minenum : result.length;
 							// $('.hasmine').hide();
 							// $('.nomine').fadeIn(500);
-							showMines();
+							if(minenum > 0){
+								showMines();
+							} else {
+								$('.hasmine').hide();
+								$('.nomine').fadeIn(500);
+							}
 							//$('.hasmine').hide();
 							//$('.nomine').fadeIn(500);
 						} 
@@ -1002,7 +1010,8 @@
 				for(var i = 0; i < minenum; i++){
 					var left = (Math.random()*WRange+1)+"rem";
 					var top1 = (Math.random()*HRange+1)+"rem";
-					var dom = "<div class='mines none' data-id='"+i+"' data-mineid='"+result[i].jobcoinno+"' data-mine='"+result[i].jobcoin+"' style='left:"+left+";top:"+top1+";'>"
+					//console.log(i,result[i]);
+					var dom = "<div class='mines datacoin' data-id='"+i+"' data-mineid='"+result[i].jobcoinno+"' data-mine='"+result[i].jobcoin+"' style='left:"+left+";top:"+top1+";'>"
 							+    "<div class='animatebox'>"
 							+		"<div class='mineimg'></div>"
 							+		"<div class='minenum'>"+result[i].jobcoin+"</div>"
@@ -1025,6 +1034,7 @@
 						if(data.result.length != 0){
 							result = data.result;
 							minenum = result.length >= minenum ? minenum : result.length;
+							//console.log(minenum);
 							showMines();
 							$('.nomine').hide();
 							$('.hasmine').fadeIn(500);
@@ -1054,26 +1064,31 @@
 				getjobcoinno();
 			});
 
-			$(document).on('tap','.mines',function(){
+			$('.minesbox').on('tap','.datacoin',function(){
 				var _this = $(this);
+				_this.removeClass('datacoin');
 				var id = _this.attr('data-id');
 				var mid = _this.attr('data-mineid');
 				var mine = _this.attr('data-mine');
+				//console.log(_this,$("[data-mineid='"+mid+"']"));
+				//$('.minesbox').off('tap',$("[data-mineid='"+mid+"']"));
+				//$("[data-mineid='"+mid+"']").off('tap');
+				//$('.minesbox').off('tap',_this);
+
+				result.splice(id,1,'');
+				console.log(result);
 
 				$.get('/mjob/editjobcoinno',{'jobcoinno':mid},function(data){
 					if(data.reason == "success"){
-						console.log('done')
+						//console.log('done')
 					}
 				},'json');
 
 				_this.animate({
-					transform:"scale(0.2,0.2)",
 					left:"-1rem",
 					top:"16rem",
 					opacity:"0"
 				},500,"linear",function(){
-					result.splice(id,1)
-					console.log(result);
 					_this.remove();
 					checkMines();
 
@@ -1088,8 +1103,6 @@
 				$('.subjectrow').prepend("<span class='goldenup' id="+mid+"></span>");
 				setTimeout("$('#"+mid+"').remove()",500);
 
-				
-				
 			});
 
 			// $('.showpower').on('tap',function(){
@@ -1138,7 +1151,7 @@
 									setTimeout(function() {
 										minenum = 6 ;
 										getjobcoinno();
-										console.log('down')
+										//console.log('down')
 										self.endPullDownToRefresh();
 									}, 1000);
 								}

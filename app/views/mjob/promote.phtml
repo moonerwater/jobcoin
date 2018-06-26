@@ -117,7 +117,9 @@
 		width: 100%;
 		height: 1.58rem;
 	}
-
+	.none {
+		display: none !important;
+	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -145,25 +147,16 @@
 	<div class="uppromote">
 		<h3>提升挖矿算力,加速获取JOB币</h3>
 		<div>算力越大，挖到的JOB币越多</div>
-		<p>授权以下平台的账户信息，可快速提升算力，并同时获得JOB奖励。金职链致力于用区块链帮助个人用户安全管理和支配自己的职业数据，加密存储不缓存，去中心化管理，真正实现职业数据由自己来安全管理，让自己成为数据的主人。<a href="#">查看更多></a></p>
+		<p>授权以下平台的账户信息，可快速提升算力，并同时获得JOB奖励。金职链致力于用区块链帮助个人用户安全管理和支配自己的职业数据，加密存储不缓存，去中心化管理，真正实现职业数据由自己来安全管理，让自己成为数据的主人。<a href="strategy">查看更多></a></p>
 	</div>
 </div>
 
 <div class="authentications">
-	<a href="followwechat" class="col-xs-4">
-		<div class="imgbox">
-			<img src="/public/img/mjob/wechat.png" class="auto-center">
-		</div>
-		<h4>关注微信公众号</h4>
-		<div class="status rel">
-			{% if data['user']['check_weixin'] == 'Y' %}
-				<img src="/public/img/mjob/done.png" class="auto-center">
-			{% else %}
-				<img src="/public/img/mjob/undone.png" class="auto-center">
-			{% endif %}
-		</div>
-	</a>
-	<a href="followwechat" class="col-xs-4">
+	{% if data['user']['check_idcard'] == 'Y' %}
+	<a href="javascript:void(0);" class="col-xs-4">
+	{% else %}
+	<a href="identity" class="col-xs-4">
+	{% endif %}
 		<div class="imgbox">
 			<img src="/public/img/mjob/face.png" class="auto-center">
 		</div>
@@ -172,11 +165,15 @@
 			{% if data['user']['check_idcard'] == 'Y' %}
 				<img src="/public/img/mjob/done.png" class="auto-center">
 			{% else %}
-				<img src="/public/img/mjob/undone.png" class="auto-center">
+				<img src="/public/img/mjob/undone30.png" class="auto-center">
 			{% endif %}
 		</div>
 	</a>
-	<a href="followwechat" class="col-xs-4">
+	{% if data['user']['check_face'] == 'Y' %}
+	<a href="javascript:void(0);" class="col-xs-4">
+	{% else %}
+	<a href="faceverify" class="col-xs-4">
+	{% endif %}
 		<div class="imgbox">
 			<img src="/public/img/mjob/face.png" class="auto-center">
 		</div>
@@ -185,11 +182,15 @@
 			{% if data['user']['check_face'] == 'Y' %}
 				<img src="/public/img/mjob/done.png" class="auto-center">
 			{% else %}
-				<img src="/public/img/mjob/undone.png" class="auto-center">
+				<img src="/public/img/mjob/undone50.png" class="auto-center">
 			{% endif %}
 		</div>
 	</a>
-	<a href="followwechat" class="col-xs-4">
+	{% if data['user']['check_chsi'] == 'Y' %}
+	<a href="javascript:void(0);" class="col-xs-4">
+	{% else %}
+	<a href="chsi" class="col-xs-4">
+	{% endif %}
 		<div class="imgbox">
 			<img src="/public/img/mjob/xuexin.png" class="auto-center">
 		</div>
@@ -198,17 +199,30 @@
 			{% if data['user']['check_chsi'] == 'Y' %}
 				<img src="/public/img/mjob/done.png" class="auto-center">
 			{% else %}
-				<img src="/public/img/mjob/undone.png" class="auto-center">
+				<img src="/public/img/mjob/undone40.png" class="auto-center">
 			{% endif %}
 		</div>
 	</a>
-	<a href="thirdparty" class="col-xs-4">
+	<a href="thirdparty" class="col-xs-4 none">
 		<div class="imgbox">
 			<img src="/public/img/mjob/58.png" class="auto-center">
 		</div>
 		<h4>58同城</h4>
 		<div class="status rel">
 			{% if data['user']['check_58'] == 'Y' %}
+				<img src="/public/img/mjob/done.png" class="auto-center">
+			{% else %}
+				<img src="/public/img/mjob/undone.png" class="auto-center">
+			{% endif %}
+		</div>
+	</a>
+	<a href="followwechat" class="col-xs-4 none">
+		<div class="imgbox">
+			<img src="/public/img/mjob/wechat.png" class="auto-center">
+		</div>
+		<h4>关注微信公众号</h4>
+		<div class="status rel">
+			{% if data['user']['check_weixin'] == 'Y' %}
 				<img src="/public/img/mjob/done.png" class="auto-center">
 			{% else %}
 				<img src="/public/img/mjob/undone.png" class="auto-center">

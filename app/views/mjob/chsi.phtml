@@ -39,8 +39,13 @@
     img.captchabox {
     	display:block;
     	margin:0 auto;
-    	width: 6.45rem;
-    	height: 3.92rem;
+    	/*width: 6.45rem;
+    	height: 3.92rem;*/
+    	
+    	height:80px;
+    	/*position: absolute;
+    	right:0;
+    	top:-1rem;*/
     }
 </style>
 
@@ -55,17 +60,19 @@
 	</div>
 	<div class="inputbox">
 		<div class="mui-input-row">
-			<input type="text" name="username" class="mui-input-clear" placeholder="手机号/账户名称">
+			<input type="text" name="username" class="mui-input-clear" placeholder="手机号/身份证号/邮箱">
 		</div>
 		<div class="mui-input-row mui-password">
-			<input type="password" name="password" class="mui-input-password" placeholder="请输入密码">
+			<input type="password" name="password" class="mui-input-password" placeholder="密码">
 		</div>
-		<div class="mui-input-row none captcharow">
+		<div class="mui-input-row none captcharow rel">
 			<input type="text" name="captcha" class="mui-input-clear" placeholder="请输入下方验证码">
+			<!-- <img class="captchabox" src="/public/img/mjob/login.png"> -->
 		</div>
-		<img class="captchabox" src="">
+		<!-- <img class="captchabox" src="/public/img/mjob/login.png"> -->
 	</div>
-	<button type="button" id='confirmBtn' class="mui-btn mui-btn-success mui-btn-block">登  陆</button>
+	<button type="button" id='Login' class="mui-btn mui-btn-success mui-btn-block loginbtn">验  证</button>
+	<button type="button" id='Catpcha' class="mui-btn mui-btn-success mui-btn-block loginbtn none" disabled="disabled">验  证</button>
 </div>
 
 
@@ -104,14 +111,83 @@
 	});
 
 	var userid = {{ userinfo['id'] }};
-	console.log(userid)
+	var indexload;
 
-	$('#confirmBtn').on('tap',function(){
+	$(function(){
+		var cookie = $.cookie('waiting');
+		if(cookie){
+			$("input[name='username']").attr('disabled','disabled');
+			$("input[name='password']").attr('disabled','disabled');
+			$('.loginbtn').attr('disabled','disabled');
+			layer.msg('验证时间间隔为3分钟，请稍后再试。',{icon: 5});
+			setTimeout("window.location.href = 'promote'",3000);
+		}
+	});
+	
+	function getchsiresult(){
+		$.get('/mjob/getchsiresult',function(data){
+			if(data.result.status == "login success") {
+				layer.close(indexload);
+				layer.msg('验证成功。',{icon: 1});
+				setTimeout("window.location.href = 'main'",1000);
+			}
+			if(data.result.status == "error") {
+				layer.close(indexload);
+				layer.msg('验证失败，请3分钟后再试。',{icon: 5});
+				$('.loginbtn').attr('disabled','disabled');
+				// var expiresDate= new Date();
+				// expiresDate.setTime(expiresDate.getTime() + (60*2*1000));
+				// $.cookie('waiting', "2min", { expires: expiresDate });
+				setTimeout("window.location.href = 'promote'",2000);
+			}
+			if(data.result.status == "need code") {
+				layer.close(indexload);
+				var src = data.result.imgbase64;
+				$('.captcharow').show();
+				$('.captcharow').after("<img class='captchabox' src='"+src+"'>");
+				$('#Login').hide().attr('disabled','disabled');
+				$('#Catpcha').show().removeAttr('disabled');
+				return false;
+			}
+		},'json');
+		// console.log('222')
+		// layer.close(indexload);
+		// var src = "/public/img/mjob/login.png";
+		// $('.captcharow').show();
+		// $('.captcharow').after("<img class='captchabox' src='"+src+"'>");
+		// $('#Login').hide().attr('disabled','disabled');
+		// $('#Catpcha').show().removeAttr('disabled');
+		// return false;
+	}
+
+	function getchsiresult2(){
+		$.get('/mjob/getchsiresult',function(data){
+			if(data.result.status == "login success") {
+				layer.close(indexload);
+				layer.msg('验证成功。',{icon: 1});
+				setTimeout("window.location.href = 'main'",1000);
+			}
+			else {
+				layer.close(indexload);
+				layer.msg('验证失败，请3分钟后再试。',{icon: 5});
+				$('.loginbtn').attr('disabled','disabled');
+				// var expiresDate= new Date();
+				// expiresDate.setTime(expiresDate.getTime() + (60*2*1000));
+				// $.cookie('waiting', "2min", { expires: expiresDate });
+				setTimeout("window.location.href = 'promote'",2000);
+			}
+		},'json');
+		// console.log('333');
+		// layer.msg('哎呦不错哦',{icon: 1});
+		// setTimeout("window.location.href = 'main'",2000);
+	}
+
+	$('#Login').on('tap',function(){
 		var username = $("input[name='username']").val();
 		var password = $("input[name='password']").val();
-		var captcha = $("input[name='captcha']").val();
+		
 		if(username.length == ''){
-	        layer.msg('请填写姓名。',{icon: 5});
+	        layer.msg('请填写手机号/身份证号/邮箱。',{icon: 5});
 	        return false;
 	    }
 	    if(password.length == ''){
@@ -122,50 +198,34 @@
 	    $("input[name='username']").attr('disabled','disabled');
 		$("input[name='password']").attr('disabled','disabled');
 		//$("input[name='captcha']").attr('disable','disable');
-		var indexload = layer.load(2, {
+		indexload = layer.load(2, {
 		  shade: [0.4,'#000'] //0.1透明度的白色背景
 		});
 
-		function getchsiresult(){
-			$.get('/mjob/getchsiresult',function(data){
-				if(data.reason == "login success") {
-					layer.msg('验证成功。',{icon: 1});
-				}
-				if(data.reason == "error") {
-					layer.msg('验证失败。',{icon: 5});
-				}
-				if(data.reason == "need code") {
-					var src = data.result.imgbase64;
-					$('.captcharow').show();
-					$('.captcharow').after("<img class='captchabox' src='"+src+"'>");
-					$('#confirmBtn').addClass('needcode');
-					return false;
-				}
-			},'json');
-		}
-
 		$.get('http://18.188.242.251:81/mjob/addchsiuser',{'username':username,'password':password,'userid':userid},function(data){
-			if(data.reason == 'success'){
-				setTimeout(getchsiresult(),15000);
-			} else {
-				layer.msg(data.error_code,{icon: 5});
-			}
+			
 		},'json');
+		//console.warn('111')
+		var expiresDate= new Date();
+		expiresDate.setTime(expiresDate.getTime() + (60*3*1000));
+		$.cookie('waiting', "2min", { expires: expiresDate });
+		setTimeout("getchsiresult()",20000);
+	});
 
-        // $.post('http://www.jobchain.us/mjob/checkchsi',{"username":username,"password":password,"code":captcha},function(data){
-        // 	if(data){
-        // 		layer.close(indexload);
-	       //  	if(data.reason == 'success'){
-	       //  		layer.msg('通过。',{icon: 6});
-	       //  	} else {
-	       //  		layer.msg('重载页面',{icon: 5});
-	       //  		//window.location.reload();
-	       //  	}
-        // 	} else {
-        // 		layer.close(indexload);
-        // 		layer.msg('访问出错。',{icon: 5});
-        // 	}
-        // },'json')
+	$('#Catpcha').on('tap',function(){
+		var captcha = $("input[name='captcha']").val();
+		if(captcha == ''){
+	        layer.msg('请填写验证码。',{icon: 5});
+	        return false;
+	    } else{
+			indexload = layer.load(2, {
+			  shade: [0.4,'#000'] //0.1透明度的白色背景
+			});
+			$.get('/mjob/addchsicode',{'code':captcha},function(data){
+				
+			},'json');
+			setTimeout("getchsiresult2()",25000);
+		}
 	});
 
 </script>

@@ -79,7 +79,7 @@
 
 <div class="mui-content">
 	<div id="slider" class="mui-slider">
-		<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+		<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted none">
 			<a class="mui-control-item" href="#item1mobile">
 				全部
 			</a>
@@ -87,7 +87,7 @@
 				部分
 			</a>
 		</div>
-		<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+		<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6 none"></div>
 		<div class="mui-slider-group">
 			<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
 				<div id="scroll1" class="mui-scroll-wrapper">
@@ -142,7 +142,7 @@
 </div>
 
 <script>
-	var windowHeight = (document.documentElement.clientHeight || document.body.clientHeight) - 44 - 38;
+	var windowHeight = (document.documentElement.clientHeight || document.body.clientHeight) - 44 ;// 如果有选项卡，再-38
 	var rate = parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px',''));
 	var remRate = windowHeight/rate;
 	//console.log(windowHeight/rate);
