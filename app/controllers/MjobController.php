@@ -672,8 +672,97 @@ class MjobController extends ControllerH5
 
     }
 
+    public function checkfaceAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+        $imgbase64 = $this->request->get('imgbase64', 'string');
+
+        if (!$imgbase64) {
+            $this->replyFailure('没有图像');
+            return '';
+        }
+
+        function request_post($url = '', $param = '') {
+            if (empty($url) || empty($param)) {
+                return false;
+            }
+
+            $postUrl = $url;
+            $curlPost = $param;
+            $curl = curl_init();//初始化curl
+            curl_setopt($curl, CURLOPT_URL,$postUrl);//抓取指定网页
+            curl_setopt($curl, CURLOPT_HEADER, 0);//设置header
+            curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
+            curl_setopt($curl, CURLOPT_POST, 1);//post提交方式
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $curlPost);
+            $data = curl_exec($curl);//运行curl
+            curl_close($curl);
+
+            return $data;
+        }
+
+        $url = 'https://aip.baidubce.com/oauth/2.0/token';
+        $post_data['grant_type']       = 'client_credentials';
+        $post_data['client_id']      = 'Dru3IW8xggMHfhNiDwwQCELn';
+        $post_data['client_secret'] = 'rYxCjoxEdfIcTuD9S4MHplt1EVHAiAw8';
+        $o = "";
+        foreach ( $post_data as $k => $v )
+        {
+            $o.= "$k=" . urlencode( $v ). "&" ;
+        }
+        $post_data = substr($o,0,-1);
+
+        $res = request_post($url, $post_data);
+        $result = json_decode($res,true);
+
+        $token = $result['access_token'];
+        $url = 'https://aip.baidubce.com/rest/2.0/face/v3/detect?access_token=' . $token;
+        $img = $imgbase64;
+        $bodys = array(
+            'image_type' => "BASE64",
+            'image' => $img
+        );
+        $res = request_post($url, $bodys);
+        $result = json_decode($res,true);
+
+        if($result['error_code'] == 0 && $result['result']){
+            //
+            $user = \User::findFirstById($userid);
+            $user->check_face = 'Y';
+            $user->score += 50;
+            $user->last_time = time();
+            $user->save();
+
+            $userscore = new \UserScore();
+            $userscore->user_id = $user->id;
+            $userscore->type = 'face';
+            $userscore->score = 50;
+            $userscore->create_time = time();
+            $userscore->last_time = time();
+            $userscore->save();
+
+            $userdataface = new \UserDataFace();
+            $userdataface->user_id = $user->id;
+            $userdataface->img_base64 = $img;
+            $userdataface->create_time = time();
+            $userdataface->last_time = time();
+            $userdataface->save();
+
+            $this->reply(true, 0, $result);
+        }
+        else{
+            $this->replyFailure($result['error_msg']);
+        }
+    }
+
     public function faceverifyAction() {
         $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+        if($this->userinfo['check_face'] == 'Y'){
+            $this->response->redirect('mjob/index');
+        }
     }
 
     public function followwechatAction()
