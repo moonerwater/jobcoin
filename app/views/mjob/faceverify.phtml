@@ -135,7 +135,7 @@
 		</div>
 		
 		<h5>*请点击上方按钮，上传清晰的人脸照片。</h5>
-		<h5>*上传的图片上限大小为4Mb。</h5>
+		<h5>*上传的图片上限大小为10Mb。</h5>
 		<h5>*上传完成之后，请点击开始识别。</h5>
 
 		<!-- <h5><a href="#">验证一下信息享受更高的数据权限</a></h5> -->
@@ -157,17 +157,51 @@
 	    var reader = new FileReader();
 	    reader.onload = (function (file) {
 	        return function (e) {
-	        	//console.log(e.total)
-	        	if(e.total>4*1024*1024){
+	        	if(e.total>10*1024*1024){
 			        //alert('上传的图片的大于4M,请重新选择');
-			        layer.msg('上传的图片的大于4M,请重新选择。',{icon: 5});
+			        layer.msg('上传的图片的大于10M,请重新选择。',{icon: 5});
 			        return false;
 		        } else {
+		        	var IMG = new Image();
+		        	IMG.src = this.result;
+		            IMG.onload = function(){
+	      				var w = this.naturalWidth, h = this.naturalHeight , resizeW = 0, resizeH = 0;
+	      				console.log(w,h)
+	      			
+		      			var maxSize = {
+					        width: 1200,
+					        height: 1000,
+					        level: 0.6
+					    };
+					    if(w > maxSize.width || h > maxSize.height){
+					        var multiple = Math.max(w / maxSize.width, h / maxSize.height);
+					        resizeW = w / multiple;
+					        resizeH = h / multiple;
+					        var canvas = document.createElement('canvas'),
+						    ctx = canvas.getContext('2d');
+					        canvas.width = resizeW;
+					        canvas.height = resizeH;
+					        ctx.drawImage(IMG, 0, 0, resizeW, resizeH);
+						    var base64 = canvas.toDataURL('image/jpeg', maxSize.level);
+						    $("#showImage")[0].src=base64;
+						    var arr = base64.split(',');
+				            base = arr[1];
+				            console.log(base)
+					    } else {
+					        // 如果图片尺寸小于最大限制，则不压缩直接上传
+					        $("#showImage")[0].src=IMG.src;
+				            var arr = IMG.src.split(',');
+				            base = arr[1];
+				            console.log(base);
+					    }
+					    
+				    }
+	        	
 	            //console.log(this.result); //这个就是base64的数据了
-		            $("#showImage")[0].src=this.result;
-		            var arr = this.result.split(',');
-		            base = arr[1];
-		            console.log(base);
+		            // $("#showImage")[0].src=this.result;
+		            // var arr = this.result.split(',');
+		            // base = arr[1];
+		            // console.log(base);
 	            }
 	        };
 	    })(e.target.files[0]);
