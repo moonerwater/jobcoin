@@ -656,7 +656,7 @@ class MjobController extends ControllerH5
         $bodys = array(
             "detect_direction" => true,
             "id_card_side" => 'front',
-            "detect_risk" => true,
+            "detect_risk" => false,
             "image" => $img
         );
         $res = $this->request_post($url, $bodys);
