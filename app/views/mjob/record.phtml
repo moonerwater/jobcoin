@@ -71,7 +71,11 @@
 						{% elseif item['type'] == 'login' %}
 							每日登录
 						{% elseif item['type'] == 'chsi' %}
-							学信网授权
+							学信网认证
+						{% elseif item['type'] == 'idcard' %}
+							实名认证
+						{% elseif item['type'] == 'face' %}
+							人脸识别
 						{% endif %}
 					</h5>
 					<p>{{ item['time'] }}</p>
