@@ -617,6 +617,18 @@ class MjobController extends ControllerH5
         }
     }
 
+    public function settingAction() {
+        $this->checkNoUserGoLogin();
+    }
+
+    public function identityAction() {
+        $this->checkNoUserGoLogin();
+    }
+
+    public function faceverifyAction() {
+        $this->checkNoUserGoLogin();
+    }
+
     public function followwechatAction()
     {
         
@@ -627,17 +639,7 @@ class MjobController extends ControllerH5
         
     }
 
-    public function settingAction()
-    {
-        
-    }
-
     public function warrantAction()
-    {
-        
-    }
-
-    public function identityAction()
     {
         
     }
@@ -647,9 +649,5 @@ class MjobController extends ControllerH5
         
     }
 
-    public function faceverifyAction()
-    {
-        
-    }
 
 }
