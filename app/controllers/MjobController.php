@@ -625,6 +625,28 @@ class MjobController extends ControllerH5
         $this->checkNoUserGoLogin();
     }
 
+    public function checkidcardimgAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+        $imgbase64 = $this->request->get('imgbase64', 'string');
+
+        if (!$imgbase64) {
+            $this->replyFailure('没有图像');
+            return '';
+        }
+
+        $idcard = new \Idcard();
+        $result = $idcard->sendIdcard($imgbase64);
+        if($result['error_code'] == 0){
+            $this->reply(true, 0, $result);
+        }
+        else{
+            $this->replyFailure($result['reason']);
+        }
+
+    }
+
     public function faceverifyAction() {
         $this->checkNoUserGoLogin();
     }
