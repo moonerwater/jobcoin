@@ -251,7 +251,7 @@
 					setTimeout("window.location.reload()",2000);
 				} else {
 					layer.close(indexload);
-					layer.msg("识别失败，请上传清晰的身份证正面图片。",{icon: 5});
+					layer.msg(data.reason,{icon: 5});
 				}
 			},'json');
 		}

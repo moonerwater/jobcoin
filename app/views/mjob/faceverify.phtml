@@ -135,7 +135,7 @@
 		</div>
 		
 		<h5>*请点击上方按钮，上传清晰的人脸照片。</h5>
-		<h5>*上传的图片上限大小为2Mb。</h5>
+		<h5>*上传的图片上限大小为4Mb。</h5>
 		<h5>*上传完成之后，请点击开始识别。</h5>
 
 		<!-- <h5><a href="#">验证一下信息享受更高的数据权限</a></h5> -->
@@ -158,9 +158,9 @@
 	    reader.onload = (function (file) {
 	        return function (e) {
 	        	//console.log(e.total)
-	        	if(e.total>2*1024*1024){
+	        	if(e.total>4*1024*1024){
 			        //alert('上传的图片的大于4M,请重新选择');
-			        layer.msg('上传的图片的大于2M,请重新选择。',{icon: 5});
+			        layer.msg('上传的图片的大于4M,请重新选择。',{icon: 5});
 			        return false;
 		        } else {
 	            //console.log(this.result); //这个就是base64的数据了
