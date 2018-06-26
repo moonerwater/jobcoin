@@ -636,6 +636,53 @@ class MjobController extends ControllerH5
             return '';
         }
 
+        $idcard = new \Idcard();
+        $result = $idcard->sendIdcard($imgbase64);
+        if($result['error_code'] == 0 && $result['result']['realname'] && $result['result']['idcard']){
+            //
+            $user = \User::findFirstById($userid);
+            $user->check_idcard = 'Y';
+            $user->name = $result['result']['realname'];
+            $user->idcard = $result['result']['idcard'];
+            $user->score += 30;
+            $user->last_time = time();
+            $user->save();
+
+            $userscore = new \UserScore();
+            $userscore->user_id = $user->id;
+            $userscore->type = 'idcard';
+            $userscore->score = 30;
+            $userscore->create_time = time();
+            $userscore->last_time = time();
+            $userscore->save();
+
+            $userdataidcard = new \UserDataIdcard();
+            $userdataidcard->user_id = $user->id;
+            $userdataidcard->attr = json_encode($result['result'], 320);
+            $userdataidcard->create_time = time();
+            $userdataidcard->last_time = time();
+            $userdataidcard->save();
+
+            $this->reply(true, 0, $result);
+
+        }
+        else{
+            $this->replyFailure($result['reason']);
+        }
+
+    }
+
+    /*public function checkidcardimgAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+        $imgbase64 = $this->request->get('imgbase64', 'string');
+
+        if (!$imgbase64) {
+            $this->replyFailure('没有图像');
+            return '';
+        }
+
         $url = 'https://aip.baidubce.com/oauth/2.0/token';
         $post_data['grant_type']       = 'client_credentials';
         $post_data['client_id']      = 'iokoqaKX1nGWi7VSstR3RSMu';
@@ -694,7 +741,7 @@ class MjobController extends ControllerH5
             $this->replyFailure($result['error_msg']);
         }
 
-    }
+    }*/
 
     public function checkfaceAction() {
         $this->checkNoUserGoLogin();
