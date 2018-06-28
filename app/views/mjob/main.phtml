@@ -551,6 +551,34 @@
 				50%  {top:-.3rem;}
 				100% {top:0px;}
 			}
+			/*.minesbox .mines .animatebox.aniA {
+				animation: myfloatA 2.7s infinite;
+    			-webkit-animation: myfloatA 2.7s infinite;
+			}
+			@keyframes myfloatA {
+				0%   {top:0px;}
+				50%  {top:-.5rem;}
+				100% {top:0px;}
+			}
+			@-webkit-keyframes myfloatA {
+				0%   {top:0px;}
+				50%  {top:-.5rem;}
+				100% {top:0px;}
+			}
+			.minesbox .mines .animatebox.aniB {
+				animation: myfloatB 3.7s infinite;
+    			-webkit-animation: myfloatB 3.7s infinite;
+			}
+			@keyframes myfloatB {
+				0%   {top:0px;}
+				50%  {top:-.4rem;}
+				100% {top:0px;}
+			}
+			@-webkit-keyframes myfloatB {
+				0%   {top:0px;}
+				50%  {top:-.4rem;}
+				100% {top:0px;}
+			}*/
 			.minesbox .mines .mineimg {
 				width: 6.26rem;
 				height: 7.98rem;
@@ -963,7 +991,8 @@
 	<script>
 
 			//矿显示数量
-			var minenum = 6;
+			var minenum2 = 6;
+			var minenum = minenum2;
 			//显示范围
 			var HRange = 16-7.98-2.15+0.5;
 			var WRange = parseFloat($('.minesbox').css('width').replace('px','')) / parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px','')) - 6.26;
@@ -972,6 +1001,7 @@
 			//console.log(parseFloat($('.minesbox').css('width').replace('px','')),parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px','')))
 			//本地储存金矿
 			var result = {};
+			console.log(WRange,HRange)
 
 			function checkMines(){
 				var len;
@@ -1006,20 +1036,86 @@
 				});
 			}
 
+			var positionArray = [];
+
+			function randomLeft(){
+				var returnLeft = Math.floor((Math.random()*WRange+1));
+				if($.inArray( returnLeft , positionArray )){
+					return randomLeft();
+				} else {
+					return returnLeft;
+				}
+			}
+
 			function showMines(){
 				for(var i = 0; i < minenum; i++){
-					var left = (Math.random()*WRange+1)+"rem";
-					var top1 = (Math.random()*HRange+1)+"rem";
+					//var left = Math.floor((Math.random()*WRange+1));
+					var left = randomLeft();
+					console.log(left)
+					var top1 = Math.floor((Math.random()*HRange+1));
+					var leftB = left + 6;
+					//console.log(left,leftB)
+					for(var kk = left; kk <= leftB; kk++){
+						positionArray.push(kk);
+
+					}
+					//console.log(positionArray)
+					//positionArray[i] = {'leftA':left ,'leftB':leftB};
 					//console.log(i,result[i]);
-					var dom = "<div class='mines datacoin' data-id='"+i+"' data-mineid='"+result[i].jobcoinno+"' data-mine='"+result[i].jobcoin+"' style='left:"+left+";top:"+top1+";'>"
-							+    "<div class='animatebox'>"
+					// getJsonLength();
+					// if(checkPosition(left) == false){
+					// 	//return false;
+					// 	console.log('no')
+					// } else {
+					// 	positionArray[i] = {'leftA':left ,'leftB':leftB};
+						var dom = "<div class='mines datacoin' data-id='"+i+"' data-mineid='"+result[i].jobcoinno+"' data-mine='"+result[i].jobcoin+"' style='left:"+left+"rem;top:"+top1+"rem;'>"
+							// if(i%2 == 0){
+							// 	dom +=    "<div class='animatebox aniA'>";
+							// } else {
+							// 	dom +=    "<div class='animatebox aniB'>";
+							// }
+							+	"<div class='animatebox'>"
 							+		"<div class='mineimg'></div>"
 							+		"<div class='minenum'>"+result[i].jobcoin+"</div>"
 							+    "</div>"
 							+ "</div>";
-					$('.minesbox').append(dom);
-					$('.mines').fadeIn(500);
-					checkMines();
+						$('.minesbox').append(dom);
+						$('.mines').fadeIn(500);
+						checkMines();
+					//}
+					
+					
+				}
+				//checkPosition();
+				//console.log(positionArray)
+			}
+
+			function getJsonLength() { 
+				positionLen = 0; 
+				for(var k in positionArray) {  
+				    positionLen++;  
+				}  
+			}
+
+			function checkPosition(dotA) {
+				console.log(positionLen);
+				if(positionLen != 0){
+					for (var k in positionArray){
+						var leftA = positionArray[k].leftA;
+						var leftB = positionArray[k].leftB;
+						console.log(leftA,leftB)
+						for(var j = 0; j < positionLen; j++){
+							if(dotA >= leftA && dotA <= leftB){
+								console.log('false');
+								return false;
+							} else {
+								console.log('true');
+								return true;
+							}
+						}
+					}
+				} else {
+					return true;
 				}
 			}
 
@@ -1149,7 +1245,7 @@
 								callback: function() {
 									var self = this;
 									setTimeout(function() {
-										minenum = 6 ;
+										minenum = minenum2 ;
 										getjobcoinno();
 										//console.log('down')
 										self.endPullDownToRefresh();
