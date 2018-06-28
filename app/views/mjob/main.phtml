@@ -1037,10 +1037,16 @@
 			}
 
 			var positionArray = [];
+			var maxrandom = 0;
 
 			function randomLeft(){
+				maxrandom++;
 				var returnLeft = Math.floor((Math.random()*WRange+1));
-				if($.inArray( returnLeft , positionArray )){
+				//console.log('s'+$.inArray( returnLeft,positionArray )+':'+maxrandom);
+				if(maxrandom >= 200){
+					return returnLeft;
+				}
+				if($.inArray( returnLeft,positionArray ) >= 0){
 					return randomLeft();
 				} else {
 					return returnLeft;
@@ -1048,18 +1054,19 @@
 			}
 
 			function showMines(){
+				positionArray = [];
+				maxrandom = 0;
 				for(var i = 0; i < minenum; i++){
 					//var left = Math.floor((Math.random()*WRange+1));
 					var left = randomLeft();
 					console.log(left)
 					var top1 = Math.floor((Math.random()*HRange+1));
-					var leftB = left + 6;
+					var leftW = 3;
 					//console.log(left,leftB)
-					for(var kk = left; kk <= leftB; kk++){
+					for(var kk = left-leftW; kk <= left + leftW; kk++){
 						positionArray.push(kk);
 
 					}
-					//console.log(positionArray)
 					//positionArray[i] = {'leftA':left ,'leftB':leftB};
 					//console.log(i,result[i]);
 					// getJsonLength();
@@ -1086,6 +1093,7 @@
 					
 					
 				}
+				//console.log(positionArray)
 				//checkPosition();
 				//console.log(positionArray)
 			}
