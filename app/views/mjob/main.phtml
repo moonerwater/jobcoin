@@ -171,8 +171,50 @@
 		.mine .mining {
 			display: block;
 			width: 29.2% !important;
+			height:10.9rem;
 			margin:0 auto;
+			position:relative;
 			/*margin-top:3.29rem;*/
+		}
+		.mine .mining .rock {
+			position:absolute;
+			width: 3rem;
+			height: 3rem;
+			top:0rem;
+			right:.5rem;
+			transform:rotate(60deg);
+			animation: hammerHit 1.5s infinite;
+			-webkit-animation: hammerHit 1.5s infinite;
+		}
+		@keyframes hammerHit {
+			0%   {transform:rotate(60deg);}
+			50%  {transform:rotate(-25deg);}
+			100% {transform:rotate(60deg);}
+		}
+		@-webkit-keyframes hammerHit {
+			0%   {transform:rotate(60deg);}
+			50%  {transform:rotate(-25deg);}
+			100% {transform:rotate(60deg);}
+		}
+		.mine .mining .cloud {
+			position:absolute;
+			width: 6rem;
+			height: 2rem;
+			bottom:1rem;
+			left:.2rem;
+			opacity: .7;
+			animation: hidCloud 2s infinite;
+			-webkit-animation: hidCloud 2s infinite;
+		}
+		@keyframes hidCloud {
+			0%   {opacity: .7;bottom:1rem;}
+			50%  {opacity: 1;bottom:1.3rem;}
+			100% {opacity: .7;bottom:1rem;}
+		}
+		@-webkit-keyframes hammerHit {
+			0%   {opacity: .7;bottom:1rem;}
+			50%  {opacity: 1;bottom:1.3rem;}
+			100% {opacity: .7;bottom:1rem;}
 		}
 		.mine .pmining {
 			width: 8.22rem;
@@ -184,14 +226,14 @@
 			color:#fff;
 			font-size:1rem;
 			margin:0 auto;
-			margin-top:3rem;
+			margin-top:2rem;
 			/*margin-bottom: 2rem;*/
 		}
 		.mine .ptext {
 			color:#fff;
 			font-size:1rem;
 			text-align: center;
-			margin-bottom: 1rem;
+			margin-bottom: 2rem;
 		}
 		.subjectrow {
 			position: relative;
@@ -493,6 +535,19 @@
 			height: 6.83rem;
 			max-width: inherit;
 			width: 6.83rem;
+			display: inline-block;
+			border-radius: 50%;
+			overflow: hidden;
+			background: #56d87a;
+			position:relative;
+		}
+		#tabbar-with-contact .mui-table-view .mui-media-object .text {
+			color:#fff;
+			font-size:4rem;
+			text-align: center;
+			width: 4rem;
+			height: 4rem;
+			line-height: 4rem;
 		}
 		#tabbar-with-contact .mui-table-view .mui-media-body {
 			margin-top: 1.2rem;
@@ -776,7 +831,15 @@
 								<div class="mine">
 									<div class="nomine none">
 										<p class="ptext">算力越高挖出的矿石越多哦</p>
-										<img src="/public/img/mjob/mining.png" class="mining">
+										<div class="mining">
+											<img src="/public/img/mjob/mining.png" class="auto-center">
+											<div class="rock">
+												<img src="/public/img/mjob/hammer.png" class="auto-center">
+											</div>
+											<div class="cloud">
+												<img src="/public/img/mjob/cloud.png" class="auto-center">
+											</div>
+										</div>
 										<p class="pmining">正在挖矿中…</p>
 									</div>
 									<div class="hasmine ">
@@ -923,9 +986,11 @@
 										<div class="myfriends">
 											<ul class="mui-table-view">
 												<li class="mui-table-view-cell mui-media">
-													<img class="mui-media-object mui-pull-left" src="/public/img/mjob/face.png">
+													<span class="mui-media-object mui-pull-left">
+														<span class="text auto-center">无</span>
+													</span>
 													<div class="mui-media-body">
-														{{ data['username'] }}
+														<span>{{ data['username'] }}</span>
 														<p class="mui-ellipsis">金职岛第{{ data['userrank'] }}位居民</p>
 													</div>
 												</li>
@@ -990,211 +1055,227 @@
 	<script type="text/javascript" src="{{url('js/mjob/mui.pullToRefresh.material.js')}}"></script>
 	<script>
 
-			//矿显示数量
-			var minenum2 = 5;
-			var minenum = minenum2;
-			//显示范围
-			var HRange = 16-7.98-2.15+0.5;
-			var WRange = parseFloat($('.minesbox').css('width').replace('px','')) / parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px','')) - 6.26;
-			//本地储存金矿
-			var result = {};
-			console.log(WRange,HRange)
+		function checkName( name ) {
+		    var regu = /[\u4E00-\u9FA5]/;
+		    var re = new RegExp(regu);
+		    if (re.test(name)) {
+		        return true;  
+		    }
+		    else {
+		        return false;
+		    }
+		};
 
-			function checkMines(){
-				var len;
-				
-				$('.minesbox').each(function(){
-					len = $(this).find('.mines').length;
-					if(result.length != 0){
-						if(len == 0) {
-							result.splice(0,6)
-							minenum = result.length >= minenum ? minenum : result.length;
-							if(minenum > 0){
-								showMines();
-							} else {
-								$('.hasmine').hide();
-								$('.nomine').fadeIn(500);
-							}
-						} 
-					} else {
-						$('.hasmine').hide();
-						$('.nomine').fadeIn(500);
-						//getjobcoinno();
-					}
-				});
-			}
+		//矿显示数量
+		var minenum2 = 5;
+		var minenum = minenum2;
+		//显示范围
+		var HRange = 16-7.98-2.15+0.5;
+		var WRange = parseFloat($('.minesbox').css('width').replace('px','')) / parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px','')) - 6.26;
+		//本地储存金矿
+		var result = {};
+		//console.log(WRange,HRange)
 
-			var positionArray = [];
-			var maxrandom = 0;
-
-			function randomLeft(){
-				maxrandom++;
-				var returnLeft = Math.floor((Math.random()*WRange+1));
-				console.log('s'+$.inArray( returnLeft,positionArray )+':'+maxrandom);
-				if(maxrandom >= 500){
-					return returnLeft;
-				}
-				if($.inArray( returnLeft,positionArray ) >= 0){
-					return randomLeft();
-				} else {
-					return returnLeft;
-				}
-			}
-
-			function showMines(){
-				positionArray = [];
-				maxrandom = 0;
-				for(var i = 0; i < minenum; i++){
-					//var left = Math.floor((Math.random()*WRange+1));
-					var left = randomLeft();
-					console.log(left)
-					var top1 = Math.floor((Math.random()*HRange+1));
-					var leftW = 2;
-					//console.log(left,leftB)
-					for(var kk = left-leftW; kk <= left + leftW; kk++){
-						positionArray.push(kk);
-
-					}
-					var dom = "<div class='mines datacoin' data-id='"+i+"' data-mineid='"+result[i].jobcoinno+"' data-mine='"+result[i].jobcoin+"' style='left:"+left+"rem;top:"+top1+"rem;'>"
-						// if(i%2 == 0){
-						// 	dom +=    "<div class='animatebox aniA'>";
-						// } else {
-						// 	dom +=    "<div class='animatebox aniB'>";
-						// }
-						+	"<div class='animatebox'>"
-						+		"<div class='mineimg'></div>"
-						+		"<div class='minenum'>"+result[i].jobcoin+"</div>"
-						+    "</div>"
-						+ "</div>";
-					$('.minesbox').append(dom);
-					$('.mines').fadeIn(500);
-					checkMines();			
-				}
-			}
-
-			function getjobcoinno(){
-				$('.minesbox').empty();
-				$('.nomine').hide();
-				$('.hasmine').hide();
-				$('.pacman').show();
-				$.get('/mjob/getjobcoinno',function(data){
-					if(data.reason == "success"){
-						$('.pacman').hide();
-						if(data.result.length != 0){
-							result = data.result;
-							minenum = result.length >= minenum ? minenum : result.length;
-							//console.log(minenum);
+		function checkMines(){
+			var len;
+			$('.minesbox').each(function(){
+				len = $(this).find('.mines').length;
+				if(result.length != 0){
+					if(len == 0) {
+						result.splice(0,6)
+						minenum = result.length >= minenum ? minenum : result.length;
+						if(minenum > 0){
 							showMines();
-							$('.nomine').hide();
-							$('.hasmine').fadeIn(500);
 						} else {
 							$('.hasmine').hide();
 							$('.nomine').fadeIn(500);
 						}
+					} 
+				} else {
+					$('.hasmine').hide();
+					$('.nomine').fadeIn(500);
+				}
+			});
+		}
+
+		var positionArray = [];
+		var maxrandom = 0;
+
+		function randomLeft(){
+			maxrandom++;
+			var returnLeft = Math.floor((Math.random()*WRange+1));
+			//console.log('s'+$.inArray( returnLeft,positionArray )+':'+maxrandom);
+			if(maxrandom >= 500){
+				return returnLeft;
+			}
+			if($.inArray( returnLeft,positionArray ) >= 0){
+				return randomLeft();
+			} else {
+				return returnLeft;
+			}
+		}
+
+		function showMines(){
+			positionArray = [];
+			maxrandom = 0;
+			for(var i = 0; i < minenum; i++){
+				//var left = Math.floor((Math.random()*WRange+1));
+				var left = randomLeft();
+				//console.log(left)
+				var top1 = Math.floor((Math.random()*HRange+1));
+				var leftW = 2;
+				//console.log(left,leftB)
+				for(var kk = left-leftW; kk <= left + leftW; kk++){
+					positionArray.push(kk);
+
+				}
+				var dom = "<div class='mines datacoin' data-id='"+i+"' data-mineid='"+result[i].jobcoinno+"' data-mine='"+result[i].jobcoin+"' style='left:"+left+"rem;top:"+top1+"rem;'>"
+					// if(i%2 == 0){
+					// 	dom +=    "<div class='animatebox aniA'>";
+					// } else {
+					// 	dom +=    "<div class='animatebox aniB'>";
+					// }
+					+	"<div class='animatebox'>"
+					+		"<div class='mineimg'></div>"
+					+		"<div class='minenum'>"+result[i].jobcoin+"</div>"
+					+    "</div>"
+					+ "</div>";
+				$('.minesbox').append(dom);
+				$('.mines').fadeIn(500);
+				checkMines();			
+			}
+		}
+
+		function getjobcoinno(){
+			$('.minesbox').empty();
+			$('.nomine').hide();
+			$('.hasmine').hide();
+			$('.pacman').show();
+			$.get('/mjob/getjobcoinno',function(data){
+				if(data.reason == "success"){
+					$('.pacman').hide();
+					if(data.result.length != 0){
+						result = data.result;
+						minenum = result.length >= minenum ? minenum : result.length;
+						//console.log(minenum);
+						showMines();
+						$('.nomine').hide();
+						$('.hasmine').fadeIn(500);
 					} else {
-						$('.pacman').hide();
 						$('.hasmine').hide();
 						$('.nomine').fadeIn(500);
 					}
+				} else {
+					$('.pacman').hide();
+					$('.hasmine').hide();
+					$('.nomine').fadeIn(500);
+				}
+			},'json');
+		}
+
+		$(function(){
+			if($.cookie('regscore') > 0){
+				layer.msg("新用户注册，算力+"+$.cookie('regscore')+"。",{icon: 6,time:3500});
+				$.cookie('regscore', null);
+			} else {
+				$.get('/mjob/checktodaylogin',function(data){
+					if(data.reason == "success" && data.result.login_score != '0') {
+						layer.msg("每日登陆，算力+"+data.result.login_score+"。",{icon: 6,time:3500});
+					}
 				},'json');
 			}
+			getjobcoinno();
 
-			$(function(){
-				if($.cookie('regscore') > 0){
-					layer.msg("新用户注册，算力+"+$.cookie('regscore')+"。",{icon: 6,time:3500});
-					$.cookie('regscore', null);
-				} else {
-					$.get('/mjob/checktodaylogin',function(data){
-						if(data.reason == "success" && data.result.login_score != '0') {
-							layer.msg("每日登陆，算力+"+data.result.login_score+"。",{icon: 6,time:3500});
-						}
-					},'json');
+			var text = $('.mui-media-body span').text();
+			if(!checkName(text)){
+				$('.mui-media-object .text').html('无');
+			} else {
+				$('.mui-media-object .text').html(text.substring(0,1));
+			}
+		});
+
+		$('.minesbox').on('tap','.datacoin',function(){
+			var _this = $(this);
+			_this.removeClass('datacoin');
+			var id = _this.attr('data-id');
+			var mid = _this.attr('data-mineid');
+			var mine = _this.attr('data-mine');
+			//console.log(_this,$("[data-mineid='"+mid+"']"));
+			//$('.minesbox').off('tap',$("[data-mineid='"+mid+"']"));
+			//$("[data-mineid='"+mid+"']").off('tap');
+			//$('.minesbox').off('tap',_this);
+
+			result.splice(id,1,'');
+			console.log(result);
+
+			$.get('/mjob/editjobcoinno',{'jobcoinno':mid},function(data){
+				if(data.reason == "success"){
+					//console.log('done')
 				}
-				getjobcoinno();
+			},'json');
+
+			_this.animate({
+				left:"-1rem",
+				top:"16rem",
+				opacity:"0"
+			},500,"linear",function(){
+				_this.remove();
+				checkMines();
+
+				function domGold(){
+					$('.subjectrow').prepend("<span class='showgold' id='"+mid+id+"'>+"+mine+"</span>");
+				}
+
+				setTimeout(domGold(),1100);
+				setTimeout("$('#"+mid+id+"').remove()",1100);
 			});
 
-			$('.minesbox').on('tap','.datacoin',function(){
-				var _this = $(this);
-				_this.removeClass('datacoin');
-				var id = _this.attr('data-id');
-				var mid = _this.attr('data-mineid');
-				var mine = _this.attr('data-mine');
-				//console.log(_this,$("[data-mineid='"+mid+"']"));
-				//$('.minesbox').off('tap',$("[data-mineid='"+mid+"']"));
-				//$("[data-mineid='"+mid+"']").off('tap');
-				//$('.minesbox').off('tap',_this);
+			$('.subjectrow').prepend("<span class='goldenup' id="+mid+"></span>");
+			setTimeout("$('#"+mid+"').remove()",500);
 
-				result.splice(id,1,'');
-				console.log(result);
+		});
 
-				$.get('/mjob/editjobcoinno',{'jobcoinno':mid},function(data){
-					if(data.reason == "success"){
-						//console.log('done')
-					}
-				},'json');
+		mui.init();
 
-				_this.animate({
-					left:"-1rem",
-					top:"16rem",
-					opacity:"0"
-				},500,"linear",function(){
-					_this.remove();
-					checkMines();
+		mui('.mui-scroll').on('tap','a',function(){document.location.href=this.href;});
 
-					function domGold(){
-						$('.subjectrow').prepend("<span class='showgold' id='"+mid+id+"'>+"+mine+"</span>");
-					}
-
-					setTimeout(domGold(),1100);
-					setTimeout("$('#"+mid+id+"').remove()",1100);
-				});
-
-				$('.subjectrow').prepend("<span class='goldenup' id="+mid+"></span>");
-				setTimeout("$('#"+mid+"').remove()",500);
-
+		(function($) {
+			//阻尼系数
+			var deceleration = mui.os.ios?0.003:0.0009;
+			$('.mui-scroll-wrapper').scroll({
+				bounce: false,
+				indicators: true, //是否显示滚动条
+				deceleration:deceleration
 			});
-
-			mui.init();
-
-			mui('.mui-scroll').on('tap','a',function(){document.location.href=this.href;});
-
-			(function($) {
-				//阻尼系数
-				var deceleration = mui.os.ios?0.003:0.0009;
-				$('.mui-scroll-wrapper').scroll({
-					bounce: false,
-					indicators: true, //是否显示滚动条
-					deceleration:deceleration
-				});
-				$.ready(function() {
-					//循环初始化所有下拉刷新，上拉加载。
-					$.each(document.querySelectorAll('.mui-slider-group .scroll'), function(index, pullRefreshEl) {
-						$(pullRefreshEl).pullToRefresh({
-							down: {
-								callback: function() {
-									var self = this;
-									setTimeout(function() {
-										minenum = minenum2 ;
-										getjobcoinno();
-										//console.log('down')
-										self.endPullDownToRefresh();
-									}, 1000);
-								}
+			$.ready(function() {
+				//循环初始化所有下拉刷新，上拉加载。
+				$.each(document.querySelectorAll('.mui-slider-group .scroll'), function(index, pullRefreshEl) {
+					$(pullRefreshEl).pullToRefresh({
+						down: {
+							callback: function() {
+								var self = this;
+								setTimeout(function() {
+									minenum = minenum2 ;
+									getjobcoinno();
+									//console.log('down')
+									self.endPullDownToRefresh();
+								}, 1000);
 							}
-							// ,up: {
-							// 	callback: function() {
-							// 		var self = this;
-							// 		setTimeout(function() {
-							// 			reload();
-							// 			console.log('up')
-							// 			self.endPullUpToRefresh();
-							// 		}, 1000);
-							// 	}
-							// }
-						});
+						}
+						// ,up: {
+						// 	callback: function() {
+						// 		var self = this;
+						// 		setTimeout(function() {
+						// 			reload();
+						// 			console.log('up')
+						// 			self.endPullUpToRefresh();
+						// 		}, 1000);
+						// 	}
+						// }
 					});
 				});
-			})(mui);
+			});
+		})(mui);
 
 	</script>
 {% endblock %}
