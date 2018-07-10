@@ -32,7 +32,7 @@
 			position: absolute;
 			top: -20px;
 			left: 50%;
-			margin-left: -25px;
+			margin-left: -10px;
 			width: 40px;
 			height: 40px;
 			border-radius: 100%;
@@ -176,26 +176,44 @@
 			position:relative;
 			/*margin-top:3.29rem;*/
 		}
+		
+		@-webkit-keyframes hammer {
+			0%   {
+					-webkit-transform:rotate(-10deg);
+							transform:rotate(-10deg);
+				 }
+			50%  {
+					-webkit-transform:rotate(60deg);
+							transform:rotate(60deg);
+				 }
+			100% {
+					-webkit-transform:rotate(-10deg);
+							transform:rotate(-10deg);
+				 }
+		}
+		@keyframes hammer {
+			0%   {transform:rotate(-10deg);-ms-transform:rotate(-10deg);-moz-transform:rotate(-10deg);-o-transform:rotate(-10deg);}
+			50%  {transform:rotate(60deg);-ms-transform:rotate(60deg);-moz-transform:rotate(60deg);-o-transform:rotate(60deg);}
+			100% {transform:rotate(-10deg);-ms-transform:rotate(-10deg);-moz-transform:rotate(-10deg);-o-transform:rotate(-10deg);}
+		}
 		.mine .mining .rock {
 			position:absolute;
-			width: 3rem;
-			height: 3rem;
-			top:0rem;
-			right:.5rem;
-			transform:rotate(60deg);
-			animation: hammerHit 1.5s infinite;
-			-webkit-animation: hammerHit 1.5s infinite;
+			width: 80%;
+		    height: 100%;
+		    top: -2.5rem;
+		    right: -2.5rem;
+			transform:rotate(-10deg);
+			-ms-transform:rotate(-10deg);
+			-moz-transform:rotate(-10deg);
+			-webkit-transform:rotate(-10deg);
+			-o-transform:rotate(-10deg);
+			-webkit-animation: hammer 1.5s 0s infinite;
+					animation: hammer 1.5s 0s infinite;
+			/*-webkit-animation-name: hammerHit;
+			-webkit-animation-duration: 1.5s;
+			-webkit-animation-iteration-count: infinite*/;
 		}
-		@keyframes hammerHit {
-			0%   {transform:rotate(60deg);}
-			50%  {transform:rotate(-25deg);}
-			100% {transform:rotate(60deg);}
-		}
-		@-webkit-keyframes hammerHit {
-			0%   {transform:rotate(60deg);}
-			50%  {transform:rotate(-25deg);}
-			100% {transform:rotate(60deg);}
-		}
+		
 		.mine .mining .cloud {
 			position:absolute;
 			width: 6rem;
@@ -466,7 +484,7 @@
 		}
 		#tabbar-with-chat .box > div .title {
 			font-size:1.33rem;
-			width: 9.33rem;
+			width: 10.33rem;
 			text-align: center;
 			margin: 0 auto;
 	    	margin-bottom: 1.25rem;
@@ -807,6 +825,16 @@
 		            transform: translate(0, -6.25px);
 		    top: 25px;
 		    left: 100px; }
+
+		    #goDb {
+		    	display: block;
+		    	width: 100%;
+		    	height:6.87rem;
+		    	margin-bottom: 1rem;
+		    	border-radius: .5rem;
+		    	background: #eaeaea url("/public/img/mjob/2.png") center no-repeat !important;
+				background-size: contain !important;
+		    }
 	</style>
 
 	<!-- <header class="mui-bar mui-bar-nav">
@@ -826,6 +854,7 @@
 										<span class="mintit"></span><span class="power showpower">{{ data['score'] }}</span>
 									</div>
 									<a href="strategy" class="right">算力攻略</a>
+									<audio id="audio" src="/public/sound/gold.mp3" preload='auto'></audio>
 									<div class="cls"></div>
 								</div>
 								<div class="mine">
@@ -834,7 +863,7 @@
 										<div class="mining">
 											<img src="/public/img/mjob/mining.png" class="auto-center">
 											<div class="rock">
-												<img src="/public/img/mjob/hammer.png" class="auto-center">
+												<img src="/public/img/mjob/hammer2.png" class="auto-center">
 											</div>
 											<div class="cloud">
 												<img src="/public/img/mjob/cloud.png" class="auto-center">
@@ -843,7 +872,7 @@
 										<p class="pmining">正在挖矿中…</p>
 									</div>
 									<div class="hasmine ">
-										<p class="ptext">72小时内不领取近况将消失</p>
+										<p class="ptext">72小时内不领取金矿将消失</p>
 										<div class="minesbox">
 											<!-- <div class="mines">
 												<div class="mineimg"></div>
@@ -957,6 +986,7 @@
 												</div>
 											</div>
 										</div>
+										<a href="../db/index" id="goDb"></a>
 										<div class="rules">
 											<div class="title">金职岛建设规划</div>
 											<div class="det">
@@ -1034,15 +1064,15 @@
 			</div>
 			<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
 				<nav class="mui-bar mui-bar-tab">
-					<a class="mui-control-item mui-active" href="#tabbar">
+					<a class="mui-control-item mui-active" data-href="tabbar" id="tabbar2">
 						<span class="icon-1 iconpng"></span>
 						<span class="mui-tab-label">数据挖矿</span>
 					</a>
-					<a class="mui-control-item" href="#tabbar-with-chat">
+					<a class="mui-control-item" data-href="tabbar-with-chat" id="tabbar-with-chat2">
 						<span class="icon-2 iconpng"><!-- <span class="mui-badge">9</span> --></span>
 						<span class="mui-tab-label">金职岛</span>
 					</a>
-					<a class="mui-control-item" href="#tabbar-with-contact">
+					<a class="mui-control-item" data-href="tabbar-with-contact" id="tabbar-with-contact2">
 						<span class="icon-3 iconpng"></span>
 						<span class="mui-tab-label">我的身份</span>
 					</a>
@@ -1055,16 +1085,40 @@
 	<script type="text/javascript" src="{{url('js/mjob/mui.pullToRefresh.material.js')}}"></script>
 	<script>
 
-		function checkName( name ) {
-		    var regu = /[\u4E00-\u9FA5]/;
-		    var re = new RegExp(regu);
-		    if (re.test(name)) {
-		        return true;  
-		    }
-		    else {
-		        return false;
-		    }
-		};
+		$('#sliderSegmentedControl a').on('tap',function(){
+			var href = $(this).attr('data-href');
+			//console.log(href);
+			//window.location.href = 'main#'+href;
+			window.location.href = 'main#a-'+href;
+			checkHref();
+		});
+
+		function checkHref(){
+			var urlArr = window.location.href.split('#');
+			var position = urlArr[1];
+			console.log(position)
+			//$('.mui-slider-item').hide();
+			if(position == 'a-tabbar-with-chat'){
+				$('#tabbar-with-chat').show().addClass('mui-active').siblings().removeClass('mui-active');
+				$('#tabbar-with-chat2').addClass('mui-active').siblings().removeClass('mui-active');
+				console.log('2')
+			}
+			else if(position == 'a-tabbar-with-contact'){
+				$('#tabbar-with-contact').show().addClass('mui-active').siblings().removeClass('mui-active');
+				$('#tabbar-with-contact2').addClass('mui-active').siblings().removeClass('mui-active');
+				console.log('3')
+			}
+			else {
+				$('#tabbar').addClass('mui-active').show().siblings().removeClass('mui-active');
+				$('#tabbar2').addClass('mui-active').siblings().removeClass('mui-active');
+				console.log('1')
+			}
+		}
+
+		document.getElementById('slider').addEventListener('slide', function(e) {
+			console.log('sadsadsad')
+			checkHref();
+		});
 
 		//矿显示数量
 		var minenum2 = 5;
@@ -1074,7 +1128,12 @@
 		var WRange = parseFloat($('.minesbox').css('width').replace('px','')) / parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px','')) - 6.26;
 		//本地储存金矿
 		var result = {};
+		//碰撞数组
+		var positionArray = [];
+		//最大随机次数
+		var maxrandom = 0;
 		//console.log(WRange,HRange)
+		var audio = $("#audio")[0];
 
 		function checkMines(){
 			var len;
@@ -1097,9 +1156,6 @@
 				}
 			});
 		}
-
-		var positionArray = [];
-		var maxrandom = 0;
 
 		function randomLeft(){
 			maxrandom++;
@@ -1173,6 +1229,17 @@
 			},'json');
 		}
 
+		function checkName( name ) {
+		    var regu = /[\u4E00-\u9FA5]/;
+		    var re = new RegExp(regu);
+		    if (re.test(name)) {
+		        return true;  
+		    }
+		    else {
+		        return false;
+		    }
+		};
+
 		$(function(){
 			if($.cookie('regscore') > 0){
 				layer.msg("新用户注册，算力+"+$.cookie('regscore')+"。",{icon: 6,time:3500});
@@ -1185,6 +1252,7 @@
 				},'json');
 			}
 			getjobcoinno();
+			checkHref();
 
 			var text = $('.mui-media-body span').text();
 			if(!checkName(text)){
@@ -1192,6 +1260,11 @@
 			} else {
 				$('.mui-media-object .text').html(text.substring(0,1));
 			}
+
+			audio.load();
+			audio.play();
+			audio.pause();
+
 		});
 
 		$('.minesbox').on('tap','.datacoin',function(){
@@ -1208,11 +1281,10 @@
 			result.splice(id,1,'');
 			console.log(result);
 
-			$.get('/mjob/editjobcoinno',{'jobcoinno':mid},function(data){
-				if(data.reason == "success"){
-					//console.log('done')
-				}
-			},'json');
+			$.get('/mjob/editjobcoinno',{'jobcoinno':mid},function(data){},'json');
+
+			audio.load();
+			audio.play();
 
 			_this.animate({
 				left:"-1rem",
@@ -1238,6 +1310,8 @@
 		mui.init();
 
 		mui('.mui-scroll').on('tap','a',function(){document.location.href=this.href;});
+
+		
 
 		(function($) {
 			//阻尼系数
