@@ -1,0 +1,335 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职夺宝{% endblock %}
+{% block css %}{{ stylesheetLink('css/db/db.css') }}{% endblock %}
+{% block content %}
+<style type="text/css">
+	
+	.bgtit {
+		height: 18.3rem;
+		background: #1f36bf;
+	}
+	.conrow {
+		height: 6.52rem;
+		margin-bottom: 1rem;
+		margin-top:2.2rem;
+	}
+	.conrow .con {
+		display: block;
+		padding:0;
+	}
+	.conrow .con .icorow {
+		height: 3.8rem;
+		margin-bottom: 1rem;
+	}
+	.conrow .con .icorow .ico {
+		width: 3.8rem;
+		height: 3.8rem;
+		border-radius: 50%;
+	}
+	.conrow .con h5 {
+		margin:0;
+		text-align: center;
+		font-size:1rem;
+		color:#fff;
+	}
+	.mui-slider {
+		height: 14.74rem;
+	}
+	.mui-slider-indicator {
+		/*bottom: 0;*/
+	}
+	.mui-slider-indicator .mui-indicator {
+		margin: 1px 2px;
+		background: #d7dae7;
+	}
+	.mui-slider-indicator .mui-active.mui-indicator {
+		background: #1f36bf;
+	}
+	.mui-slider-item {
+		height: 14.74rem !important;
+		/*background: #fff;*/
+	}
+	.mui-slider-item a {
+		position:relative;
+		width: 100%;
+		height: 100%;
+	}
+	.news {
+	    width: 100%;
+	    height: 3.23rem;
+	    line-height: 3.23rem;
+	    border-radius: 3.23rem;
+	    background-color: #3552fc;
+	    margin-top: 1rem;
+	    margin-bottom: 1rem;
+	    color: #fff;
+	    padding: 0 1.2rem;
+	    font-size: 1rem;
+	}
+	.news a {
+	    color: #fff;
+	}
+	.news span {
+	    display: inline-block;
+	    width: 5.48rem;
+	    height: 1.96rem;
+	    line-height: 1.96rem;
+	    border-radius: 1.96rem;
+	    text-align: center;
+	    background-color: #fe4b28;
+	    margin-right: .3rem;
+	}
+	.mui-table-view {
+		margin-bottom: 6.82rem;
+	}
+	.mui-table-view:before,
+	.mui-table-view:after {
+		background: transparent;
+	}
+	.mui-table-view-cell {
+		height: 8.9rem;
+		padding:15px;
+	}
+	.mui-table-view-cell .item {
+		height: 100%;
+	}
+	.mui-table-view .mui-media-object {
+		width: 6.46rem;
+		max-width:6.46rem;
+		height: 6.46rem;
+	}
+	.mui-table-view-cell:after {
+		right: 15px;
+	}
+	.mui-table-view-cell .title {
+		height: 3rem;
+		margin-bottom: 1.4rem;
+		color:#67686e;
+		line-height: 1.58rem;
+		font-size:1.14rem;
+		overflow: hidden;
+	}
+	.mui-table-view-cell .title .tips {
+		background: #fbb73c;
+		display: inline-block;
+		width: 5.5rem;
+		height: 1.52rem;
+		line-height: 1.58rem;
+		color:#fff;
+		text-align: center;
+		margin-right: 5px;
+		border-radius: 1.52rem;
+	}
+	.mui-table-view-cell .status {
+		height: 2.5rem;
+		font-size: 1rem;
+	}
+	.mui-table-view-cell .status .rate,
+	.mui-table-view-cell .status .link {
+		padding:0;
+	}
+	.mui-table-view-cell .status .rate p {
+		font-size:1rem;
+	}
+	.mui-table-view-cell .status .rate .progressrow {
+		width: 100%;
+		height: 5px;
+		background: #d7dae7;
+		border-radius: 5px;
+		position:relative;
+	}
+	.mui-table-view-cell .status .rate .progress {
+		position: absolute;
+		top:0;
+		left:0;
+		height: 5px;
+		border-radius: 5px;
+		background: -webkit-linear-gradient(left, #ff0a8d , #ff5d24); /* Safari 5.1 - 6.0 */
+		background: -o-linear-gradient(right, #ff0a8d, #ff5d24); /* Opera 11.1 - 12.0 */
+		background: -moz-linear-gradient(right, #ff0a8d, #ff5d24); /* Firefox 3.6 - 15 */
+		background: linear-gradient(to right, #ff0a8d , #ff5d24); /* 标准的语法 */
+	}
+	.mui-table-view-cell .status .link {
+		height: 2.09rem;
+		line-height: 2.18rem;
+		border-radius: 2.09rem;
+		text-align: center;
+		font-size: 1.14rem;
+		color:#fff;
+		background: -webkit-linear-gradient(left, #ff0a8d , #ff5d24); /* Safari 5.1 - 6.0 */
+		background: -o-linear-gradient(right, #ff0a8d, #ff5d24); /* Opera 11.1 - 12.0 */
+		background: -moz-linear-gradient(right, #ff0a8d, #ff5d24); /* Firefox 3.6 - 15 */
+		background: linear-gradient(to right, #ff0a8d , #ff5d24); /* 标准的语法 */
+	}
+	.mui-table-view-cell .status .link.disabled {
+		background: #d7dae7;
+	}
+</style>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">金职夺宝</h1>
+</header>
+
+<div class="mui-content">
+	<div class="bgtit">
+		<div class="container">
+			<div class="conrow">
+				<a href="#" class="col-xs-3 con">
+					<div class="icorow rel">
+						<div class="ico auto-center" style="background: #fe1594;"></div>
+					</div>
+					<h5>我的资产</h5>
+				</a>
+				<a href="#" class="col-xs-3 con">
+					<div class="icorow rel">
+						<div class="ico auto-center" style="background: #f85d31;"></div>
+					</div>
+					<h5>活动规则</h5>
+				</a>
+				<a href="#" class="col-xs-3 con">
+					<div class="icorow rel">
+						<div class="ico auto-center" style="background: #ffd02b;"></div>
+					</div>
+					<h5>系统消息</h5>
+				</a>
+				<a href="#" class="col-xs-3 con">
+					<div class="icorow rel">
+						<div class="ico auto-center" style="background: #3ab4f1;"></div>
+					</div>
+					<h5>参与记录</h5>
+				</a>
+			</div>
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="/public/img/db/3.jpg" class="auto-center">
+						</a>
+					</div>
+					<!-- 第一张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="/public/img/db/1.jpg" class="auto-center">
+						</a>
+					</div>
+					<!-- 第二张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="/public/img/db/2.jpg" class="auto-center">
+						</a>
+					</div>
+					<!-- 第三张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="/public/img/db/3.jpg" class="auto-center">
+						</a>
+					</div>
+					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="/public/img/db/1.jpg" class="auto-center">
+						</a>
+					</div>
+				</div>
+				<div class="mui-slider-indicator">
+					<div class="mui-indicator mui-active"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+				</div>
+			</div>
+			<div class="news">
+				<a href="#">
+					<span>夺宝快报</span>
+					金职夺宝开放，开启夺宝狂欢！
+				</a>
+			</div>
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media">
+					<div class="item">
+						<img class="mui-media-object mui-pull-left" src="/public/img/db/1.jpg">
+						<div class="mui-media-body">
+							<div class="title">
+								<span class="tips">16801期</span>
+								新一代全面屏AI双摄手机4GB+128GB三网通4G手机双卡双待
+							</div>
+							<div class="status">
+								<div class="rate col-xs-7">
+									<p>夺宝进度：<span>50%</span></p>
+									<div class="progressrow">
+										<div class="progress" style="width:50%"></div>
+									</div>
+								</div>
+								<a href="#" class="btn link col-xs-4 right disabled">立即购买</a>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<div class="item">
+						<img class="mui-media-object mui-pull-left" src="/public/img/db/1.jpg">
+						<div class="mui-media-body">
+							<div class="title">
+								<span class="tips">16801期</span>
+								新一代全面屏AI双摄手机4GB+128GB三网通4G手机双卡双待
+							</div>
+							<div class="status">
+								<div class="rate col-xs-7">
+									<p>夺宝进度：<span>30%</span></p>
+									<div class="progressrow">
+										<div class="progress" style="width:30%"></div>
+									</div>
+								</div>
+								<a href="#" class="btn link col-xs-4 right disabled">立即购买</a>
+							</div>
+						</div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<div class="item">
+						<img class="mui-media-object mui-pull-left" src="/public/img/db/1.jpg">
+						<div class="mui-media-body">
+							<div class="title">
+								<span class="tips">16801期</span>
+								新一代全面屏AI双摄手机4GB+128GB三网通4G手机双卡双待
+							</div>
+							<div class="status">
+								<div class="rate col-xs-7">
+									<p>夺宝进度：<span>100%</span></p>
+									<div class="progressrow">
+										<div class="progress" style="width:100%"></div>
+									</div>
+								</div>
+								<a href="detail" class="link col-xs-4 right">立即购买</a>
+							</div>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<footer>
+	<a href="/mjob/main#tabbar" class="col-xs-4">
+		<span class="icon-1 iconpng"></span>
+		<span class="mui-tab-label">数据挖矿</span>
+	</a>
+	<a href="/mjob/main#tabbar" class="col-xs-4 active">
+		<span class="icon-2 iconpng"></span>
+		<span class="mui-tab-label">金职岛</span>
+	</a>
+	<a href="/mjob/main#tabbar" class="col-xs-4">
+		<span class="icon-3 iconpng"></span>
+		<span class="mui-tab-label">我的身份</span>
+	</a>
+</footer>
+<script type="text/javascript">
+	mui.init({
+		swipeBack:true //启用右滑关闭功能
+	});
+	var slider = mui("#slider");
+	slider.slider({
+		interval: 3000
+	});
+</script>
+{% endblock %}

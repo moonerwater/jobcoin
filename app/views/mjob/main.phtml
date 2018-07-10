@@ -1096,28 +1096,34 @@
 		function checkHref(){
 			var urlArr = window.location.href.split('#');
 			var position = urlArr[1];
-			console.log(position)
-			//$('.mui-slider-item').hide();
+			var width = $(window).width();
+
 			if(position == 'a-tabbar-with-chat'){
-				$('#tabbar-with-chat').show().addClass('mui-active').siblings().removeClass('mui-active');
+				$('#tabbar-with-chat').addClass('mui-active').siblings().removeClass('mui-active');
 				$('#tabbar-with-chat2').addClass('mui-active').siblings().removeClass('mui-active');
+				$('.mui-slider-group').css("transform","translate3d(-"+width+"px, 0px, 0px)");
 				console.log('2')
 			}
 			else if(position == 'a-tabbar-with-contact'){
-				$('#tabbar-with-contact').show().addClass('mui-active').siblings().removeClass('mui-active');
+				$('#tabbar-with-contact').addClass('mui-active').siblings().removeClass('mui-active');
 				$('#tabbar-with-contact2').addClass('mui-active').siblings().removeClass('mui-active');
+				$('.mui-slider-group').css("transform","translate3d(-"+width*2+"px, 0px, 0px)");
 				console.log('3')
 			}
 			else {
-				$('#tabbar').addClass('mui-active').show().siblings().removeClass('mui-active');
+				$('#tabbar').addClass('mui-active').siblings().removeClass('mui-active');
 				$('#tabbar2').addClass('mui-active').siblings().removeClass('mui-active');
 				console.log('1')
+				$('.mui-slider-group').css("transform","translate3d(0px, 0px, 0px)");
 			}
 		}
-
+		checkHref();
 		document.getElementById('slider').addEventListener('slide', function(e) {
-			console.log('sadsadsad')
-			checkHref();
+			setTimeout(function(){
+				var href = $('.mui-slider-item.mui-active').attr('id');
+				window.location.href = 'main#a-'+href;
+			},100)
+			
 		});
 
 		//矿显示数量
@@ -1251,9 +1257,9 @@
 					}
 				},'json');
 			}
-			getjobcoinno();
-			checkHref();
 
+			getjobcoinno();
+			
 			var text = $('.mui-media-body span').text();
 			if(!checkName(text)){
 				$('.mui-media-object .text').html('无');

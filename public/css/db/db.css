@@ -1,0 +1,57 @@
+body,html {
+	background: #f3f5f8;
+	padding-bottom: 5.82rem;
+	height: 100%;
+}
+
+footer {
+	height: 5.82rem;
+	width: 100%;
+	position:fixed;
+	bottom: 0;
+	left:0;
+	z-index: 100;
+	background-color: #f7f7f7;
+	padding: 0 15px;
+	-webkit-box-shadow: 0 0 1px rgba(0,0,0,.85);
+    box-shadow: 0 0 1px rgba(0,0,0,.85);
+}
+footer a {
+	display: block;
+	height: 100%;
+	padding: 0;
+    position: relative;
+    top: .5rem;
+}
+footer a .iconpng {
+	width: 2rem;
+    height: 2rem;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+    top: 4px;
+}
+footer a .iconpng.icon-1 {
+    background: url(/public/img/mjob/s1.png) center no-repeat;
+    background-size: contain;
+}
+footer a .iconpng.icon-2 {
+    background: url(/public/img/mjob/s2s.png) center no-repeat;
+    background-size: contain;
+}
+footer a .iconpng.icon-3 {
+    background: url(/public/img/mjob/s3.png) center no-repeat;
+    background-size: contain;
+}
+footer a .mui-tab-label {
+	display: inline-block;
+	margin-top:8px;
+	text-align: center;
+	font-weight: 700;
+	color:#333;
+	font-size: 15px;
+	width: 100%;
+}
+footer a.active .mui-tab-label {
+	color: #374fff !important;
+}
