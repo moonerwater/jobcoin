@@ -174,6 +174,7 @@
 			height:10.9rem;
 			margin:0 auto;
 			position:relative;
+			z-index: 5;
 			/*margin-top:3.29rem;*/
 		}
 		
@@ -198,6 +199,7 @@
 		}
 		.mine .mining .rock {
 			position:absolute;
+			z-index: -1;
 			width: 80%;
 		    height: 100%;
 		    top: -2.5rem;
@@ -213,7 +215,16 @@
 			-webkit-animation-duration: 1.5s;
 			-webkit-animation-iteration-count: infinite*/;
 		}
-		
+		@keyframes hidCloud {
+			0%   {opacity: .7;bottom:1rem;}
+			50%  {opacity: 1;bottom:1.3rem;}
+			100% {opacity: .7;bottom:1rem;}
+		}
+		@-webkit-keyframes hidCloud {
+			0%   {opacity: .7;bottom:1rem;}
+			50%  {opacity: 1;bottom:1.3rem;}
+			100% {opacity: .7;bottom:1rem;}
+		}
 		.mine .mining .cloud {
 			position:absolute;
 			width: 6rem;
@@ -224,15 +235,77 @@
 			animation: hidCloud 2s infinite;
 			-webkit-animation: hidCloud 2s infinite;
 		}
-		@keyframes hidCloud {
-			0%   {opacity: .7;bottom:1rem;}
-			50%  {opacity: 1;bottom:1.3rem;}
-			100% {opacity: .7;bottom:1rem;}
+		@keyframes fireworkA {
+			0%   {opacity: 0;top:1.8rem;left:2.3rem;}
+			25%  {opacity: 1;top:1.15rem;left:1.85rem;}
+			50%  {opacity: .2;top:.5rem;left:1.4rem;}
+			75%  {opacity: 0;top:.5rem;left:1.4rem;}
+			100% {opacity: 0;top:1.8rem;left:2.3rem;}
 		}
-		@-webkit-keyframes hammerHit {
-			0%   {opacity: .7;bottom:1rem;}
-			50%  {opacity: 1;bottom:1.3rem;}
-			100% {opacity: .7;bottom:1rem;}
+		@-webkit-keyframes fireworkA {
+			0%   {opacity: 0;top:1.8rem;left:2.3rem;}
+			25%  {opacity: 1;top:1.15rem;left:1.85rem;}
+			50%  {opacity: .2;top:.5rem;left:1.4rem;}
+			75%  {opacity: 0;top:.5rem;left:1.4rem;}
+			100% {opacity: 0;top:1.8rem;left:2.3rem;}
+		}
+		@keyframes fireworkB {
+			0%   {opacity: 0;top:1.9rem;left:2.4rem;}
+			25%  {opacity: 1;top:2.0rem;left:1.85rem;}
+			50%  {opacity: .2;top:2.1rem;left:1.3rem;}
+			75%  {opacity: 0;top:2.1rem;left:1.3rem;}
+			100% {opacity: 0;top:1.9rem;left:2.4rem;}
+		}
+		@-webkit-keyframes fireworkB {
+			0%   {opacity: 0;top:1.9rem;left:2.4rem;}
+			25%  {opacity: 1;top:2.0rem;left:1.85rem;}
+			50%  {opacity: .2;top:2.1rem;left:1.3rem;}
+			75%  {opacity: 0;top:2.1rem;left:1.3rem;}
+			100% {opacity: 0;top:1.9rem;left:2.4rem;}
+		}
+		@keyframes fireworkC {
+			0%   {opacity: 0;top:2rem;left:2rem;}
+			25%  {opacity: 1;top:1.5rem;left:2.3rem;}
+			50%  {opacity: .2;top:1rem;left:2.6rem;}
+			75%  {opacity: 0;top:1rem;left:2.6rem;}
+			100% {opacity: 0;top:2rem;left:2rem;}
+		}
+		@-webkit-keyframes fireworkC {
+			0%   {opacity: 0;top:2rem;left:2rem;}
+			25%  {opacity: 1;top:1.5rem;left:2.3rem;}
+			50%  {opacity: .2;top:1rem;left:2.6rem;}
+			75%  {opacity: 0;top:1rem;left:2.6rem;}
+			100% {opacity: 0;top:2rem;left:2rem;}
+		}
+		.mine .mining .firework {
+			position: absolute;
+			width: 1.2rem;
+			height: 1.2rem;
+			/*animation-delay:1.5s;
+			-webkit-animation-delay:1.5s;*/
+		}
+		.mine .mining .firework1 {
+			top:1.8rem;
+			left:2.3rem;
+			opacity: 0;
+			animation: fireworkA 1.5s linear 1s infinite;
+			-webkit-animation: fireworkA 1.5s linear 1s infinite;
+		}
+		.mine .mining .firework2 {
+			top:1.9rem;
+			left:2.4rem;
+			transform: scale(.7);
+			opacity: 0;
+			animation: fireworkB 1.5s linear 1s infinite;
+			-webkit-animation: fireworkB 1.5s linear 1s infinite;
+		}
+		.mine .mining .firework3 {
+			top:2rem;
+			left:2rem;
+			transform: scale(.85);
+			opacity: 0;
+			animation: fireworkC 1.5s linear 1s infinite;
+			-webkit-animation: fireworkC 1.5s linear 1s infinite;
 		}
 		.mine .pmining {
 			width: 8.22rem;
@@ -607,7 +680,8 @@
 			float:left;
 			position: absolute;
 			width: 6.26rem;
-			height: 9.63rem;	
+			height: 9.63rem;
+			transform: scale(.8);
 		}
 		.minesbox .mines .animatebox {
 			position: relative;
@@ -861,12 +935,21 @@
 									<div class="nomine none">
 										<p class="ptext">算力越高挖出的矿石越多哦</p>
 										<div class="mining">
-											<img src="/public/img/mjob/mining.png" class="auto-center">
+											<img src="/public/img/mjob/mining2.png" class="auto-center">
 											<div class="rock">
 												<img src="/public/img/mjob/hammer2.png" class="auto-center">
 											</div>
 											<div class="cloud">
 												<img src="/public/img/mjob/cloud.png" class="auto-center">
+											</div>
+											<div class="firework firework1">
+												<img src="/public/img/mjob/firework.png" class="auto-center">
+											</div>
+											<div class="firework firework2">
+												<img src="/public/img/mjob/firework.png" class="auto-center">
+											</div>
+											<div class="firework firework3">
+												<img src="/public/img/mjob/firework.png" class="auto-center">
 											</div>
 										</div>
 										<p class="pmining">正在挖矿中…</p>
@@ -1102,18 +1185,15 @@
 				$('#tabbar-with-chat').addClass('mui-active').siblings().removeClass('mui-active');
 				$('#tabbar-with-chat2').addClass('mui-active').siblings().removeClass('mui-active');
 				$('.mui-slider-group').css("transform","translate3d(-"+width+"px, 0px, 0px)");
-				console.log('2')
 			}
 			else if(position == 'a-tabbar-with-contact'){
 				$('#tabbar-with-contact').addClass('mui-active').siblings().removeClass('mui-active');
 				$('#tabbar-with-contact2').addClass('mui-active').siblings().removeClass('mui-active');
 				$('.mui-slider-group').css("transform","translate3d(-"+width*2+"px, 0px, 0px)");
-				console.log('3')
 			}
 			else {
 				$('#tabbar').addClass('mui-active').siblings().removeClass('mui-active');
 				$('#tabbar2').addClass('mui-active').siblings().removeClass('mui-active');
-				console.log('1')
 				$('.mui-slider-group').css("transform","translate3d(0px, 0px, 0px)");
 			}
 		}
@@ -1130,7 +1210,7 @@
 		var minenum2 = 5;
 		var minenum = minenum2;
 		//显示范围
-		var HRange = 16-7.98-2.15+0.5;
+		var HRange = 16-9.63; 	//9.63
 		var WRange = parseFloat($('.minesbox').css('width').replace('px','')) / parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px','')) - 6.26;
 		//本地储存金矿
 		var result = {};

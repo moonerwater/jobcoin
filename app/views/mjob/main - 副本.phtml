@@ -1,0 +1,955 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职岛 - 主页{% endblock %}
+
+
+{% block content %}
+		<style>
+			body,html{
+                background-color: #1f36bf;
+                /*padding:0 20px;*/
+            }
+            .mui-slider-indicator.mui-segmented-control {
+                position: absolute !important;
+                bottom: 0 !important;
+                top: auto !important;
+                left: 0 !important;
+                height: 5.82rem !important;
+                z-index:100 !important;
+                /*border-top: .5rem solid #f7f7f7;*/
+            }
+            .mui-bar {
+            	position: absolute !important;
+            	z-index:100 !important;
+            }
+            .mui-bar-tab {
+            	height:auto;
+            }
+			.mui-bar~.mui-content .mui-fullscreen {
+				top: 44px;
+				height: auto;
+			}
+			.mui-pull-top-tips {
+				position: absolute;
+				top: -20px;
+				left: 50%;
+				margin-left: -25px;
+				width: 40px;
+				height: 40px;
+				border-radius: 100%;
+				z-index: 1;
+			}
+			.mui-bar~.mui-pull-top-tips {
+				top: 24px;
+			}
+			.mui-pull-top-wrapper {
+				width: 42px;
+				height: 42px;
+				display: block;
+				text-align: center;
+				background-color: #efeff4;
+				border: 1px solid #ddd;
+				border-radius: 25px;
+				background-clip: padding-box;
+				box-shadow: 0 4px 10px #bbb;
+				overflow: hidden;
+			}
+			.mui-pull-top-tips.mui-transitioning {
+				-webkit-transition-duration: 200ms;
+				transition-duration: 200ms;
+			}
+			.mui-pull-top-tips .mui-pull-loading {
+				/*-webkit-backface-visibility: hidden;
+				-webkit-transition-duration: 400ms;
+				transition-duration: 400ms;*/
+				
+				margin: 0;
+			}
+			.mui-pull-top-wrapper .mui-icon,
+			.mui-pull-top-wrapper .mui-spinner {
+				margin-top: 7px;
+			}
+			.mui-pull-top-wrapper .mui-icon.mui-reverse {
+				/*-webkit-transform: rotate(180deg) translateZ(0);*/
+			}
+			.mui-pull-bottom-tips {
+				text-align: center;
+				background-color: #efeff4;
+				font-size: 15px;
+				line-height: 40px;
+				color: #777;
+				display: none;
+			}
+			.mui-pull-top-canvas {
+				overflow: hidden;
+				background-color: #fafafa;
+				border-radius: 40px;
+				box-shadow: 0 4px 10px #bbb;
+				width: 40px;
+				height: 40px;
+				margin: 0 auto;
+			}
+			.mui-pull-top-canvas canvas {
+				width: 40px;
+			}
+			.mui-control-item .mui-tab-label {
+				font-weight: 700;
+			}
+			.mui-segmented-control.mui-scroll-wrapper .mui-control-item {
+				padding: 0;
+    			width: 30%;
+    			position: relative;
+   				top: .5rem;
+			}
+			.mui-slider-indicator .mui-icon {
+				font-size: 24px;
+				line-height:1;
+				width: 54px;
+			    display: block;
+			    padding: 0;
+			    margin: 0 auto;
+			    padding-top: 10px;
+			    border:none;
+			}
+			/*.mui-bar-tab {
+				height: 5.82rem;
+			}*/
+			.mui-fullscreen.mui-slider .mui-slider-group {
+				padding-bottom: 5rem;
+			}
+			/*.mui-scroll {
+				display: none;
+			}*/
+			.powerrow {
+				margin-top:1.52rem;
+			}
+			.powerrow .left {
+				/*width: 6.2rem;*/
+				height: 4.37rem;
+				line-height: 4.37rem;
+			}
+			.powerrow .left span.mintit {
+				width: 3.49em;
+				height: 2.15rem;
+				background: url("/public/img/mjob/minetit.png") center no-repeat;
+				background-size: contain;
+				display: inline-block;
+				margin-right: 1rem;
+				position: relative;
+				top:.3rem;
+			}
+			.powerrow .left .power {
+				font-size: 1.8rem;
+			    color: #fac82e;
+			    position: relative;
+			    top: -.2rem;
+			}
+			/*.powerrow .left  {
+				color:#6d82ff;
+				font-size:.5rem;
+				position: relative;
+				top:-1rem;
+			}*/
+			.powerrow .right {
+				display: block;
+				width: 7.08rem;
+				height: 2.66rem;
+				border-radius: 2.66rem;
+				font-size:1.14rem;
+				line-height: 2.66rem;
+				text-align: center;
+				background-color: #3552fc;
+				color:#fff;
+				position: relative;
+    			top: .7rem;
+			}
+			.mine {
+				height: 18rem;
+				background: url("/public/img/mjob/minebg.png") center no-repeat;
+				background-size: cover;
+				margin-bottom: 2rem;
+			}
+			.mine .mining {
+				display: block;
+				width: 29.2% !important;
+				margin:0 auto;
+				/*margin-top:3.29rem;*/
+			}
+			.mine .pmining {
+				width: 8.22rem;
+				height: 2.15rem;
+				line-height: 2.15rem;
+				border-radius: 2.15rem;
+				text-align: center;
+				background-color: #3552fc;
+				color:#fff;
+				font-size:1rem;
+				margin:0 auto;
+				margin-top:3rem;
+				/*margin-bottom: 2rem;*/
+			}
+			.mine .ptext {
+				color:#fff;
+				font-size:1rem;
+				text-align: center;
+				margin-bottom: 1rem;
+			}
+			.subjectrow {
+				position: relative;
+				z-index: 10;
+			}
+			.subjectrow .subject {
+				width: 5.32rem;
+				margin-right: 1rem;
+				display: block;
+			}
+			.subjectrow .subject .radius {
+				width: 4.17rem;
+				height: 4.17rem;
+				border-radius: 50%;
+				background-color: #3552fc;
+				margin:0 auto;
+			}
+			.subjectrow .subject .radius img {
+				max-width: 2rem;
+			}
+			.subjectrow .subject .tit {
+				width: 100%;
+				height: 1.7rem;
+				line-height: 1.7rem;
+				border-radius: 1.7rem;
+				text-align: center;
+				font-size:1rem;
+				background-color: #3552fc;
+				color:#fff;
+				margin-top:.6rem;
+			}
+			.news {
+				width: 100%;
+				height: 3.23rem;
+				line-height: 3.23rem;
+				border-radius: 3.23rem;
+				background-color: #3552fc;
+				margin-top: 1.2rem;
+				margin-bottom: 1.64rem;
+				color:#fff;
+				padding:0 1.2rem;
+				font-size: 1rem;
+			}
+			.news a {
+				color:#fff;
+			}
+			.news span {
+				display: inline-block;
+				width: 3.48rem;
+				height: 1.96rem;
+				line-height: 1.96rem;
+				border-radius: 1.96rem;
+				text-align: center;
+				background-color: #fe4b28;
+				margin-right: .3rem;
+			}
+			.datalist {
+				padding:.63rem;
+			}
+			.datalist h2 {
+				font-size:1.33rem;
+				color:#fff;
+				margin:0;
+			}
+			.datalist .line {
+				width: 2.05rem;
+				height: .44rem;
+				background-color: #fff;
+				border-top-right-radius: .22rem;
+    			border-bottom-right-radius: .22rem;
+    			margin-top:.69rem;
+    			margin-bottom: 1.2rem;
+			}
+			.miningdata .row {
+				margin-bottom: .8rem;
+				font-size:1.13rem;
+			}
+			.miningdata .row .left {
+				color:#adb9ff;
+			}
+			.miningdata .row .right {
+				text-align: right;
+			}
+			.miningdata hr {
+				border:0;
+				background-color:#647bff;
+				height:1px;
+				margin-bottom: 0;
+			}
+			.ranking h2 > span { 
+				float:right;
+				font-size:1rem;
+				position: relative;
+    			top: .25rem;
+			}
+			.ranking h2 > span::before {
+				content: "";
+			    background: url(/public/img/mjob/time.png);
+			    background-size: contain;
+			    width: 1rem;
+			    height: 1rem;
+			    position: absolute;
+			    top: 0;
+			    left: -1.5rem;
+			    display: block;
+			}
+			.yellowtype {
+				color:#ffdc19;
+			}
+			table.ranktable {
+				font-size:1rem;
+				width: 100%;
+			}
+			table.ranktable th {
+				color:#a4b0fb;
+			}
+			table.ranktable tr {
+				height: 2.3rem;
+			}
+			table.ranktable tbody .rank,
+			table.ranktable tbody .name {
+				color:#fff;
+			}
+			table.ranktable tbody .rank {
+				text-align: center;
+			}
+			table.ranktable tbody .power {
+				text-align: right;
+			}
+			table.ranktable tr:first-child td:first-child,
+			table.ranktable tr:nth-child(2) td:first-child,
+			table.ranktable tr:nth-child(3) td:first-child {
+				color:#1f36bf;
+			}
+			table.ranktable tr:first-child td:first-child {
+				background: url('/public/img/mjob/no1.png') no-repeat center;
+				background-size: 1.33rem 1.83rem;
+			}
+			table.ranktable tr:nth-child(2) td:first-child {
+				background: url('/public/img/mjob/no2.png') no-repeat center;
+				background-size: 1.33rem 1.83rem;
+			}
+			table.ranktable tr:nth-child(3) td:first-child {
+				background: url('/public/img/mjob/no3.png') no-repeat center;
+				background-size: 1.33rem 1.83rem;
+			}
+
+			#tabbar-with-chat .banner {
+				height: 12rem;
+				position: relative;
+				background: #1f36bf;
+			}
+			#tabbar-with-chat .banner div.bg {
+				width: 100%;
+			    height: 6rem;
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    right: 0;
+			    bottom: 0;
+			    margin: auto;
+			    background: url(/public/img/mjob/recordbanner.png) no-repeat 50% top;
+			    background-size: 83%;
+			}
+			#tabbar-with-chat .banner div.auto-center {
+				color:#fff;
+				text-align: center;
+				width: 100%;
+				height: 4.74rem;
+				font-size:3rem;
+				/*top:-1rem;*/
+			}
+			#tabbar-with-chat .banner div img {
+				width:auto;
+			}
+			#tabbar-with-chat .box {
+				position: relative;
+				top:-2.6rem;
+			}
+			#tabbar-with-chat .box > div {
+				background: #fff;
+				border-radius: 1rem;
+				margin-bottom: 1rem;
+				padding: 1.45rem;
+			}
+			#tabbar-with-chat .box > div .title {
+				font-size:1.33rem;
+				width: 9.33rem;
+				text-align: center;
+				margin: 0 auto;
+		    	margin-bottom: 1.25rem;
+				padding: .2rem 0;
+				border-bottom:2px solid #f8e940;
+			}
+			#tabbar-with-chat .box > div .det {
+				position: relative;
+				left:1rem;
+			}
+			#tabbar-with-chat .box > div .det::before {
+				content: "";
+				display: block;
+				width: 1rem;
+				height: 100%;
+				position: absolute;
+				top:.5rem;
+				left:-1.5rem;
+				background: url("/public/img/mjob/pageline.png") no-repeat center;
+				background-size: contain;
+			}
+			#tabbar-with-chat .box .myfriends .row-2 .col-xs-6:first-child {
+				border-right: 1px solid #d7dae7;
+			}
+			#tabbar-with-chat .box .myfriends .row-2 .col-xs-6 h3 {
+				font-size:2.28rem;
+				text-align: center;
+				margin:0;
+				margin-bottom: .6rem;
+			}
+			#tabbar-with-chat .box .myfriends .row-2 .col-xs-6 p {
+				font-size:1rem;
+				text-align: center;
+				margin:0;
+				color:#d1d0d0;
+			}
+			#tabbar-with-chat .box .rules h3 {
+				font-size: 1.14rem;
+			}
+			#tabbar-with-chat .box .rules p {
+				color:#b1b0b0;
+			}
+			#tabbar-with-contact .banner {
+				height: 7rem;
+				position: relative;
+				background: #1f36bf url("/public/img/mjob/recordbanner.png") no-repeat center;
+				background-size: contain;
+			}
+			#tabbar-with-contact .box {
+				position: relative;
+				top:-2.6rem;
+			}
+			#tabbar-with-contact .box > div {
+				background: #fff;
+				border-radius: 1rem;
+				margin-bottom: 1rem;
+				overflow: hidden;
+			}
+			#tabbar-with-contact .box .myfriends {
+				padding: 1.45rem;
+			}
+			#tabbar-with-contact .mui-table-view-cell:after {
+				left: 0;
+			}
+			#tabbar-with-contact .mui-table-view .mui-media-object {
+				height: 6.83rem;
+				max-width: inherit;
+				width: 6.83rem;
+			}
+			#tabbar-with-contact .mui-table-view .mui-media-body {
+				margin-top: 1.2rem;
+    			font-size: 2.28rem;
+			}
+			#tabbar-with-contact .rules a.mui-navigate-right span {
+				display: inline-block;
+				margin-right: .5rem;
+				width: 1.5rem;
+				height: 1.5rem;
+				position: relative;
+				top:.3rem;
+			}
+			#tabbar-with-contact .rules a.mui-navigate-right span.ident1 {
+				background: url("/public/img/mjob/ideicon1.png") no-repeat center;
+				background-size: contain;
+			}
+			#tabbar-with-contact .rules a.mui-navigate-right span.ident2 {
+				background: url("/public/img/mjob/ideicon2.png") no-repeat center;
+				background-size: contain;
+			}
+			#tabbar-with-contact .rules a.mui-navigate-right span.ident3 {
+				background: url("/public/img/mjob/ideicon3.png") no-repeat center;
+				background-size: contain;
+			}
+			#tabbar-with-contact .rules a.mui-navigate-right span.ident4 {
+				background: url("/public/img/mjob/ideicon4.png") no-repeat center;
+				background-size: contain;
+			}
+			#tabbar-with-contact .rules a.mui-navigate-right span.ident5 {
+				background: url("/public/img/mjob/ideicon5.png") no-repeat center;
+				background-size: contain;
+			}
+			.minesbox {
+				position: relative;
+				height:16rem;
+			}
+			.minesbox .mines {
+				float:left;
+				position: absolute;
+				width: 6.26rem;
+				height: 9.63rem;	
+			}
+			.minesbox .mines .animatebox {
+				position: relative;
+				animation: myfloat 2s infinite;
+    			-webkit-animation: myfloat 2s infinite;
+			}
+			.minesbox .mines .mineimg {
+				width: 6.26rem;
+				height: 7.98rem;
+				background: url("/public/img/mjob/mine.png") no-repeat center;
+				background-size: contain;
+			}
+			.minesbox .mines .minenum {
+				width: 6.26rem;
+				height: 2.15rem;
+				line-height: 2.15rem;
+				border-radius: 2.15rem;
+				color:#fff;
+				font-size:1.14rem;
+				position: relative;
+				top:-.5rem;
+				opacity: .8;
+				text-align: center;
+				background: #314df3;
+			}
+			.mui-slider-indicator .iconpng {
+			    width: 2rem;
+			    height: 2rem;
+			    display: block;
+			    margin: 0 auto;
+			    position: relative;
+			    top: 4px;
+			}
+			.mui-slider-indicator .iconpng.icon-1 {
+				background: url("/public/img/mjob/s1.png") center no-repeat;
+				background-size: contain;
+			}
+			.mui-slider-indicator .iconpng.icon-2 {
+				background: url("/public/img/mjob/s2.png") center no-repeat;
+				background-size: contain;
+			}
+			.mui-slider-indicator .iconpng.icon-3 {
+				background: url("/public/img/mjob/s3.png") center no-repeat;
+				background-size: contain;
+			}
+			.mui-active .icon-1 {
+				background: url("/public/img/mjob/s1s.png") center no-repeat !important;
+				background-size: contain !important;
+			}
+			.mui-active .icon-2 {
+				background: url("/public/img/mjob/s2s.png") center no-repeat !important;
+				background-size: contain !important;
+			}
+			.mui-active .icon-3 {
+				background: url("/public/img/mjob/s3s.png") center no-repeat !important;
+				background-size: contain !important;
+			}
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+				color: #374fff !important;
+			}
+
+			@keyframes myfloat {
+				0%   {top:0px;}
+				50%  {top:-.3rem;}
+				100% {top:0px;}
+			}
+			@-webkit-keyframes myfloat {
+				0%   {top:0px;}
+				50%  {top:-.3rem;}
+				100% {top:0px;}
+			}
+		</style>
+
+		<!-- <header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">金职岛</h1>
+		</header> -->
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				
+				<div class="mui-slider-group">
+					<div id="tabbar" class="mui-slider-item mui-control-content mui-active">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll scroll">
+								<div class="container">
+									<div class="powerrow">
+										<div class="left">
+											<span class="mintit"></span><span class="power showpower">{{ data['score'] }}</span>
+										</div>
+										<a href="strategy" class="right">算力攻略</a>
+										<div class="cls"></div>
+									</div>
+									<div class="mine">
+										<div class="nomine none">
+											<p class="ptext">算力越高挖出的矿石越多哦</p>
+											<img src="/public/img/mjob/mining.png" class="mining">
+											<p class="pmining">正在挖矿中…</p>
+										</div>
+										<div class="hasmine">
+											<p class="ptext">72小时内不领取近况将消失</p>
+											<div class="minesbox">
+												<!-- <div class="mines">
+													<div class="mineimg"></div>
+													<div class="minenum">0.00035</div>
+												</div> -->
+											</div>
+										</div>
+									</div>
+									<div class="subjectrow">
+										<a href="assets" class="subject left">
+											<div class="radius rel">
+												<img src="/public/img/mjob/subject1.png" class="auto-center">
+											</div>
+											<div class="tit">我的资产</div>
+										</a>
+										<a href="promote" class="subject left">
+											<div class="radius rel">
+												<img src="/public/img/mjob/subject2.png" class="auto-center">
+											</div>
+											<div class="tit">提升算力</div>
+										</a>
+										<a href="invite" class="subject right" style="margin-right: 0;">
+											<div class="radius rel">
+												<img src="/public/img/mjob/subject3.png" class="auto-center">
+											</div>
+											<div class="tit">邀请好友</div>
+										</a>
+										<div class="cls"></div>
+									</div>
+									<div class="news">
+										<a href="#">
+											<span>头条</span>
+											金职链每周进展通报（05.14-05.20）
+										</a>
+									</div>
+									<div class="miningdata datalist">
+										<h2>挖矿数据</h2>
+										<div class="line"></div>
+										<div class="row">
+											<div class="col-xs-6 left">我的当前挖矿能力</div>
+											<div class="col-xs-6 right yellowtype showpower">{{ data['score'] }}</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-6 left">我的挖矿算力排名</div>
+											<div class="col-xs-6 right yellowtype " id="Myrank">{{ data['scorerank'] }}</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-6 left">今日全民挖矿次数</div>
+											<div class="col-xs-6 right yellowtype " id="Todaymining">{{ data['todaycount'] }}</div>
+										</div>
+										<div class="row">
+											<div class="col-xs-6 left">累计全民挖矿次数</div>
+											<div class="col-xs-6 right yellowtype " id="Allmining">{{ data['totalcount'] }}</div>
+										</div>
+										<hr>
+									</div>
+									<div class="ranking datalist" style="padding-bottom: 5rem;">
+										<h2 class='rel'>全岛挖矿排行<span class="yellowtype">更新于 <span id='time'>{{ data['time'] }}</span></span></h2>
+										<div class="line"></div>
+										<table class="ranktable">
+										    <thead>
+											    <tr>
+											        <th style="width:10%;text-align: center;">名次</th>
+											        <th style="width:55%">账号</th>
+											        <th style="width:30%;text-align: right;">算力值</th>
+											    </tr>
+										    </thead>
+										    <tbody>
+											{% for key, item in data['userlist'] %}
+											    <tr>
+											        <td class="rank">{{ key+1 }}</td>
+											        <td class="name">{{ item['code_system'] }}</td>
+											        <td class="yellowtype power">{{ item['score'] }}</td>
+											    </tr>
+											{% endfor %}
+										  </tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="tabbar-with-chat" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll">
+								<div class="mui-content">
+									<div class="banner">
+										<div class="bg"></div>
+										<div class="auto-center"><img src="/public/img/mjob/landlogo.png" class="auto-center"></div>
+									</div>
+									<div class="container rel">
+										<div class="box">
+											<div class="myfriends">
+												<div class="row row-2">
+													<div class="col-xs-6">
+														<h3>{{ data['totaluser'] }}</h3>
+														<p>金职岛总人口</p>
+													</div>
+													<div class="col-xs-6">
+														<h3>{{ data['totalvip'] }}</h3>
+														<p>创世居民</p>
+													</div>
+												</div>
+											</div>
+											<div class="rules">
+												<div class="title">金职岛建设规划</div>
+												<div class="det">
+													<h3>搭建及完善金职岛</h3>
+													<p>搭建金职岛基础设施，吸引创始居民及更多的居民入住，提供JOB币奖励，为后续的职业数据价值经济做好用户储备。</p>
+													<h3>引进应用入岛</h3>
+													<p>引进基于金职链的各类区块链职业应用，为岛上居民提供各方面的职业服务。</p>
+													<h3>打造去中心化职业数据交易所</h3>
+													<p>在金职岛内打造去中心化的职业数据交易所，引入职业数据买方，向岛上居民公平公正地进行数据采购，并将授权数据所获得的利益回报给岛上居民。</p>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="tabbar-with-contact" class="mui-slider-item mui-control-content">
+						<div class="mui-scroll-wrapper">
+							<div class="mui-scroll" style="height: 100%;">
+								<div class="mui-content" style="height: 100%;">
+									<div class="banner">
+										<!-- <div class="auto-center"><img src="/public/img/mjob/landlogo.png" class="auto-center"></div> -->
+									</div>
+									<div class="container rel">
+										<div class="box">
+											<div class="myfriends">
+												<ul class="mui-table-view">
+													<li class="mui-table-view-cell mui-media">
+														<a href="identity" style="padding:0;">
+															<img class="mui-media-object mui-pull-left" src="/public/img/mjob/face.png">
+															<div class="mui-media-body">
+																{{ data['username'] }}
+																<p class="mui-ellipsis">金职岛第{{ data['userrank'] }}位居民</p>
+															</div>
+														</a>
+													</li>
+												</ul>
+											</div>
+											<div class="rules">
+												<ul class="mui-table-view">
+													<li class="mui-table-view-cell">
+														<a href="dataplate" class="mui-navigate-right">
+															<span class="ident1"></span>我的数据
+														</a>
+													</li>
+													<li class="mui-table-view-cell">
+														<a href="assets" class="mui-navigate-right">
+															<span class="ident2"></span>我的资产
+														</a>
+													</li>
+													<li class="mui-table-view-cell">
+														<a href="#" class="mui-navigate-right">
+															<span class="ident3"></span>金职钱包
+														</a>
+													</li>
+													<li class="mui-table-view-cell">
+														<a href="#" class="mui-navigate-right">
+															<span class="ident4"></span>实名信息
+														</a>
+													</li>
+													<li class="mui-table-view-cell">
+														<a href="setting" class="mui-navigate-right">
+															<span class="ident5"></span>账户设置
+														</a>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<nav class="mui-bar mui-bar-tab">
+						<a class="mui-control-item mui-active" href="#tabbar">
+							<span class="icon-1 iconpng"></span>
+							<span class="mui-tab-label">数据挖矿</span>
+						</a>
+						<a class="mui-control-item" href="#tabbar-with-chat">
+							<span class="icon-2 iconpng"><!-- <span class="mui-badge">9</span> --></span>
+							<span class="mui-tab-label">金职岛</span>
+						</a>
+						<a class="mui-control-item" href="#tabbar-with-contact">
+							<span class="icon-3 iconpng"></span>
+							<span class="mui-tab-label">我的身份</span>
+						</a>
+					</nav>
+				</div>
+			</div>
+		</div>
+	
+	<script type="text/javascript" src="{{url('js/mjob/mui.pullToRefresh.js')}}"></script>
+	<script type="text/javascript" src="{{url('js/mjob/mui.pullToRefresh.material.js')}}"></script>
+	<script>
+
+			//矿显示数量
+			var minenum = 6;
+			//显示范围
+			var HRange = 16-7.98-2.15+0.5;
+			var WRange = parseFloat($('.minesbox').css('width').replace('px','')) / parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px','')) - 6.26;
+			//var k = parseFloat(window.getComputedStyle(document.documentElement)["fontSize"].replace('px',''));
+			//console.log(HRange,WRange);
+
+			function checkMines(){
+				var len;
+				$('.minesbox').each(function(){
+					len = $(this).find('.mines').length;
+					//console.log(len)
+					if(len == 0) {
+						getjobcoinno();
+					} else {
+						$('.nomine').hide();
+						$('.hasmine').show();
+					}
+				});
+			}
+
+			function getjobcoinno(){
+				$.get('/mjob/getjobcoinno',function(data){
+					if(data.reason == "success"){
+						if(data.result.length != 0){
+							for(var i = 0; i < minenum; i++){
+								var left = (Math.random()*WRange+1)+"rem";
+								var top1 = (Math.random()*HRange+1)+"rem";
+								console.log(data.result[i].jobcoinno,data.result[i].jobcoin)
+								var dom = "<div class='mines none' data-mineid='"+data.result[i].jobcoinno+"' style='left:"+left+";top:"+top1+";'>"
+										+    "<div class='animatebox'>"
+										+		"<div class='mineimg'></div>"
+										+		"<div class='minenum'>"+data.result[i].jobcoin+"</div>"
+										+    "</div>"
+										+ "</div>";
+								$('.minesbox').append(dom);
+								$('.mines').fadeIn(500);
+								//checkMines();
+							}
+						} else {
+							$('.hasmine').hide();
+							$('.nomine').fadeIn(500);
+						}
+					}
+				},'json');
+			}
+
+			$(function(){
+				if($.cookie('regscore') > 0){
+					layer.msg("新用户注册，算力+"+$.cookie('regscore')+"。",{icon: 6,time:3500});
+					$.cookie('regscore', null);
+				} else {
+					$.get('/mjob/checktodaylogin',function(data){
+						if(data.reason == "success" && data.result.login_score != '0') {
+							layer.msg("每日登陆，算力+"+data.result.login_score+"。",{icon: 6,time:3500});
+						}
+					},'json');
+				}
+				getjobcoinno();
+			});
+
+			$(document).on('tap','.mines',function(){
+				console.log('aaa')
+				var _this = $(this);
+				var id = _this.attr('data-mineid');
+				$.get('/mjob/editjobcoinno',{'jobcoinno':id},function(data){
+					if(data.reason == "success"){
+						_this.animate({
+							transform:"scale(0.2,0.2)",
+							left:"-3rem",
+							top:"20rem",
+							opacity:"0"
+						},800,"linear",function(){
+							_this.remove();
+							checkMines();
+						});
+					}
+				},'json');
+				
+			});
+
+			
+
+			// for(var i = 0; i < minenum; i++){
+			// 	var left = (Math.random()*WRange+1)+"rem";
+			// 	var top1 = (Math.random()*HRange+1)+"rem";
+			// 	//console.log(left,top1)
+			// 	var dom = "<div class='mines' data-mineid='"+i+"' style='left:"+left+";top:"+top1+";'>"
+			// 			+		"<div class='mineimg'></div>"
+			// 			+		"<div class='minenum'>0.00035</div>"
+			// 			+ "</div>";
+			// 	$('.minesbox').append(dom);
+			// 	checkMines();
+			// }
+
+			
+
+
+			mui.init();
+
+			mui('.mui-scroll').on('tap','a',function(){document.location.href=this.href;});
+
+			(function($) {
+				//阻尼系数
+				var deceleration = mui.os.ios?0.003:0.0009;
+				$('.mui-scroll-wrapper').scroll({
+					bounce: false,
+					indicators: true, //是否显示滚动条
+					deceleration:deceleration
+				});
+				$.ready(function() {
+					//循环初始化所有下拉刷新，上拉加载。
+					$.each(document.querySelectorAll('.mui-slider-group .scroll'), function(index, pullRefreshEl) {
+						$(pullRefreshEl).pullToRefresh({
+							down: {
+								callback: function() {
+									var self = this;
+									setTimeout(function() {
+										reload();
+										console.log('down')
+										self.endPullDownToRefresh();
+									}, 1000);
+								}
+							}
+							// ,up: {
+							// 	callback: function() {
+							// 		var self = this;
+							// 		setTimeout(function() {
+							// 			reload();
+							// 			console.log('up')
+							// 			self.endPullUpToRefresh();
+							// 		}, 1000);
+							// 	}
+							// }
+						});
+					});
+					// var createFragment = function(ul, index, count, reverse) {
+					// 	var length = ul.querySelectorAll('li').length;
+					// 	var fragment = document.createDocumentFragment();
+					// 	var li;
+					// 	for (var i = 0; i < count; i++) {
+					// 		li = document.createElement('li');
+					// 		li.className = 'mui-table-view-cell';
+					// 		li.innerHTML = '第' + (index + 1) + '个选项卡子项-' + (length + (reverse ? (count - i) : (i + 1)));
+					// 		fragment.appendChild(li);
+					// 	}
+					// 	return fragment;
+					// };
+				});
+			})(mui);
+
+			function reload(){
+				$('.showpower').text((Math.floor(Math.random()*1001)).toString());
+				$('#Myrank').text((Math.floor(Math.random()*100001)).toString());
+				$('#Todaymining').text((Math.floor(Math.random()*10000001)).toString());
+				$('#Allmining').text((Math.floor(Math.random()*100000001)).toString());
+			}
+			reload();
+		</script>
+{% endblock %}

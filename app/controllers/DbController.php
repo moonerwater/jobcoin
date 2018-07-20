@@ -17,12 +17,17 @@ class DbController extends ControllerH5
 
     }
 
-    public function show401Action()
+    public function paysuccessAction()
     {
 
     }
 
-    public function show500Action()
+    public function luckynumAction()
+    {
+
+    }
+
+    public function shareorderAction()
     {
 
     }
