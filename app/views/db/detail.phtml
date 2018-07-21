@@ -826,7 +826,7 @@
 	<div class="mui-scroll-wrapper">sadsdsa</div>
 </div>
 
-<footer>
+<!-- <footer>
 	<a href="/mjob/main" class="col-xs-4">
 		<span class="icon-1 iconpng"></span>
 		<span class="mui-tab-label">数据挖矿</span>
@@ -839,10 +839,11 @@
 		<span class="icon-3 iconpng"></span>
 		<span class="mui-tab-label">我的身份</span>
 	</a>
-</footer>
+</footer> -->
 
 <script src="/public/js/db/mui.zoom.js"></script>
 <script src="/public/js/db/mui.previewimage.js"></script>
+
 <script type="text/javascript">
 
 	$('#buy').on('tap',function(){
@@ -907,4 +908,7 @@
 	// 	interval: 3000
 	// });
 </script>
+{% endblock %}
+{% block footer %}
+       {{ partial('common/footer_Db')}}
 {% endblock %}
