@@ -208,7 +208,7 @@ class DbController extends ControllerH5
         $list['percent'] = (number_format($list['already_num']/$list['need_num']*100, 2));
         $list['has_num'] = $list['need_num'] - $list['already_num'];
         if($list['is_end'] == 'Y'){
-            $list['end_time'] = date('Y-m-d H:i:s', $list['create_time']);
+            $list['end_time'] = date('Y-m-d H:i:s', $list['end_time']);
             $user = \User::findFirstById($list['win_user_id']);
             $list['phone'] = $this->getDisablePhone($user->phone);
             $list['username'] = $user->name;
