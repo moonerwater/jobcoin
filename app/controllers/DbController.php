@@ -221,7 +221,7 @@ class DbController extends ControllerH5
         foreach($listuserdetail as $k => $v){
             $userno[] = $v->no;
         }
-        $data['userno'] = implode('、', $userno);
+        $data['userno'] = implode(',', $userno);
         $data['listusertotal'] = count($listuserdetail);
         $listuser = \DbListUser::find(array('list_id = '.$id, 'order' => 'id desc'));
         $listuser = $listuser->toArray();
