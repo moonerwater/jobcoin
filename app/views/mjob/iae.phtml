@@ -103,6 +103,12 @@
 										<div class="left stat3">
 									{% elseif item['type'] == 'regfor2' %}
 										<div class="left stat2">
+									{% elseif item['type'] == 'coinget' %}
+										<div class="left stat2">
+									{% elseif item['type'] == 'coingetfor1' %}
+										<div class="left stat2">
+									{% elseif item['type'] == 'coingetfor2' %}
+										<div class="left stat2">
 									{% endif %}
 										<h5>
 											{% if item['type'] == 'reg' %}
@@ -113,11 +119,17 @@
 												邀请一级好友
 											{% elseif item['type'] == 'regfor2' %}
 												邀请二级好友
+											{% elseif item['type'] == 'coinget' %}
+												夺宝
+											{% elseif item['type'] == 'coingetfor1' %}
+												一级好友夺宝返利
+											{% elseif item['type'] == 'coingetfor2' %}
+												二级好友夺宝返利
 											{% endif %}
 										</h5>
 										<p>{{ item['time'] }}</p>
 									</div>
-									<div class="right"><span>+{{ item['jobcoin'] }}</span>JOB</div>
+									<div class="right"><span>{% if item['type'] == 'coinget' %}-{% else %}+{% endif %}{{ item['jobcoin'] }}</span>JOB</div>
 								</li>
 							{% endfor %}
 						</ul>
