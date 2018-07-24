@@ -29,7 +29,7 @@ class ControllerH5 extends ControllerBase
 
         }
         else{
-            $this->response->redirect('mjob/index');
+            $this->response->redirect('/mjob/login?backurl=http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
         }
     }
 
