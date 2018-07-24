@@ -34,8 +34,12 @@ class ControllerH5 extends ControllerBase
     }
 
     protected function getDisablePhone($phone){
-
         return substr($phone,0,3).'****'.substr($phone,7,4);
+    }
+
+    protected function getDisableIp($ip){
+        $ip = explode('.', $ip);
+        return $ip[0].'.***'.'.***.'.$ip[3];
     }
 
     protected function checkUserGoMain(){

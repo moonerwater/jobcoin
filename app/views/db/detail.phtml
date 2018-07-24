@@ -603,17 +603,17 @@
 					<div class="winnerrow">
 						<div class="head left">
 							<div class="imgbox auto-center"><img src="/public/img/db/1.jpg" class="auto-center"></div>
-							<div class="tip"><img src="/public/img/db/winner.png" class="auto-center"></div>
+							<div class="tip"><img src="/public/img/db/winner.png" class="auto-center">{{ data['list']['username'] }}</div>
 						</div>
 						<div class="userinfo left">
-							<p><span class="tit">获奖者：</span>152****1276</p>
-							<p><span class="tit">本期参与：</span><span class="pink">9</span>人次</p>
-							<p><span class="tit">幸运号码：</span><span class="pink">8965</span></p>
-							<p><span class="tit">揭晓时间：</span>2018/07/02 14:56</p>
+							<p><span class="tit">获奖者：</span>{{ data['list']['phone'] }}</p>
+							<p><span class="tit">本期参与：</span><span class="pink">{{ data['list']['already_num'] }}</span>人次</p>
+							<p><span class="tit">幸运号码：</span><span class="pink">{{ data['list']['lucky_num'] }}</span></p>
+							<p><span class="tit">揭晓时间：</span>{{ data['list']['end_time'] }}</p>
 						</div>
 						<div class="cls"></div>
 					</div>
-					<a href="luckynum" class="link gradual">查看幸运号码</a>
+					<a href="luckynum/{{ data['list']['id'] }}" class="link gradual">查看幸运号码</a>
 				</div>
 			{% else %}
 				<div class="progressbox">
@@ -629,13 +629,16 @@
 				</div>
 			{% endif %}
 		</div>
-		<div class="row record nojoin">
-			夺宝记录：本期未参与
-		</div>
-		<div class="row record joined mui-collapse mui-table-view-cell">
-			<a class="mui-navigate-right" href="#">夺宝记录：我参与了<span class="num">3</span>次<span class="right">持有码</span></a>
-			<div class="mui-collapse-content code">982、659</div>
-		</div>
+		{% if data['listusertotal'] %}
+			<div class="row record joined mui-collapse mui-table-view-cell">
+				<a class="mui-navigate-right" href="#">夺宝记录：我参与了<span class="num">{{ data['listusertotal'] }}</span>次<span class="right">持有码</span></a>
+				<div class="mui-collapse-content code">{{ data['userno'] }}</div>
+			</div>
+		{% else %}
+			<div class="row record nojoin">
+				夺宝记录：本期未参与
+			</div>
+		{% endif %}
 		<div class="row feedback">
 			<div id="segmentedControl" class="mui-segmented-control">
 				<a href="#item1" class="mui-control-item mui-active">用户晒单</a>
@@ -644,133 +647,66 @@
 			</div>
 			<div class="feedbackbox">
 				<div id="item1" class="mui-control-content mui-active">
-					<div class="comment">
-						<div class="userinfo">
-							<div class="user left">
-								<img src="/public/img/db/1.jpg">香蕉你个巴拉
+					{% if data['listusercomment'] %}
+						{% for key, item in data['listusercomment'] %}
+							<div class="comment">
+								<div class="userinfo">
+									<div class="user left">
+										<img src="/public/img/db/1.jpg">{{ item['username'] }}{{ item['phone'] }}
+									</div>
+									<div class="time right">{{ item['create_time'] }}</div>
+								</div>
+								<p>
+									{{ item['comment'] }}
+								</p>
+								<div class="picturerow">
+									{% for key2, item2 in item['imgs'] %}
+										<div class="rel">
+											<img src="{{ item2 }}" class="auto-center" data-preview-src=""  data-preview-group="1">
+										</div>
+									{% endfor %}
+									<div class="cls"></div>
+								</div>
+								<hr>
+								<a href="#" class="itemlink">{{ data['list']['name'] }}</a>
 							</div>
-							<div class="time right">2018/02/08</div>
-						</div>
-						<p>
-							怎么说呢，苹果的机子系统和体验都很不错，上一部机子是6plus，用到今年已经是榨干了基本性能，正好是换代时刻！首先，说说感觉，这个全面屏做的质感和色彩都不错，打开色彩场景颜色偏暖但是很讨眼睛喜欢，当然你也可以关闭色彩自动场景，颜色会偏冷！不要说什么边框和屏占比和刘海儿，一切追求极致的窄边框和全面屏带来的操作不完美都是耍流氓，苹果没有出现这个状况，还是完美的苹果，只是指纹识别变成面部识别还是要适应！高能预警：！！！第三方软件的适配真是醉了！大部分都是闹着玩呢？凭空把上部大部分空间给浪费掉，还有某视频端，某农药，总是感觉怪怪的，刘海以下一厘米都是黑
-						</p>
-						<div class="picturerow">
-							<div class="rel">
-								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
-							</div>
-							<div class="rel">
-								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
-							</div>
-							<div class="rel">
-								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
-							</div>
-							<div class="rel">
-								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
-							</div>
-							<div class="rel">
-								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
-							</div>
-							<div class="cls"></div>
-						</div>
-						<hr>
-						<a href="#" class="itemlink">iPhone X 64G 深空灰 三网通 支持JOB币资产购买</a>
-					</div>
-					<div class="comment">
-						<div class="userinfo">
-							<div class="user left">
-								<img src="/public/img/db/1.jpg">香蕉你个巴拉
-							</div>
-							<div class="time right">2018/02/08</div>
-						</div>
-						<p>
-							怎么说呢，苹果的机子系统和体验都很不错，上一部机子是6plus，用到今年已经是榨干了基本性能，正好是换代时刻！首先，说说感觉，这个全面屏做的质感和色彩都不错，打开色彩场景颜色偏暖但是很讨眼睛喜欢，当然你也可以关闭色彩自动场景，颜色会偏冷！不要说什么边框和屏占比和刘海儿，一切追求极致的窄边框和全面屏带来的操作不完美都是耍流氓，苹果没有出现这个状况，还是完美的苹果，只是指纹识别变成面部识别还是要适应！高能预警：！！！第三方软件的适配真是醉了！大部分都是闹着玩呢？凭空把上部大部分空间给浪费掉，还有某视频端，某农药，总是感觉怪怪的，刘海以下一厘米都是黑
-						</p>
-						<div class="picturerow">
-							<div class="rel">
-								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
-							</div>
-							<div class="rel">
-								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
-							</div>
-							<div class="rel">
-								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
-							</div>
-							<div class="rel">
-								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
-							</div>
-							<div class="rel">
-								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
-							</div>
-							<div class="cls"></div>
-						</div>
-						<hr>
-						<a href="#" class="itemlink">iPhone X 64G 深空灰 三网通 支持JOB币资产购买</a>
-					</div>
+						{% endfor %}
+					{% else %}
+						暂无用户晒单
+					{% endif %}
 				</div>
 				<div id="item2" class="mui-control-content">
-					<ul class="mui-table-view joinrecord">
-						<li class="mui-table-view-cell">
-						 	<div class="joinrow">
-						 		<div class="head left">
-						 			<img src="/public/img/db/1.jpg" class="auto-center">
-						 		</div>
-						 		<div class="info right">
-						 			<div>
-							 			<div class="left name">哈利路亚</div>
-							 			<div class="right">IP:192.***.***.457</div>
-							 			<div class="cls"></div>
-						 			</div>
-						 			<div>
-							 			<div class="left">参与了<span>5</span>人次</div>
-							 			<div class="right">2018/02/10 14:32:21</div>
-							 			<div class="cls"></div>
-						 			</div>
-						 		</div>
-						 	</div>
-						</li>
-				        <li class="mui-table-view-cell">
-						 	<div class="joinrow">
-						 		<div class="head left">
-						 			<img src="/public/img/db/1.jpg" class="auto-center">
-						 		</div>
-						 		<div class="info right">
-						 			<div>
-							 			<div class="left name">哈利路亚</div>
-							 			<div class="right">IP:192.***.***.457</div>
-							 			<div class="cls"></div>
-						 			</div>
-						 			<div>
-							 			<div class="left">参与了<span>5</span>人次</div>
-							 			<div class="right">2018/02/10 14:32:21</div>
-							 			<div class="cls"></div>
-						 			</div>
-						 		</div>
-						 	</div>
-						</li>
-						<li class="mui-table-view-cell">
-						 	<div class="joinrow">
-						 		<div class="head left">
-						 			<img src="/public/img/db/1.jpg" class="auto-center">
-						 		</div>
-						 		<div class="info right">
-						 			<div>
-							 			<div class="left name">哈利路亚</div>
-							 			<div class="right">IP:192.***.***.457</div>
-							 			<div class="cls"></div>
-						 			</div>
-						 			<div>
-							 			<div class="left">参与了<span>5</span>人次</div>
-							 			<div class="right">2018/02/10 14:32:21</div>
-							 			<div class="cls"></div>
-						 			</div>
-						 		</div>
-						 	</div>
-						</li>
-					</ul>
+					{% if data['listuser'] %}
+						<ul class="mui-table-view joinrecord">
+							{% for key, item in data['listuser'] %}
+								<li class="mui-table-view-cell">
+									<div class="joinrow">
+										<div class="head left">
+											<img src="/public/img/db/1.jpg" class="auto-center">{{ item['username'] }}
+										</div>
+										<div class="info right">
+											<div>
+												<div class="left name">{{ item['phone'] }}</div>
+												<div class="right">IP:{{ item['ip'] }}</div>
+												<div class="cls"></div>
+											</div>
+											<div>
+												<div class="left">参与了<span>{{ item['count'] }}</span>人次</div>
+												<div class="right">{{ item['create_time'] }}</div>
+												<div class="cls"></div>
+											</div>
+										</div>
+									</div>
+								</li>
+							{% endfor %}
+						</ul>
+					{% else %}
+						暂无参与记录
+					{% endif %}
 				</div>
 				<div id="item3" class="mui-control-content">
 					<p class="rules">
-						1.用户使用数字资产(JOB币)购买夺宝人次，每购买1人次，将获得1个系统分配的夺宝号码。<br>2.当该商品的全部夺宝号码分配完毕后，区块链夺宝程序将自动计算出一个幸运号码(计算规则见下一条)，持有该幸运号码的用户可直接获得该商品。<br>3.计算规则：如下图所示，当夺宝号码售罄时，系统会记录下当前公信宝区块链最新的区块号，同时等待幸运区块号的生成(售罄区块号+50)。待幸运区块号确认后(大约3-5分钟)，取幸运区块号签名(哈希值)的最后8位，转成10进制数字，基于夺宝总人次进行取余，得到的数字即为幸运号码。 <span>(由于区块哈希值为随机数，无法人为干预，所以保证了幸运号码的随机性和公正性)</span><br>4.金职岛保留对夺宝玩法的最终解释权。
+						1.用户使用数字资产(JOB币)购买夺宝人次，每购买1人次，将获得1个系统分配的夺宝号码。<br>2.当该商品的全部夺宝号码分配完毕后，区块链夺宝程序将自动计算出一个幸运号码(计算规则见下一条)，持有该幸运号码的用户可直接获得该商品。<br>3.计算规则：如下图所示，当夺宝号码售罄时，系统会记录下当前eos区块链最新的区块号，同时等待幸运区块号的生成(售罄区块号+50)。待幸运区块号确认后(大约3-5分钟)，取幸运区块号签名(哈希值)的最后8位，转成10进制数字，基于夺宝总人次进行取余，得到的数字即为幸运号码。 <span>(由于区块哈希值为随机数，无法人为干预，所以保证了幸运号码的随机性和公正性)</span><br>4.金职岛保留对夺宝玩法的最终解释权。
 					</p>
 				</div>
 			</div>
@@ -790,7 +726,7 @@
 		<div class="container">
 			<div class="rows payinfo">
 				支付类型
-				<span class="right" id="Balance" data-bal="100">JOB(余额：100)</span>
+				<span class="right" id="Balance" data-bal="100">JOB(余额：{{ data['list']['jobcoin'] }})</span>
 			</div>
 			<div class="rows payinfo rel">
 				支付方式
