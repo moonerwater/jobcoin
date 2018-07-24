@@ -45,33 +45,33 @@
 	<ul class="mui-table-view">
 		 <li class="mui-table-view-cell">
 			<span class="tit">售罄时间</span>
-			2018-7-9 13:44:15
+			 {{ data['end_time'] }}
 		 </li>
          <li class="mui-table-view-cell" style="color:#3552fc;">
          	<span class="tit">售罄时区块号</span>
-			123154616</li>
+			{{ data['block_num'] }}</li>
          <li class="mui-table-view-cell" style="color:#3552fc;">
          	<span class="tit">幸运区块号</span>
-			<span>4651651651515</span> +50
+			<span>{{ data['block_num'] }}</span> +50
          </li>
          <li class="mui-table-view-cell">
          	<span class="tit">幸运区块哈希值</span>
-			ae916f55 <span style="color:#a4a6ad;">(16进制后8位)</span>
+			 {{ data['md5'] }} <span style="color:#a4a6ad;">(16进制后8位)</span>
          </li>
          <li class="mui-table-view-cell">
          	<span class="tit">夺宝总人次</span>
-			8848
+			 {{ data['already_num'] }}
          </li>
          <li class="mui-table-view-cell" style="color:#ff2a63;">
          	<span class="tit">本期幸运号码</span>
-			6985
+			 {{ data['lucky_num'] }}
          </li>
 	</ul>
 	<div class="box">
 		<table class="table table-condensed">
 			<thead>
 			    <tr>
-			        <th>ae916f55转10进制</th>
+			        <th>{{ data['md5'] }}转10进制</th>
 			        <th>取余</th>
 			        <th>夺宝总人次</th>
 			        <th>    </th>
@@ -80,11 +80,11 @@
 			</thead>
 			<tbody>
 			    <tr>
-			        <td>2909845165</td>
+			        <td>{{ data['temp10'] }}</td>
 			        <td>%</td>
-			        <td>8848</td>
+			        <td>{{ data['already_num'] }}</td>
 			        <td>=</td>
-			        <td>6985</td>
+			        <td>{{ data['lucky_num'] }}</td>
 			    </tr>
 			</tbody>
 		</table>

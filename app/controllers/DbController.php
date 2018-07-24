@@ -250,12 +250,27 @@ class DbController extends ControllerH5
         $this->view->setVar('data', $data);
     }
 
-    public function paysuccessAction()
-    {
+    public function luckynumAction($id) {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
 
+        //
+        $list = \DbList::findFirstById($id);
+        if(!$list){
+            $this->replyFailure('id error');
+            return '';
+        }
+        $list = $list->toArray();
+        $list['end_time'] = date('Y-m-d H:i:s', $list['end_time']);
+        $list['block_num2'] = $list['block_num']+50;
+        $list['md5'] = substr(md5($list['block_num2']),24,8);
+        $list['temp10'] = hexdec($list['md5']);
+        $list['lucky_num'] = $list['temp10'] % $list['already_num'];
+        $this->view->setVar('data', $list);
     }
 
-    public function luckynumAction()
+    public function paysuccessAction()
     {
 
     }
