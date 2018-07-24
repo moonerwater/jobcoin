@@ -243,66 +243,33 @@
 				</a>
 			</div>
 			<ul class="mui-table-view">
+				{% for key, item in data['list'] %}
 				<li class="mui-table-view-cell mui-media">
 					<a href="detail" class="item">
-						<img class="mui-media-object mui-pull-left" src="/public/img/db/x1.jpg">
+						<img class="mui-media-object mui-pull-left" src="{{ item['imgs'][0] }}">
 						<div class="mui-media-body">
 							<div class="title">
-								<span class="tips">16801期</span>
-								Apple iPhone X (A1865) 64GB 深空灰色 移动联通电信4G手机
+								<span class="tips">{{ item['no'] }}期</span>
+								{{ item['name'] }}
 							</div>
 							<div class="status">
 								<div class="rate col-xs-7">
-									<p>夺宝进度：<span>50%</span></p>
+									<p>夺宝进度：<span>{{ item['percent'] }}%</span></p>
 									<div class="progressrow">
-										<div class="progress gradual" style="width:50%"></div>
+										<div class="progress gradual" style="width:{{ item['percent'] }}%"></div>
 									</div>
 								</div>
-								<button class="btn link col-xs-4 right gradual">立即购买</button>
+								{% if item['is_end'] == 'Y' %}
+									<button class="link col-xs-4 right gradual disabled">立即购买</button>
+								{% else %}
+									<button class="btn link col-xs-4 right gradual">立即购买</button>
+								{% endif %}
+
 							</div>
 						</div>
 					</a>
 				</li>
-				<li class="mui-table-view-cell mui-media">
-					<a href="detail2" class="item">
-						<img class="mui-media-object mui-pull-left" src="/public/img/db/i1.jpg">
-						<div class="mui-media-body">
-							<div class="title">
-								<span class="tips">16801期</span>
-								Apple iPad 平板电脑 2018年新款9.7英寸
-							</div>
-							<div class="status">
-								<div class="rate col-xs-7">
-									<p>夺宝进度：<span>30%</span></p>
-									<div class="progressrow">
-										<div class="progress gradual" style="width:30%"></div>
-									</div>
-								</div>
-								<button class="btn link col-xs-4 right gradual">立即购买</button>
-							</div>
-						</div>
-					</a>
-				</li>
-				<li class="mui-table-view-cell mui-media">
-					<a href="detail" class="item">
-						<img class="mui-media-object mui-pull-left" src="/public/img/db/1.jpg">
-						<div class="mui-media-body">
-							<div class="title">
-								<span class="tips">16801期</span>
-								新一代全面屏AI双摄手机4GB+128GB三网通4G手机双卡双待
-							</div>
-							<div class="status">
-								<div class="rate col-xs-7">
-									<p>夺宝进度：<span>100%</span></p>
-									<div class="progressrow">
-										<div class="progress gradual" style="width:100%"></div>
-									</div>
-								</div>
-								<button class="link col-xs-4 right gradual disabled">立即购买</button>
-							</div>
-						</div>
-					</a>
-				</li>
+				{% endfor %}
 			</ul>
 		</div>
 	</div>
