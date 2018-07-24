@@ -45,6 +45,9 @@ class DbController extends ControllerH5
         $list = $list->toArray();
         $product = \DbProduct::findFirstById($list['product_id']);
         $list['name'] = $product->name;
+        $temp = explode(',', $product->imgs);
+        $list['imgs2'][0] = $temp[count($temp)-1];
+        $list['imgs2'][1] = $temp[0];
         $list['imgs'] = explode(',', $product->imgs);
         $list['percent'] = (number_format($list['already_num']/$list['need_num']*100, 2));
         $list['has_num'] = $list['need_num'] - $list['already_num'];

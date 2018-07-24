@@ -564,6 +564,11 @@
 <div class="mui-content">
 	<div id="slider" class="mui-slider">
 		<div class="mui-slider-group mui-slider-loop">
+			<div class="mui-slider-item itembox mui-slider-item-duplicate">
+				<a href="#">
+					<img src="{{ data['list']['imgs2'][0] }}" class="auto-center">
+				</a>
+			</div>
 			{% for key, item in data['list']['imgs'] %}
 				<div class="mui-slider-item itembox">
 					<a href="#">
@@ -571,6 +576,11 @@
 					</a>
 				</div>
 			{% endfor %}
+			<div class="mui-slider-item itembox mui-slider-item-duplicate">
+				<a href="#">
+					<img src="{{ data['list']['imgs2'][1] }}" class="auto-center">
+				</a>
+			</div>
 		</div>
 		<div class="mui-slider-indicator">
 			{% for key, item in data['list']['imgs'] %}
