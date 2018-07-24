@@ -469,6 +469,9 @@ class MjobController extends ControllerH5
         //
         $user = \User::find(array('', 'order' => 'score desc, id asc', 'limit'=>5));
         $data['userlist'] = $user->toArray();
+        foreach($data['userlist'] as $k => $v){
+            $data['userlist'][$k]['phone'] = $this->getDisablePhone($v['phone']);
+        }
         //
         $totaluser = \User::find('')->count();
         $data['totaluser'] = $totaluser;
