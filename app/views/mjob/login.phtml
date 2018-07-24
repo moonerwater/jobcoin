@@ -140,6 +140,8 @@
 
 	var user_type;
 
+	var backurl = "{{ backurl }}";
+
 	//var invite = '{{ invitecode }}';
 
 	// $(function(){
@@ -218,10 +220,18 @@
 	    },function(data){
 	    	if(data.reason == "success"){
 	    		if(data.result.user_type == "new"){
-	    			$.cookie('regscore', data.result.reg_score, { expires: 1 });
-	    			window.location.href = 'main';
+	    			if(backurl == ""){
+		    			$.cookie('regscore', data.result.reg_score, { expires: 1 });
+		    			window.location.href = 'main';
+		    		} else {
+		    			window.location.href = backurl;
+		    		}
 	    		} else {
-	    			window.location.href = 'main';
+	    			if(backurl == ""){
+		    			window.location.href = 'main';
+		    		} else {
+		    			window.location.href = backurl;
+		    		}
 	    			//window.location.href = 'main' + "?login_score="+ data.result.login_score;
 	    		}
 	    		// setCookie(mobile,'first','23:59:59',function(){

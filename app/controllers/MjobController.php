@@ -441,6 +441,9 @@ class MjobController extends ControllerH5
         $this->checkUserGoMain();
         $invitecode = $this->request->get('invitecode', 'string');
         $this->view->setVar('invitecode', $invitecode);
+
+        $backurl = $this->request->get('backurl', 'string');
+        $this->view->setVar('backurl', $backurl);
     }
 
     public function mainAction() {
