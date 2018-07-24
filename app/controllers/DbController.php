@@ -116,7 +116,7 @@ class DbController extends ControllerH5
             $block_num = $result['result']['blocks'];
             $block_num = $block_num?$block_num:5500500;
             $block_num2 = $block_num+50;
-            $md5 = substr(md5($block_num2),24,8);
+            $md5 = substr(md5($block_num2),25,7);
             $temp10 = hexdec($md5);
             $lucky_num = $temp10 % $list->already_num;
 
