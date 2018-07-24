@@ -31,9 +31,27 @@ class DbController extends ControllerH5
         $this->view->setVar('data', $data);
     }
 
-    public function detailAction()
-    {
+    public function detailAction($id) {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
 
+        //
+        $list = \DbList::findFirstById($id);
+        if(!$list){
+            $this->replyFailure('id error');
+            return '';
+        }
+        $list = $list->toArray();
+        $product = \DbProduct::findFirstById($list['product_id']);
+        $list['name'] = $product->name;
+        $list['imgs'] = explode(',', $product->imgs);
+        $list['percent'] = (number_format($list['already_num']/$list['need_num']*100, 2));
+        $list['has_num'] = $list['need_num'] - $list['already_num'];
+        $data['list'] = $list;
+
+        //
+        $this->view->setVar('data', $data);
     }
 
     public function paysuccessAction()

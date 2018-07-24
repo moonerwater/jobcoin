@@ -564,88 +564,60 @@
 <div class="mui-content">
 	<div id="slider" class="mui-slider">
 		<div class="mui-slider-group mui-slider-loop">
-			<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
-			<div class="mui-slider-item itembox mui-slider-item-duplicate">
-				<a href="#">
-					<img src="/public/img/db/x5.jpg" class="auto-center">
-				</a>
-			</div>
-			<!-- 第一张 -->
-			<div class="mui-slider-item itembox">
-				<a href="#">
-					<img src="/public/img/db/x1.jpg" class="auto-center" data-preview-src=""  data-preview-group="A">
-				</a>
-			</div>
-			<!-- 第二张 -->
-			<div class="mui-slider-item itembox">
-				<a href="#">
-					<img src="/public/img/db/x2.jpg" class="auto-center" data-preview-src="" data-preview-group="A">
-				</a>
-			</div>
-			<!-- 第三张 -->
-			<div class="mui-slider-item itembox">
-				<a href="#">
-					<img src="/public/img/db/x3.jpg" class="auto-center" data-preview-src=""  data-preview-group="A">
-				</a>
-			</div>
-			<div class="mui-slider-item itembox">
-				<a href="#">
-					<img src="/public/img/db/x4.jpg" class="auto-center" data-preview-src=""  data-preview-group="A">
-				</a>
-			</div>
-			<div class="mui-slider-item itembox">
-				<a href="#">
-					<img src="/public/img/db/x5.jpg" class="auto-center" data-preview-src=""  data-preview-group="A">
-				</a>
-			</div>
-			<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
-			<div class="mui-slider-item itembox mui-slider-item-duplicate">
-				<a href="#">
-					<img src="/public/img/db/x1.jpg" class="auto-center">
-				</a>
-			</div>
+			{% for key, item in data['list']['imgs'] %}
+				<div class="mui-slider-item itembox">
+					<a href="#">
+						<img src="{{ item }}" class="auto-center" data-preview-src=""  data-preview-group="A">
+					</a>
+				</div>
+			{% endfor %}
 		</div>
 		<div class="mui-slider-indicator">
-			<div class="mui-indicator mui-active"></div>
-			<div class="mui-indicator"></div>
-			<div class="mui-indicator"></div>
-			<div class="mui-indicator"></div>
-			<div class="mui-indicator"></div>
+			{% for key, item in data['list']['imgs'] %}
+				{% if key == 0 %}
+					<div class="mui-indicator mui-active"></div>
+				{% else%}
+					<div class="mui-indicator"></div>
+				{% endif %}
+			{% endfor %}
 		</div>
 	</div>
 	<div class="container">
 		<div class="row info">
 			<div class="title">
-				<span class="tips">16801期</span>
-				Apple iPhone X (A1865) 64GB 深空灰色 移动联通电信4G手机
+				<span class="tips">{{ data['list']['no'] }}期</span>
+				{{ data['list']['name'] }}
 			</div>
-			<div class="progressbox none">
-				<div class="person">
-					<div class="left">总需<span>8848</span>人次</div>
-					<div class="right">剩余<span>7985</span>人次</div>
-					<div class="cls"></div>
-				</div>
-				<div class="progressrow">
-					<div class="progress gradual" style="width:30%"></div>
-				</div>
-				<div class="consume right rel"><span>56</span>JOB币/人次</div>
-			</div>
-			<div class="winningbox">
-				<div class="winnerrow">
-					<div class="head left">
-						<div class="imgbox auto-center"><img src="/public/img/db/1.jpg" class="auto-center"></div>
-						<div class="tip"><img src="/public/img/db/winner.png" class="auto-center"></div>
+			{% if data['list']['is_end'] == 'Y' %}
+				<div class="winningbox">
+					<div class="winnerrow">
+						<div class="head left">
+							<div class="imgbox auto-center"><img src="/public/img/db/1.jpg" class="auto-center"></div>
+							<div class="tip"><img src="/public/img/db/winner.png" class="auto-center"></div>
+						</div>
+						<div class="userinfo left">
+							<p><span class="tit">获奖者：</span>152****1276</p>
+							<p><span class="tit">本期参与：</span><span class="pink">9</span>人次</p>
+							<p><span class="tit">幸运号码：</span><span class="pink">8965</span></p>
+							<p><span class="tit">揭晓时间：</span>2018/07/02 14:56</p>
+						</div>
+						<div class="cls"></div>
 					</div>
-					<div class="userinfo left">
-						<p><span class="tit">获奖者：</span>152****1276</p>
-						<p><span class="tit">本期参与：</span><span class="pink">9</span>人次</p>
-						<p><span class="tit">幸运号码：</span><span class="pink">8965</span></p>
-						<p><span class="tit">揭晓时间：</span>2018/07/02 14:56</p>
-					</div>
-					<div class="cls"></div>
+					<a href="luckynum" class="link gradual">查看幸运号码</a>
 				</div>
-				<a href="luckynum" class="link gradual">查看幸运号码</a>
-			</div>
+			{% else %}
+				<div class="progressbox">
+					<div class="person">
+						<div class="left">总需<span>{{ data['list']['need_num'] }}</span>人次</div>
+						<div class="right">剩余<span>{{ data['list']['has_num'] }}</span>人次</div>
+						<div class="cls"></div>
+					</div>
+					<div class="progressrow">
+						<div class="progress gradual" style="width:{{ data['list']['percent'] }}%"></div>
+					</div>
+					<div class="consume right rel"><span>50</span>JOB币/人次</div>
+				</div>
+			{% endif %}
 		</div>
 		<div class="row record nojoin">
 			夺宝记录：本期未参与
