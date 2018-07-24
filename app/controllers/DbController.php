@@ -56,8 +56,9 @@ class DbController extends ControllerH5
             $user = \User::findFirstById($list['win_user_id']);
             $list['phone'] = $this->getDisablePhone($user->phone);
             $list['username'] = $user->name;
-            $list['jobcoin'] = $user->jobcoin;
         }
+        $user = \User::findFirstById($userid);
+        $list['jobcoin'] = $user->jobcoin;
         $data['list'] = $list;
         //
         $listuserdetail = \DbListUserDetail::find(array('user_id = '.$userid.' and list_id = '.$id, 'order' => 'id asc'));
