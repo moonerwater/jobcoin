@@ -689,7 +689,7 @@
 							<div class="comment">
 								<div class="userinfo">
 									<div class="user left">
-										<span class="username">{{ item['username'] }}</span>{{ item['username'] }}{{ item['phone'] }}
+										<span class="username">{{ item['username'] }}</span>{{ item['phone'] }}
 									</div>
 									<div class="time right">{{ item['create_time'] }}</div>
 								</div>
@@ -821,7 +821,11 @@
 	$(function(){
 		$('span.username').each(function(){
 			var text = $(this).text();
-			$(this).html(text.substring(0,1));
+			if(text != ''){
+				$(this).html(text.substring(0,1));
+			} else {
+				$(this).html('无');
+			}
 		});
 	});
 
