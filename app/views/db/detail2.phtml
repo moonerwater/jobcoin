@@ -1,0 +1,913 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}商品详情{% endblock %}
+{% block css %}{{ stylesheetLink('css/db/db.css') }}{% endblock %}
+{% block content %}
+<style type="text/css">
+	.mui-preview-image.mui-fullscreen {
+		position: fixed;
+		z-index: 20;
+		background-color: #000;
+	}
+	.mui-preview-header,
+	.mui-preview-footer {
+		position: absolute;
+		width: 100%;
+		left: 0;
+		z-index: 10;
+	}
+	.mui-preview-header {
+		height: 44px;
+		top: 0;
+	}
+	.mui-preview-footer {
+		height: 50px;
+		bottom: 0px;
+	}
+	.mui-preview-header .mui-preview-indicator {
+		display: block;
+		line-height: 25px;
+		color: #fff;
+		text-align: center;
+		margin: 15px auto 4;
+		width: 70px;
+		background-color: rgba(0, 0, 0, 0.4);
+		border-radius: 12px;
+		font-size: 16px;
+	}
+	.mui-preview-image {
+		display: none;
+		-webkit-animation-duration: 0.5s;
+		animation-duration: 0.5s;
+		-webkit-animation-fill-mode: both;
+		animation-fill-mode: both;
+	}
+	.mui-preview-image.mui-preview-in {
+		-webkit-animation-name: fadeIn;
+		animation-name: fadeIn;
+	}
+	.mui-preview-image.mui-preview-out {
+		background: none;
+		-webkit-animation-name: fadeOut;
+		animation-name: fadeOut;
+	}
+	.mui-preview-image.mui-preview-out .mui-preview-header,
+	.mui-preview-image.mui-preview-out .mui-preview-footer {
+		display: none;
+	}
+	.mui-zoom-scroller {
+		position: absolute;
+		display: -webkit-box;
+		display: -webkit-flex;
+		display: flex;
+		-webkit-box-align: center;
+		-webkit-align-items: center;
+		align-items: center;
+		-webkit-box-pack: center;
+		-webkit-justify-content: center;
+		justify-content: center;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		-webkit-backface-visibility: hidden;
+	}
+	.mui-zoom {
+		-webkit-transform-style: preserve-3d;
+		transform-style: preserve-3d;
+	}
+	.mui-slider .mui-slider-group .mui-slider-item img {
+		width: auto;
+		height: auto;
+		max-width: 100%;
+		max-height: 100%;
+	}
+	.mui-android-4-1 .mui-slider .mui-slider-group .mui-slider-item img {
+		width: 100%;
+	}
+	.mui-android-4-1 .mui-slider.mui-preview-image .mui-slider-group .mui-slider-item {
+		display: inline-table;
+	}
+	.mui-android-4-1 .mui-slider.mui-preview-image .mui-zoom-scroller img {
+		display: table-cell;
+		vertical-align: middle;
+	}
+	.mui-preview-loading {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		display: none;
+	}
+	.mui-preview-loading.mui-active {
+		display: block;
+	}
+	.mui-preview-loading .mui-spinner-white {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin-left: -25px;
+		margin-top: -25px;
+		height: 50px;
+		width: 50px;
+	}
+	.mui-preview-image img.mui-transitioning {
+		-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
+		transition: transform 0.5s ease, opacity 0.5s ease;
+	}
+	@-webkit-keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+	@-webkit-keyframes fadeOut {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+	@keyframes fadeOut {
+		0% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+</style>
+<style type="text/css">
+	#slider {
+		/*height: 34.2rem;*/
+		height: 25.2rem;
+	}
+	.itembox {
+		/*height: 34.2rem !important;*/
+		height: 25.2rem !important;
+		background: #fff;
+	}
+	.itembox a {
+		width: 100%;
+    	height: 100%;
+	}
+	.mui-slider-indicator .mui-indicator {
+	    margin: 1px 2px;
+	    background: #fff;
+	}
+	.mui-slider-indicator .mui-active.mui-indicator {
+		background: #1f36bf;
+	}
+	.container > .row {
+		margin-bottom: 1rem;
+		padding:1rem;
+		border-top: 1px solid #eee;
+		color:#67686e;
+		background: #fff;
+		font-size: 1rem;
+	}
+	.info .title {	
+		line-height: 1.68rem;
+		font-size:1.14rem;
+		overflow: hidden;	
+	}
+	.info .title .tips {
+		background: #fbb73c;
+		display: inline-block;
+		width: 5.5rem;
+		height: 1.52rem;
+		line-height: 1.58rem;
+		color:#fff;
+		text-align: center;
+		margin-right: 5px;
+		border-radius: 1.52rem;
+	}
+	.info .progressbox .person {
+		margin-top:.8rem;
+		color:#a4a6ad;
+		font-size: 1rem;
+	}
+	.info .progressbox .progressrow {
+		width: 100%;
+		height: 5px;
+		background: #d7dae7;
+		border-radius: 5px;
+		position:relative;
+		margin-bottom: 5px;
+	}
+	.info .progressbox .progress {
+		position: absolute;
+		top:0;
+		left:0;
+		height: 5px;
+		border-radius: 5px;
+	}
+	.info .progressbox .consume::before {
+		content: "";
+	    background: url(/public/img/db/coin.png) center no-repeat;
+	    background-size: contain;
+        width: 1rem;
+	    height: 1.4rem;
+	    position: absolute;
+	    top: -.1rem;
+	    left: -1.5rem;
+	    display: block;
+	}
+	.info .winningbox {
+		border-top:1px solid #eee;
+		padding-top:8px;
+		margin-top: .8rem;
+	}
+	.info .winnerrow .head {
+		width: 24%;
+		height: 5.7rem;
+		position: relative;
+		margin-right: 6%;
+	}
+	.info .winnerrow .head .imgbox {
+		width: 5.7rem;
+		height: 5.7rem;
+		border-radius: 50%;
+		background: #d7dae7;
+		overflow: hidden;
+	}
+	.info .winnerrow .head .tip {
+		width: 100%;
+		height: 1.84rem;
+		position: absolute;
+		left: 0;
+		bottom: 0;
+	}
+	.info .winnerrow .userinfo {
+		/*width: 68%;*/
+		/*height: 5.7rem;*/
+		font-size:1.14rem;
+	}
+	.info .winnerrow .userinfo p {
+		margin: 0;
+		line-height: 1.6rem;
+		color:#717278;
+	}
+	.info .winnerrow .userinfo p span.tit {
+		display: inline-block;
+		width:6.4rem;
+		text-align: right;
+		color:#a4a6ad;
+	}
+	.info .winnerrow .userinfo p span.pink {
+		color:#ff2a63;
+		display: inline-block;
+		margin-right: 2px;
+	}
+	.info .winningbox a.link {
+		width: 9.18rem;
+		height: 2.34rem;
+		line-height: 2.34rem;
+		border-radius: 2.34rem;
+		color:#fff;
+		font-size: 1.14rem;
+		display: block;
+		margin:0 auto;
+		margin-top:8px;
+		text-align: center;
+	}
+	.joined.mui-table-view-cell.mui-active {
+		background: #fff;
+	}
+	.joined a .num {
+		color:#ff2a63;
+	}
+	.joined a .right {
+		margin-right: 20px;
+		color:#a4a6ad;
+	}
+	.joined .code {
+		padding:2rem 1rem;
+		font-size:3rem;
+		color:#ff2a63;
+		text-align: center;
+		border-top: 1px solid #eee;
+	}
+	.mui-segmented-control {
+		border:none;
+		border-bottom: 1px solid #eee;
+	}
+	.mui-segmented-control .mui-control-item {
+		border: none;
+		color:#67686e;
+		text-decoration: none;
+		line-height: 2.5rem;
+		font-size: 1.14rem;
+	}
+	.mui-segmented-control .mui-control-item.mui-active {
+		border:none;
+		color:#67686e;
+		background-color:transparent;
+		position: relative;
+	}
+	.mui-segmented-control .mui-control-item.mui-active::after {
+		content: "";
+	    background: -webkit-linear-gradient(left, #ff0a8d , #ff5d24); /* Safari 5.1 - 6.0 */
+		background: -o-linear-gradient(right, #ff0a8d, #ff5d24); /* Opera 11.1 - 12.0 */
+		background: -moz-linear-gradient(right, #ff0a8d, #ff5d24); /* Firefox 3.6 - 15 */
+		background: linear-gradient(to right, #ff0a8d , #ff5d24); /* 标准的语法 */
+	    background-size: contain;
+        width: 100%;
+	    height: 2px;
+	    position: absolute;
+	    left: 0;
+	    bottom: 0;
+	    display: block;
+	}
+	.feedbackbox {
+		margin-bottom: 9rem;
+	}
+	.comment {
+		position: relative;
+		overflow: hidden;
+		margin-bottom: 10px;
+	}
+	.comment::after {
+		content: "";
+		background: #eee;
+		width: 110%;
+	    height: 10px;
+	    margin-left: -15px;
+	    margin-right: -15px;
+	    position: absolute;
+	    left: 0;
+	    bottom: -5px;
+	    display: block;
+	}
+	.comment .userinfo {
+		margin:.8rem 0;
+		height: 2.85rem;
+		line-height: 2.85rem;
+		color:#67686e;
+		font-size:1.14rem;
+	}
+	.comment .userinfo .user img {
+		width: 2.85rem;
+		height: 2.85rem;
+		border-radius: 50%;
+		margin-right: .5rem;
+		display: inline-block;
+	}
+	.comment .userinfo .time {
+		color:#a4a6ad;
+	}
+	.comment p {
+		font-size: 1rem;
+		color:#67686e;
+		line-height: 1.8rem;
+		width: 100%;
+	    height: auto;
+	    word-wrap: break-word;
+	    word-break: break-all;
+	    overflow: hidden;
+	}
+	.comment .picturerow {
+		width: 107%;
+	}
+	.comment .picturerow .rel {
+		height:6rem;
+		width: 20%;
+		margin-right: 4%;
+		margin-bottom: 10px;
+		padding:2px;
+		border:1px solid #eee;
+		float:left;
+	}
+	.comment .picturerow .rel img {
+		max-width: 98%;
+		max-height: 98%;
+	}
+	.comment hr {
+		margin-top:0;
+		margin-bottom: 5px;
+	}
+	.comment .itemlink {
+		color:#a4a6ad;
+		font-size: 1rem;
+		display: block;
+		text-decoration: none;
+		padding-bottom: 1rem;
+	}
+	#buy {
+		width: 80%;
+	    height: 3.62rem;
+	    line-height: 3.62rem;
+	    border-radius: 3.62rem;
+	    color: #fff;
+	    text-align: center;
+	    font-size: 2rem;
+	    position: fixed;
+	    bottom: 6.82rem;
+	    left: 10%;
+	    right: 10%;
+	    z-index: 10;
+	}
+	#mask {
+		position: fixed;
+		top:0;
+		left:0;
+		width: 100%;
+		height: 100%;
+		z-index: 20;
+		background: rgba(0,0,0,0.7);
+		display: none;
+	}
+	.buybox {
+		position: absolute;
+		bottom: 5.82rem;
+		left:0;
+		background: #fff;
+		width: 100%;
+		/*height: 21rem;*/
+	}
+	.buybox .tit {
+		padding:10px;
+		border-bottom: 1px solid #eee;
+		text-align: center;
+		font-size: 1.58rem;
+		color:#67686e;
+		height: 3.68rem;
+	}
+	.buybox .tit .left {
+		display: inline-block;
+		font-size: 1.58rem;
+		width: 1.2rem;
+		height: 100%;
+		margin-left:5px;
+		background: url(/public/img/db/close.png) center no-repeat;
+		background-size: contain;
+	}
+	.buybox .tit .right {
+		font-size: 1.58rem;
+		color:#ff2a63;
+		margin-right: 5px;
+	}
+	.buybox .container {
+		font-size: 1.4rem;
+	}
+	.buybox .rows {
+		padding:10px 0;
+	}
+	.buybox .payinfo {
+		color:#a4a6ad;
+		border-bottom: 1px solid #eee;
+	}
+	.buybox .payinfo .right {
+		color:#67686e;
+	}
+	.buybox .need span {
+		color:#ff2a63;
+	}
+	#bottomPopover {
+		height: 13rem !important;
+		bottom: 16rem !important;
+		left: auto !important;
+    	right: 1rem !important;
+    	width: 50% !important;
+	}
+	.mui-popover .mui-popover-arrow {
+		right:1rem !important;
+	}
+	.mui-numbox {
+		width: 100%;
+		border: solid 1px #eee;
+	}
+	.mui-numbox [class*=btn-numbox] {
+		font-size:2rem;
+	}
+	.mui-numbox .mui-input-numbox {
+		border-right: solid 1px #eee!important;
+    	border-left: solid 1px #eee!important;
+	}
+	.selectnun {
+		width: 105.2%;
+	}
+	.selectnun .col-xs-3 {
+		width: 20%;
+		margin-right: 5%;
+		border: solid 1px #eee;
+	}
+	.joinrecord .mui-table-view-cell {
+		padding:5px 0;
+	}
+	.joinrecord .mui-table-view-cell::after{
+		margin-left: -15px;
+	}
+	.joinrecord .joinrow {
+		height: 3.8rem;
+	}
+	.joinrecord .joinrow .head {
+		/*width: 3.8rem;
+		margin-right: 1rem;*/
+		width: 15%;
+		margin-right: 5%;
+		height: 3.8rem;
+		border-radius: 50%;
+		overflow: hidden;
+		position: relative;
+	}
+	.joinrecord .joinrow .info {
+		width: 80%;
+		padding: 5px 0;
+		color:#a4a6ad;
+		font-size:1rem;
+	}
+	.joinrecord .joinrow .info > div {
+		padding:2px 0;
+	}
+	.joinrecord .joinrow .info .name {
+		color:#4a4b4e;
+		font-size:1.14rem;
+	}
+	.joinrecord .joinrow .info span {
+		color:#ff2a63;
+	}
+	p.rules {
+		font-size:1.14rem;
+		color:#4a4b4e;
+		line-height: 2rem;
+		padding:10px 0;
+	}
+	p.rules span {
+		color:#ff2a63;
+	}
+	.mui-fullscreen.mui-slider .mui-slider-group {
+		padding-bottom: 5.82rem;
+	}
+
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">商品详情</h1>
+</header>
+
+<div class="mui-content">
+	<div id="slider" class="mui-slider">
+		<div class="mui-slider-group mui-slider-loop">
+			<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+			<div class="mui-slider-item itembox mui-slider-item-duplicate">
+				<a href="#">
+					<img src="/public/img/db/i2.jpg" class="auto-center">
+				</a>
+			</div>
+			<!-- 第一张 -->
+			<div class="mui-slider-item itembox">
+				<a href="#">
+					<img src="/public/img/db/i1.jpg" class="auto-center" data-preview-src=""  data-preview-group="A">
+				</a>
+			</div>
+			<!-- 第二张 -->
+			<div class="mui-slider-item itembox">
+				<a href="#">
+					<img src="/public/img/db/i2.jpg" class="auto-center" data-preview-src="" data-preview-group="A">
+				</a>
+			</div>
+			<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+			<div class="mui-slider-item itembox mui-slider-item-duplicate">
+				<a href="#">
+					<img src="/public/img/db/i1.jpg" class="auto-center">
+				</a>
+			</div>
+		</div>
+		<div class="mui-slider-indicator">
+			<div class="mui-indicator mui-active"></div>
+			<div class="mui-indicator"></div>
+			<div class="mui-indicator"></div>
+			<div class="mui-indicator"></div>
+			<div class="mui-indicator"></div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row info">
+			<div class="title">
+				<span class="tips">16801期</span>
+				Apple iPad 平板电脑 2018年新款9.7英寸
+			</div>
+			<div class="progressbox none">
+				<div class="person">
+					<div class="left">总需<span>8848</span>人次</div>
+					<div class="right">剩余<span>7985</span>人次</div>
+					<div class="cls"></div>
+				</div>
+				<div class="progressrow">
+					<div class="progress gradual" style="width:30%"></div>
+				</div>
+				<div class="consume right rel"><span>56</span>JOB币/人次</div>
+			</div>
+			<div class="winningbox">
+				<div class="winnerrow">
+					<div class="head left">
+						<div class="imgbox auto-center"><img src="/public/img/db/1.jpg" class="auto-center"></div>
+						<div class="tip"><img src="/public/img/db/winner.png" class="auto-center"></div>
+					</div>
+					<div class="userinfo left">
+						<p><span class="tit">获奖者：</span>152****1276</p>
+						<p><span class="tit">本期参与：</span><span class="pink">9</span>人次</p>
+						<p><span class="tit">幸运号码：</span><span class="pink">8965</span></p>
+						<p><span class="tit">揭晓时间：</span>2018/07/02 14:56</p>
+					</div>
+					<div class="cls"></div>
+				</div>
+				<a href="luckynum" class="link gradual">查看幸运号码</a>
+			</div>
+		</div>
+		<div class="row record nojoin">
+			夺宝记录：本期未参与
+		</div>
+		<div class="row record joined mui-collapse mui-table-view-cell">
+			<a class="mui-navigate-right" href="#">夺宝记录：我参与了<span class="num">3</span>次<span class="right">持有码</span></a>
+			<div class="mui-collapse-content code">982、659</div>
+		</div>
+		<div class="row feedback">
+			<div id="segmentedControl" class="mui-segmented-control">
+				<a href="#item1" class="mui-control-item mui-active">用户晒单</a>
+				<a href="#item2" class="mui-control-item">参与记录</a>
+				<a href="#item3" class="mui-control-item">活动规则</a>
+			</div>
+			<div class="feedbackbox">
+				<div id="item1" class="mui-control-content mui-active">
+					<div class="comment">
+						<div class="userinfo">
+							<div class="user left">
+								<img src="/public/img/db/1.jpg">香蕉你个巴拉
+							</div>
+							<div class="time right">2018/02/08</div>
+						</div>
+						<p>
+							怎么说呢，苹果的机子系统和体验都很不错，上一部机子是6plus，用到今年已经是榨干了基本性能，正好是换代时刻！首先，说说感觉，这个全面屏做的质感和色彩都不错，打开色彩场景颜色偏暖但是很讨眼睛喜欢，当然你也可以关闭色彩自动场景，颜色会偏冷！不要说什么边框和屏占比和刘海儿，一切追求极致的窄边框和全面屏带来的操作不完美都是耍流氓，苹果没有出现这个状况，还是完美的苹果，只是指纹识别变成面部识别还是要适应！高能预警：！！！第三方软件的适配真是醉了！大部分都是闹着玩呢？凭空把上部大部分空间给浪费掉，还有某视频端，某农药，总是感觉怪怪的，刘海以下一厘米都是黑
+						</p>
+						<div class="picturerow">
+							<div class="rel">
+								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
+							</div>
+							<div class="rel">
+								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
+							</div>
+							<div class="rel">
+								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
+							</div>
+							<div class="rel">
+								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
+							</div>
+							<div class="rel">
+								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
+							</div>
+							<div class="cls"></div>
+						</div>
+						<hr>
+						<a href="#" class="itemlink">iPhone X 64G 深空灰 三网通 支持JOB币资产购买</a>
+					</div>
+					<div class="comment">
+						<div class="userinfo">
+							<div class="user left">
+								<img src="/public/img/db/1.jpg">香蕉你个巴拉
+							</div>
+							<div class="time right">2018/02/08</div>
+						</div>
+						<p>
+							怎么说呢，苹果的机子系统和体验都很不错，上一部机子是6plus，用到今年已经是榨干了基本性能，正好是换代时刻！首先，说说感觉，这个全面屏做的质感和色彩都不错，打开色彩场景颜色偏暖但是很讨眼睛喜欢，当然你也可以关闭色彩自动场景，颜色会偏冷！不要说什么边框和屏占比和刘海儿，一切追求极致的窄边框和全面屏带来的操作不完美都是耍流氓，苹果没有出现这个状况，还是完美的苹果，只是指纹识别变成面部识别还是要适应！高能预警：！！！第三方软件的适配真是醉了！大部分都是闹着玩呢？凭空把上部大部分空间给浪费掉，还有某视频端，某农药，总是感觉怪怪的，刘海以下一厘米都是黑
+						</p>
+						<div class="picturerow">
+							<div class="rel">
+								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
+							</div>
+							<div class="rel">
+								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
+							</div>
+							<div class="rel">
+								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
+							</div>
+							<div class="rel">
+								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
+							</div>
+							<div class="rel">
+								<img src="/public/img/db/1.jpg" class="auto-center" data-preview-src=""  data-preview-group="1">
+							</div>
+							<div class="cls"></div>
+						</div>
+						<hr>
+						<a href="#" class="itemlink">iPhone X 64G 深空灰 三网通 支持JOB币资产购买</a>
+					</div>
+				</div>
+				<div id="item2" class="mui-control-content">
+					<ul class="mui-table-view joinrecord">
+						<li class="mui-table-view-cell">
+						 	<div class="joinrow">
+						 		<div class="head left">
+						 			<img src="/public/img/db/1.jpg" class="auto-center">
+						 		</div>
+						 		<div class="info right">
+						 			<div>
+							 			<div class="left name">哈利路亚</div>
+							 			<div class="right">IP:192.***.***.457</div>
+							 			<div class="cls"></div>
+						 			</div>
+						 			<div>
+							 			<div class="left">参与了<span>5</span>人次</div>
+							 			<div class="right">2018/02/10 14:32:21</div>
+							 			<div class="cls"></div>
+						 			</div>
+						 		</div>
+						 	</div>
+						</li>
+				        <li class="mui-table-view-cell">
+						 	<div class="joinrow">
+						 		<div class="head left">
+						 			<img src="/public/img/db/1.jpg" class="auto-center">
+						 		</div>
+						 		<div class="info right">
+						 			<div>
+							 			<div class="left name">哈利路亚</div>
+							 			<div class="right">IP:192.***.***.457</div>
+							 			<div class="cls"></div>
+						 			</div>
+						 			<div>
+							 			<div class="left">参与了<span>5</span>人次</div>
+							 			<div class="right">2018/02/10 14:32:21</div>
+							 			<div class="cls"></div>
+						 			</div>
+						 		</div>
+						 	</div>
+						</li>
+						<li class="mui-table-view-cell">
+						 	<div class="joinrow">
+						 		<div class="head left">
+						 			<img src="/public/img/db/1.jpg" class="auto-center">
+						 		</div>
+						 		<div class="info right">
+						 			<div>
+							 			<div class="left name">哈利路亚</div>
+							 			<div class="right">IP:192.***.***.457</div>
+							 			<div class="cls"></div>
+						 			</div>
+						 			<div>
+							 			<div class="left">参与了<span>5</span>人次</div>
+							 			<div class="right">2018/02/10 14:32:21</div>
+							 			<div class="cls"></div>
+						 			</div>
+						 		</div>
+						 	</div>
+						</li>
+					</ul>
+				</div>
+				<div id="item3" class="mui-control-content">
+					<p class="rules">
+						1.用户使用数字资产(JOB币)购买夺宝人次，每购买1人次，将获得1个系统分配的夺宝号码。<br>2.当该商品的全部夺宝号码分配完毕后，区块链夺宝程序将自动计算出一个幸运号码(计算规则见下一条)，持有该幸运号码的用户可直接获得该商品。<br>3.计算规则：如下图所示，当夺宝号码售罄时，系统会记录下当前公信宝区块链最新的区块号，同时等待幸运区块号的生成(售罄区块号+50)。待幸运区块号确认后(大约3-5分钟)，取幸运区块号签名(哈希值)的最后8位，转成10进制数字，基于夺宝总人次进行取余，得到的数字即为幸运号码。 <span>(由于区块哈希值为随机数，无法人为干预，所以保证了幸运号码的随机性和公正性)</span><br>4.金职岛保留对夺宝玩法的最终解释权。
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<a href="#" class="gradual" id="buy">立即购买</a>
+
+<div id="mask">
+	<div class="buybox">
+		<div class="tit">
+			<a class="left" id="close"></a>
+			确认购买
+			<a href="#" class="right" id="Buynow">购买</a>
+		</div>
+		<div class="container">
+			<div class="rows payinfo">
+				支付类型
+				<span class="right" id="Balance" data-bal="100">JOB(余额：100)</span>
+			</div>
+			<div class="rows payinfo rel">
+				支付方式
+				<!-- <a href="#bottomPopover" class="right">余额 > </a> -->
+				<span class="right">余额</span>
+			</div>
+			<div class="rows need">
+				需要 <span id="Need" data-price="50" data-need="50">50</span> JOB(***JOB/人次)
+			</div>
+			<div class="rows" style="padding:0">
+				<div class="mui-numbox" data-numbox-min="1">
+					<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+					<input class="mui-input-numbox" type="number" id="buyNum" value="1">
+					<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+				</div>
+			</div>
+			<div class="rows selectnun">
+				<input class="col-xs-3 btn" type="button" value="5">
+				<input class="col-xs-3 btn" type="button" value="10">
+				<input class="col-xs-3 btn" type="button" value="50">
+				<input class="col-xs-3 btn" type="button" value="999" data-value="999">
+				<div class="cls"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="bottomPopover" class="mui-popover mui-popover-bottom">
+	<div class="mui-popover-arrow"></div>
+	<div class="mui-scroll-wrapper">sadsdsa</div>
+</div>
+
+<!-- <footer>
+	<a href="/mjob/main" class="col-xs-4">
+		<span class="icon-1 iconpng"></span>
+		<span class="mui-tab-label">数据挖矿</span>
+	</a>
+	<a href="/mjob/main" class="col-xs-4 active">
+		<span class="icon-2 iconpng"></span>
+		<span class="mui-tab-label">金职岛</span>
+	</a>
+	<a href="/mjob/main" class="col-xs-4">
+		<span class="icon-3 iconpng"></span>
+		<span class="mui-tab-label">我的身份</span>
+	</a>
+</footer> -->
+
+<script src="/public/js/db/mui.zoom.js"></script>
+<script src="/public/js/db/mui.previewimage.js"></script>
+
+<script type="text/javascript">
+
+	$('#buy').on('tap',function(){
+		$('#mask').fadeIn(200);
+	});
+
+	$("#close").on('tap',function(){
+		$('#mask').fadeOut(200);
+	});
+
+	$('.mui-numbox button').on('tap',function(){
+		setTimeout("changeMoney()",10);
+	});
+
+	$('.selectnun .btn').on('tap',function(){
+		var val = $(this).val();
+		$('#buyNum').val(val);
+		changeMoney();
+	});
+
+	function changeMoney(){
+		var price = $('#Need').attr('data-price');
+		var num = $('#buyNum').val();
+		var need = price * num;
+		$('#Need').attr('data-need',need);
+		$('#Need').html(need);
+	}
+
+	$('#Buynow').on('tap',function(){
+		var balance = parseFloat($('#Balance').attr('data-bal'));
+		var need = parseFloat($('#Need').attr('data-need'));
+		if(balance >= need){
+			window.location.href = "paysuccess";
+		} else {
+			var btnArray = ['取消', '去看看'];
+			mui.confirm('查看提升余额攻略？', '当前JOB币余额不足', btnArray, function(e) {
+				if (e.index == 1) {
+					window.location.href = "strategy";
+				} else {
+					
+				}
+			})
+		}
+	});
+
+	$('footer a').on('tap',function(){
+		console.log('a')
+	});
+
+	mui('.winningbox').on('tap','a',function(){document.location.href=this.href;});
+	mui('.comment').on('tap','a',function(){document.location.href=this.href;});
+
+	mui('footer').on('tap','a',function(){document.location.href=this.href;});
+
+	mui.init({
+		swipeBack:true //启用右滑关闭功能
+	});
+
+	mui.previewImage();
+	// var slider = mui("#slider");
+	// slider.slider({
+	// 	interval: 3000
+	// });
+</script>
+{% endblock %}
+{% block footer %}
+       {{ partial('common/footer_Db')}}
+{% endblock %}
