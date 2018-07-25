@@ -271,13 +271,30 @@ class DbController extends ControllerH5
         $this->view->setVar('data', $list);
     }
 
+    public function shareorderAction() {
+        //
+        $listusercomment = \DbListUserComment::find(array('', 'order' => 'id desc'));
+        $listusercomment = $listusercomment->toArray();
+        foreach($listusercomment as $k => $v){
+            $listusercomment[$k]['create_time'] = date('Y-m-d H:i:s', $v['create_time']);
+            $listusercomment[$k]['comment'] = nl2br($v['comment']);
+            $listusercomment[$k]['imgs'] = explode(',', $v['imgs']);
+            $user = \User::findFirstById($v['user_id']);
+            $listusercomment[$k]['phone'] = $this->getDisablePhone($user->phone);
+            $listusercomment[$k]['username'] = $user->name;
+            $product = \DbProduct::findFirstById($v['product_id']);
+            $listusercomment[$k]['pname'] = $product->name;
+
+        }
+        $data['listusercomment'] = $listusercomment;
+        //
+        $this->view->setVar('data', $data);
+    }
+
     public function paysuccessAction()
     {
 
     }
 
-    public function shareorderAction()
-    {
 
-    }
 }
