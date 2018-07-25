@@ -101,6 +101,18 @@ class DbController extends ControllerH5
             $listuserdetail->save();
         }
         //
+        $user = \User::findFirstById($userid);
+        $user->jobcoin -= $jobcoin;
+        $user->last_time = time();
+        $user->save();
+        $userjobcoin = new \UserJobcoin();
+        $userjobcoin->user_id = $user->id;
+        $userjobcoin->type = 'coinget';
+        $userjobcoin->jobcoin = $jobcoin;
+        $userjobcoin->create_time = time();
+        $userjobcoin->last_time = time();
+        $userjobcoin->save();
+        //
         $list = \DbList::findFirstById($list_id);
         if($list->need_num == $list->already_num){
             $url = 'https://api-prd.eosflare.io/chain/get_info';
@@ -133,21 +145,25 @@ class DbController extends ControllerH5
             }
             $list->last_time = time();
             $list->save();
+
+            //挖矿分红奖励
+            $listuser = $this->db->fetchAll("SELECT user_id,sum(num) as num FROM db_list_user WHERE list_id= $list_id GROUP by user_id");
+            foreach($listuser as $k => $v){
+                $user = \User::findFirstById($v['user_id']);
+                $user->jobcoin += $v['num']*0.1;
+                $user->last_time = time();
+                $user->save();
+                $userjobcoin = new \UserJobcoin();
+                $userjobcoin->user_id = $user->id;
+                $userjobcoin->type = 'coinmining';
+                $userjobcoin->jobcoin = $v['num']*0.1;
+                $userjobcoin->create_time = time();
+                $userjobcoin->last_time = time();
+                $userjobcoin->save();
+            }
         }
-        //
-        $user = \User::findFirstById($userid);
-        $user->jobcoin -= $jobcoin;
-        $user->last_time = time();
-        $user->save();
-        $userjobcoin = new \UserJobcoin();
-        $userjobcoin->user_id = $user->id;
-        $userjobcoin->type = 'coinget';
-        $userjobcoin->jobcoin = $jobcoin;
-        $userjobcoin->create_time = time();
-        $userjobcoin->last_time = time();
-        $userjobcoin->save();
-        //
         //邀请时的奖励
+        $user = \User::findFirstById($userid);
         $code_user = $user->code_user;
         if($code_user){
             $user = \User::findFirst(" code_system = '$code_user'");
