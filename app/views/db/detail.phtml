@@ -1,5 +1,5 @@
 {% extends "common/mobile-index.phtml" %}
-{% block title  %}商品详情{% endblock %}
+{% block title  %}金职夺宝 - 商品详情{% endblock %}
 {% block css %}{{ stylesheetLink('css/db/db.css') }}{% endblock %}
 {% block content %}
 <style type="text/css">
@@ -478,10 +478,11 @@
 		background: url(/public/img/db/close.png) center no-repeat;
 		background-size: contain;
 	}
-	.buybox .tit .right {
+	#Buynow {
 		font-size: 1.58rem;
 		color:#ff2a63;
 		margin-right: 5px;
+		padding:0;
 	}
 	.buybox .container {
 		font-size: 1.4rem;
@@ -586,14 +587,7 @@
 	p.rules span {
 		color:#ff2a63;
 	}
-	.mui-fullscreen.mui-slider .mui-slider-group {
-		padding-bottom: 5.82rem;
-	}
-	div.noneshow {
-		padding: 10px 0;
-	    text-align: center;
-	    font-size: 1.4rem;
-	}
+	
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -763,7 +757,7 @@
 		<div class="tit">
 			<a class="left" id="close"></a>
 			确认购买
-			<a href="#" class="right" id="Buynow">购买</a>
+			<a href="#" class="right btn" id="Buynow">购买</a>
 		</div>
 		<div class="container">
 			<div class="rows payinfo">
@@ -776,7 +770,7 @@
 				<span class="right">余额</span>
 			</div>
 			<div class="rows need">
-				需要 <span id="Need" data-price="50" data-need="50">50</span> JOB(***JOB/人次)
+				需要 <span id="Need" data-price="50" data-need="50">50</span> JOB (50JOB/人次)
 			</div>
 			<div class="rows" style="padding:0">
 				<div class="mui-numbox" data-numbox-min="1">
@@ -821,6 +815,8 @@
 
 <script type="text/javascript">
 
+	var userid = "{{ userinfo['id'] }}";
+
 	$(function(){
 		$('span.username').each(function(){
 			var text = $(this).text();
@@ -833,7 +829,13 @@
 	});
 
 	$('#buy').on('tap',function(){
-		$('#mask').fadeIn(200);
+		if(userid != '') {
+			setTimeout("$('#mask').fadeIn(200)",10);
+		} else {
+			var href = '/mjob/login?backurl='+window.location.href;
+			layer.msg("客官您尚未登录，请先登录",{icon: 5,time:3000});
+			setTimeout("window.location.href='" + href + "'",3000);
+		}
 	});
 
 	$("#close").on('tap',function(){
@@ -860,25 +862,36 @@
 	}
 
 	$('#Buynow').on('tap',function(){
+		var _this = $(this);
+		_this.attr('disabled',true);
 		var balance = parseFloat($('#Balance').attr('data-bal'));
 		var need = parseFloat($('#Need').attr('data-need'));
+		var num = $("#buyNum").val();
 		if(balance >= need){
 			var urlArr = window.location.href.split('/');
     		var list_id = urlArr[5];
-    		$.get("/db/buycount",{"list_id":list_id ,"jobcoin":need},function(data){
-    			if(data.error_code == "0"){
-    				window.location.href = "paysuccess";
-    			} else {
-    				layer.msg(data.reason,{icon: 5,time:3000});
-    			}
-    		},'json');
+    		var btnArray = ['再想想', '买买买'];
+			mui.confirm("确定以"+need+"JOB币的价格购买？", '购买确认', btnArray, function(e) {
+				if (e.index == 1) {
+					$.get("/db/buycount",{"list_id":list_id ,"jobcoin":need},function(data){
+		    			if(data.error_code == "0"){
+		    				window.location.href = "/db/paysuccess?num="+num;
+		    			} else {
+		    				layer.msg(data.reason,{icon: 5,time:3000});
+		    				_this.attr('disabled',false);
+		    			}
+		    		},'json');
+				} else {
+					_this.attr('disabled',false);
+				}
+			})
 		} else {
 			var btnArray = ['取消', '去看看'];
 			mui.confirm('查看提升余额攻略？', '当前JOB币余额不足', btnArray, function(e) {
 				if (e.index == 1) {
-					window.location.href = "strategy";
+					window.location.href = "/db/strategy";
 				} else {
-					
+					_this.attr('disabled',false);
 				}
 			})
 		}

@@ -311,6 +311,21 @@ class DbController extends ControllerH5
     {
 
     }
+    public function messageAction()
+    {
+
+    }
+
+    public function joinrecordAction()
+    {
+
+    }
+
+    public function strategyAction()
+    {
+
+    }
+
 
 
 }

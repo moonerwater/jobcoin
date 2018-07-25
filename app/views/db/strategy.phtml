@@ -1,0 +1,27 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职夺宝 - 提升余额攻略{% endblock %}
+{% block css %}{{ stylesheetLink('css/db/db.css') }}{% endblock %}
+{% block content %}
+<style type="text/css">
+	html,body {
+		height: 100%;
+	}
+	
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">提升余额攻略</h1>
+</header>
+
+<div class="mui-content">
+	<div class="noneshow">
+		暂无系统消息。
+	</div>
+</div>
+
+
+{% endblock %}
+{% block footer %}
+       {{ partial('common/footer_Db')}}
+{% endblock %}

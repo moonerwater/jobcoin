@@ -47,9 +47,18 @@
 	<div class="box">
 		<img src="/public/img/db/success.png">
 	</div>
-	<p>成功参与<span>2</span>人次</p>
-	<a href="" class="btn btn-default btn-lg" role="button">查看参与记录</a>
+	<p>成功参与<span></span>人次</p>
+	<a href="/db/joinrecord" class="btn btn-default btn-lg" role="button">查看参与记录</a>
 </div>
+<script type="text/javascript">
+	$(function(){
+		var urlArr = window.location.href.split('=');
+	    var num = urlArr[1];
+	    $('p span').html(num);
+	});
+</script>
 
-
+{% endblock %}
+{% block footer %}
+       {{ partial('common/footer_Db')}}
 {% endblock %}
