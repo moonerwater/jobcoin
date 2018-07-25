@@ -13,9 +13,9 @@ class DbController extends ControllerH5
     }
     
     public function indexAction() {
-        $this->checkNoUserGoLogin();
+        //$this->checkNoUserGoLogin();
         //
-        $userid = $this->userinfo['id'];
+        //$userid = $this->userinfo['id'];
 
         //
         $list = \DbList::find(array('', 'order' => 'id desc'));
@@ -188,9 +188,10 @@ class DbController extends ControllerH5
     }
 
     public function detailAction($id) {
-        $this->checkNoUserGoLogin();
+        //$this->checkNoUserGoLogin();
         //
         $userid = $this->userinfo['id'];
+        $userid = $userid?$userid:0;
 
         //
         $list = \DbList::findFirstById($id);
