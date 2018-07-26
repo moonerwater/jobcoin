@@ -1,0 +1,282 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职夺宝 - 评论晒单{% endblock %}
+{% block css %}{{ stylesheetLink('css/db/db.css') }}{% endblock %}
+{% block content %}
+<style type="text/css">
+	html,body,.mui-content {
+		height: 100%;
+		background-color: #fff;
+	}
+	h2 {
+		color:#f00;
+		font-size:1.5rem;
+		margin:10px 0;
+	}
+	textarea {
+    	border:none;
+    	border-top:1px solid #ccc;
+    	display: block;
+    	height: 10rem;
+		margin-bottom: 1rem;
+	}
+	.pics {
+		/*width: 110%;*/
+	}
+	.pics .col-xs-3 {
+		margin-bottom: 1rem;
+	}
+	.pics .picbox {
+		width: 100%;
+		height: 0;
+		padding:50%;
+		/*margin-right: 1rem;
+		margin-bottom: 1rem;
+*/		border:1px dotted #ccc;
+		position: relative;
+		line-height: 5.5;
+		font-size:1rem;
+		text-align: center;
+	}
+	.pics .picbox i {
+	    width: 1.2rem;
+	    height: 1.2rem;
+	    line-height: 1.1rem;
+	    text-align: center;
+	    font-size: 1.5rem;
+	    color: #fff;
+	    font-weight: 700;
+	    background: #f00;
+	    border-radius: 50%;
+	    position: absolute;
+	    top: -.6rem;
+	    right: -.6rem;
+	    font-style: normal;
+	}
+	.fileinput-button {
+	    position: relative;
+	    display: block;
+	    overflow: hidden;
+	    width: 100%;
+	    margin: 0 auto;
+	    padding:0;
+	    border-radius: 0;
+	}
+	.fileinput-button span {
+		width: 100%;
+		height: 1.4rem;
+		line-height: 1.4rem;
+	}
+	.fileinput-button input {
+	    position: absolute;
+	    right: 0px;
+	    top: 0px;
+	    opacity: 0;
+	    -ms-filter: 'alpha(opacity=0)';
+	    font-size: 200px;
+	}
+	.btn-default:hover {
+		background: #fff;
+	}
+	.mui-btn-block {
+	    height: 4.62rem;
+	    border-radius: 4.62rem;
+	    font-size: 1.6rem;
+	    width: 80%;
+	    margin: 0 auto;
+	    margin-top: 2rem;
+	    color:#fff;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">评论晒单</h1>
+</header>
+
+<div class="mui-content">
+	<div class="container">
+		<h2>大吉大利，今晚吃鸡！</h2>
+		<div class="row">
+			<textarea placeholder="评论晒单有丰厚的奖励等着您~"></textarea>
+		</div>
+		<div class="pics row">
+			<!-- <div class="col-xs-3">
+				<div class="picbox">
+					<img src="/public/img/db/1.jpg" class="auto-center">
+					<i>×</i>
+				</div>
+			</div> -->
+			<div class="col-xs-3" id="Put">
+				<span class="btn btn-default fileinput-button picbox">
+		            <span class="auto-center">添加图片</span>
+		            <input type="file" accept="image/png, image/jpeg, image/jpg" onchange="imgChange(event)" id="file">
+		        </span>
+			</div>
+		</div>
+		<button type="button" id="confirmBtn" class="mui-btn mui-btn-block gradual">提交评论</button>
+	</div>
+</div>
+<script type="text/javascript">
+
+	var base = [];
+	var lid = 0;
+	var indexload;
+
+	function checkPicNum(){
+		var len = 0;
+		$(".pics .col-xs-3").each(function(){
+			len++;
+			console.log(len);
+			if(len >= 9){
+				$('#Put').hide();
+			} else {
+				$('#Put').show();
+			}
+		});
+	}
+
+	$(document).on('tap',".pics .picbox i",function(){
+		var _this = $(this);
+		var btnArray = ['取消', '删除'];
+		mui.confirm('是否删除该图片？', '删除图片', btnArray, function(e) {
+			if (e.index == 1) {
+				var id = _this.attr('data-id');
+				base.splice(id-1,1,'');
+				_this.parents('.col-xs-3').remove();
+				checkPicNum();
+			} else {
+				//_this.attr('disabled',false);
+			}
+		})		
+	});
+
+	function imgChange(e) {
+		var ba = $('#Put');
+	    var reader = new FileReader();
+	    reader.onload = (function (file) {
+	        return function (e) {
+	        	if(e.total>10*1024*1024){
+			        //alert('上传的图片的大于4M,请重新选择');
+			        layer.msg('上传的图片的大于10M,请重新选择。',{icon: 5});
+			        return false;
+		        } else {
+		        	var IMG = new Image();
+		        	IMG.src = this.result;
+		            IMG.onload = function(){
+	      				var w = this.naturalWidth, h = this.naturalHeight , resizeW = 0, resizeH = 0;
+	      				//console.log(w,h)
+	      			
+		      			var maxSize = {
+					        width: 480,
+					        height: 480,
+					        level: 0.6
+					    };
+
+					    if(w > maxSize.width || h > maxSize.height){
+					        var multiple = Math.max(w / maxSize.width, h / maxSize.height);
+					        resizeW = w / multiple;
+					        resizeH = h / multiple;
+					        var canvas = document.createElement('canvas'),
+						    ctx = canvas.getContext('2d');
+					        canvas.width = resizeW;
+					        canvas.height = resizeH;
+					        ctx.drawImage(IMG, 0, 0, resizeW, resizeH);
+						    var base64 = canvas.toDataURL('image/jpeg', maxSize.level);
+						    // $("#showImage")[0].src=base64;
+						    // var arr = base64.split(',');
+				      //       base = arr[1];
+				      //       console.log(base64)
+				      		
+				      		base.push(base64);
+				      		lid++;
+				     		var dom = "<div class='col-xs-3'>"
+									+		"<div class='picbox'>"
+									+			"<img src='"+base64+"' class='auto-center'>"
+									+			"<i data-id='"+lid+"'>×</i>"
+									+		"</div>"
+									+	"</div>";
+							ba.before(dom);
+							checkPicNum();
+					    } else {
+					        // 如果图片尺寸小于最大限制，则不压缩直接上传
+					        // $("#showImage")[0].src=IMG.src;
+				         //    var arr = IMG.src.split(',');
+				         //    base = arr[1];
+				         //    console.log(base);
+				        	
+				        	base.push(IMG.src);
+				      		lid++;
+				         	var dom = "<div class='col-xs-3'>"
+									+		"<div class='picbox'>"
+									+			"<img src='"+IMG.src+"' class='auto-center'>"
+									+			"<i data-id='"+lid+"'>×</i>"
+									+		"</div>"
+									+	"</div>";
+							ba.before(dom);
+							checkPicNum();
+					    }
+					    
+				    }
+	        	
+	            //console.log(this.result); //这个就是base64的数据了
+		            // $("#showImage")[0].src=this.result;
+		            // var arr = this.result.split(',');
+		            // base = arr[1];
+		            // console.log(base);
+	            }
+	        };
+	    })(e.target.files[0]);
+	    reader.readAsDataURL(e.target.files[0]);
+	}
+
+	Array.prototype.notempty = function(){
+		for(var i=0; i<this.length; i++){
+	         if(this[i] == "" || typeof(this[i]) == "undefined"){
+	        	this.splice(i,1);
+	            i--;
+	         }
+		 }
+		return this;
+	};
+	
+	$('#confirmBtn').on('tap',function(){
+		var text = $('textarea').val();
+		if(base.length == 0){
+			// indexload = layer.load(2, {
+			//   shade: [0.4,'#000'] //0.1透明度的白色背景
+			// });
+			// $.post('/mjob/checkidcardimg',{'text':text},function(data){
+			// 	if(data.error_code == '0'){
+			// 		layer.close(indexload);
+			// 		layer.msg('验证成功。',{icon: 1});
+			// 		setTimeout("window.location.href = 'promote'",2000);
+			// 	} else {
+			// 		layer.close(indexload);
+			// 		layer.msg("识别失败，请上传清晰的身份证正面图片。",{icon: 5});
+			// 	}
+			// },'json');
+		} else {
+			var arr = base.notempty();
+			console.log(arr);
+			// indexload = layer.load(2, {
+			//   shade: [0.4,'#000'] //0.1透明度的白色背景
+			// });
+			// $.post('/mjob/checkidcardimg',{'text':text, 'imgbase64':arr},function(data){
+			// 	if(data.error_code == '0'){
+			// 		layer.close(indexload);
+			// 		layer.msg('验证成功。',{icon: 1});
+			// 		setTimeout("window.location.href = 'promote'",2000);
+			// 	} else {
+			// 		layer.close(indexload);
+			// 		layer.msg("识别失败，请上传清晰的身份证正面图片。",{icon: 5});
+			// 	}
+			// },'json');
+		}
+	});
+
+</script>
+
+{% endblock %}
+{% block footer %}
+       {{ partial('common/footer_Db')}}
+{% endblock %}

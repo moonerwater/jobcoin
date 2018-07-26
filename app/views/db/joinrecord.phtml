@@ -130,6 +130,10 @@
 		color:#f00;
 		font-size: 1.6rem;
 	}
+	.statC button.link {
+		position: relative;
+		z-index:5;
+	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -174,7 +178,7 @@
 										<button class="btn link col-xs-4 right gradual">查看</button>
 									{% else %}
 										{% if item['is_comment'] == 'N' %}
-										<button class="link col-xs-4 right gradual ">晒单</button>
+										<button class="link col-xs-4 right gradual" onclick="turn()">晒单</button>
 										{% else %}
 										<button class="link col-xs-4 right gradual disabled">已晒单</button>
 										{% endif %}
@@ -191,7 +195,12 @@
 		<div class="noneshow">暂无参与记录。</div>
 	{% endif %}
 </div>
-
+<script type="text/javascript">
+	function turn(){
+		event.preventDefault();
+		window.location.href = "/db/comment";
+	}
+</script>
 
 {% endblock %}
 {% block footer %}

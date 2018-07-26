@@ -357,6 +357,11 @@ class DbController extends ControllerH5
 
     }
 
+    public function commentAction()
+    {
+
+    }
+
 
 
 }
