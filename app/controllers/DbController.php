@@ -260,6 +260,8 @@ class DbController extends ControllerH5
             $user = \User::findFirstById($v['user_id']);
             $listusercomment[$k]['phone'] = $this->getDisablePhone($user->phone);
             $listusercomment[$k]['username'] = $user->name;
+            $product = \DbProduct::findFirstById($v['product_id']);
+            $listusercomment[$k]['pname'] = $product->name;
 
         }
         $data['listusercomment'] = $listusercomment;
