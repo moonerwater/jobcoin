@@ -138,95 +138,58 @@
 </header>
 
 <div class="mui-content">
-	<ul class="mui-table-view">
-		<li class="mui-table-view-cell mui-media statA">
-			<a href="detail/2" class="item">
-				<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/i1.jpg">
-				<div class="mui-media-body">
-					<div class="title">
-						<span class="tips">115663期</span>
-						Apple iPad 平板电脑 2018年新款9.7英寸（128G WLAN版/A10 芯片/Retina显示屏/Touch ID MRJP2CH/A）金色
-					</div>
-					<div class="num">参与次数：<span>4</span>次</div>
-					<div class="status">
-						<div class="rate col-xs-7">
-							<p>夺宝进度：<span>50.00%</span></p>
-							<div class="progressrow">
-								<div class="progress gradual" style="width:50.00%"></div>
+	{% if data['listuser'] %}
+		<ul class="mui-table-view">
+			{% for key, item in data['listuser'] %}
+				{% if item['is_end'] == 'N' %}
+					<li class="mui-table-view-cell mui-media statA">
+				{% else %}
+					{% if item['is_win'] == 'N' %}
+					<li class="mui-table-view-cell mui-media statB">
+					<div class="winbox nowin">未中奖</div>
+					{% else %}
+					<li class="mui-table-view-cell mui-media statC">
+					<div class="winbox win">中奖</div>
+					{% endif %}
+				{% endif %}
+					<a href="/db/detail/{{ item['list_id'] }}" class="item">
+						<img class="mui-media-object mui-pull-left" src="{{ item['imgs'][0] }}">
+						<div class="mui-media-body">
+							<div class="title">
+								<span class="tips">{{ item['no'] }}期</span>
+								{{ item['pname'] }}
+							</div>
+							<div class="num">参与次数：<span>{{ item['count'] }}</span>次</div>
+							<div class="status">
+								<div class="rate col-xs-7">
+									<p>夺宝进度：<span>{{ item['percent'] }}%</span></p>
+									<div class="progressrow">
+										<div class="progress gradual" style="width:{{ item['percent'] }}%"></div>
+									</div>
+								</div>
+								{% if item['is_end'] == 'N' %}
+									<button class="btn link col-xs-4 right gradual">查看</button>
+								{% else %}
+									{% if item['is_win'] == 'N' %}
+										<button class="btn link col-xs-4 right gradual">查看</button>
+									{% else %}
+										{% if item['is_comment'] == 'N' %}
+										<button class="link col-xs-4 right gradual ">晒单</button>
+										{% else %}
+										<button class="link col-xs-4 right gradual disabled">已晒单</button>
+										{% endif %}
+									{% endif %}
+								{% endif %}
+
 							</div>
 						</div>
-						<button class="btn link col-xs-4 right gradual">查看</button>
-					</div>
-				</div>
-			</a>
-		</li>
-		<li class="mui-table-view-cell mui-media statB">
-			<div class="winbox nowin">未中奖</div>
-			<a href="detail/1" class="item">
-				<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/x1.jpg">
-				<div class="mui-media-body">
-					<div class="title">
-						<span class="tips">115662期</span>
-						Apple iPhone X (A1865) 64GB 深空灰色 移动联通电信4G手机
-					</div>
-					<div class="num">参与次数：<span>8</span>次</div>
-					<div class="status">
-						<div class="rate col-xs-7">
-							<p>夺宝进度：<span>100.00%</span></p>
-							<div class="progressrow">
-								<div class="progress gradual" style="width:100.00%"></div>
-							</div>
-						</div>
-						<button class="link col-xs-4 right gradual">查看</button>
-					</div>
-				</div>
-			</a>
-		</li>
-		<li class="mui-table-view-cell mui-media statC">
-			<div class="winbox win">中奖</div>
-			<a href="detail/1" class="item">
-				<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/x1.jpg">
-				<div class="mui-media-body">
-					<div class="title">
-						<span class="tips">115662期</span>
-						Apple iPhone X (A1865) 64GB 深空灰色 移动联通电信4G手机
-					</div>
-					<div class="num">参与次数：<span>4</span>次</div>
-					<div class="status">
-						<div class="rate col-xs-7">
-							<p>夺宝进度：<span>100.00%</span></p>
-							<div class="progressrow">
-								<div class="progress gradual" style="width:100.00%"></div>
-							</div>
-						</div>
-						<button class="link col-xs-4 right gradual ">晒单</button>
-					</div>
-				</div>
-			</a>
-		</li>
-		<li class="mui-table-view-cell mui-media statC">
-			<div class="winbox win">中奖</div>
-			<a href="detail/1" class="item">
-				<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/x1.jpg">
-				<div class="mui-media-body">
-					<div class="title">
-						<span class="tips">115662期</span>
-						Apple iPhone X (A1865) 64GB 深空灰色 移动联通电信4G手机
-					</div>
-					<div class="num">参与次数：<span>4</span>次</div>
-					<div class="status">
-						<div class="rate col-xs-7">
-							<p>夺宝进度：<span>100.00%</span></p>
-							<div class="progressrow">
-								<div class="progress gradual" style="width:100.00%"></div>
-							</div>
-						</div>
-						<button class="link col-xs-4 right gradual disabled">已晒单</button>
-					</div>
-				</div>
-			</a>
-		</li>
-	</ul>
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	{% else %}
+		<div class="noneshow">暂无参与记录。</div>
+	{% endif %}
 </div>
 
 

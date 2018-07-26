@@ -85,8 +85,8 @@ class DbController extends ControllerH5
         $listuser->save();
         for($i =1; $i<=$count; $i++){
             $listuserdetail = \DbListUserDetail::find(array('list_id = '.$list_id, 'order' => 'id desc'));
-            if(!$listuserdetail){
-                $no = -1;
+            if(!$listuserdetail->toArray()){
+                $no = 0;
             }
             else{
                 $listuserdetail = $listuserdetail->toArray();
@@ -307,18 +307,47 @@ class DbController extends ControllerH5
         $this->view->setVar('data', $data);
     }
 
-    public function paysuccessAction()
-    {
-
-    }
-    public function messageAction()
-    {
-
+    public function paysuccessAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
     }
 
-    public function joinrecordAction()
-    {
+    public function messageAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+    }
 
+    public function joinrecordAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+
+        $listuser = $this->db->fetchAll("SELECT list_id,user_id,sum(count) as count FROM db_list_user WHERE user_id = $userid GROUP by list_id ORDER by list_id DESC ");
+        foreach($listuser as $k => $v){
+            $list = \DbList::findFirstById($v['list_id']);
+            $list = $list->toArray();
+            $listuser[$k]['no'] = $list['no'];
+            $listuser[$k]['is_end'] = $list['is_end'];
+            $listuser[$k]['is_win'] = 'N';
+            if($list['win_user_id'] == $userid){
+                $listuser[$k]['is_win'] = 'Y';
+            }
+            $listuser[$k]['is_comment'] = 'N';
+            $listusercomment = \DbListUserComment::findFirst(" list_id =  ".$v['list_id']." and user_id = $userid ");
+            if($listusercomment) {
+                $listuser[$k]['is_comment'] = 'Y';
+            }
+            $listuser[$k]['percent'] = (number_format($list['already_num']/$list['need_num']*100, 2));
+
+            $product = \DbProduct::findFirstById($list['product_id']);
+            $listuser[$k]['pname'] = $product->name;
+            $listuser[$k]['imgs'] = explode(',', $product->imgs);
+        }
+        $data['listuser'] = $listuser;
+        //
+        $this->view->setVar('data', $data);
     }
 
     public function strategyAction()
