@@ -116,7 +116,7 @@ class ControllerH5 extends ControllerBase
         if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)){
             $type = $result[2];
             $type = ($type=='jpeg'?'jpg':$type);
-            $path1 = "/var/www/html/public";
+            $path1 = APP_PATH."public";
             $new_path = $path."/".date('Ymd',time())."/";
             if(!file_exists($path1.$new_path)){
                 //检查是否有该文件夹，如果没有就创建，并给予最高权限
