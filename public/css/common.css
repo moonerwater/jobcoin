@@ -28,6 +28,14 @@ img.auto-center {
 .none {
 	display: none;
 }
+img.nonepng {
+	display: block;
+	width: 8rem;
+	height: 8rem;
+	margin:0 auto;
+	margin-top:10rem;
+	margin-bottom: 2rem;
+}
 div.noneshow {
 	padding: 10px 0;
     text-align: center;

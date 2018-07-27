@@ -126,7 +126,6 @@
 		var len = 0;
 		$(".pics .col-xs-3").each(function(){
 			len++;
-			console.log(len);
 			if(len >= 9){
 				$('#Put').hide();
 			} else {
@@ -162,6 +161,10 @@
 		        } else {
 		        	var IMG = new Image();
 		        	IMG.src = this.result;
+		        	var arA = this.result.split(';');
+		        	var arB = arA[0].split('/');
+		        	var arC = arB[1];
+		        	//console.log(arC);
 		            IMG.onload = function(){
 	      				var w = this.naturalWidth, h = this.naturalHeight , resizeW = 0, resizeH = 0;
 	      				//console.log(w,h)
@@ -181,7 +184,7 @@
 					        canvas.width = resizeW;
 					        canvas.height = resizeH;
 					        ctx.drawImage(IMG, 0, 0, resizeW, resizeH);
-						    var base64 = canvas.toDataURL('image/jpeg', maxSize.level);
+						    var base64 = canvas.toDataURL("image/"+arC, maxSize.level);
 						    // $("#showImage")[0].src=base64;
 						    // var arr = base64.split(',');
 				      //       base = arr[1];
@@ -241,36 +244,41 @@
 	
 	$('#confirmBtn').on('tap',function(){
 		var text = $('textarea').val();
-		if(base.length == 0){
-			indexload = layer.load(2, {
-			  shade: [0.4,'#000'] //0.1透明度的白色背景
-			});
-			$.post('/db/commentadd',{'list_id':list_id,'comment':text},function(data){
-				if(data.error_code == '0'){
-					layer.close(indexload);
-					layer.msg('评论成功成功。',{icon: 1});
-					setTimeout("window.location.href = '/db/shareorder'",2000);
-				} else {
-					layer.close(indexload);
-					layer.msg("评论失败。",{icon: 5});
-				}
-			},'json');
+		if(text == ''){
+			layer.msg("评论不许为空哦~",{icon: 5});
+			return false;
 		} else {
-			var arr = base.notempty();
-			console.log(arr);
-			indexload = layer.load(2, {
-			  shade: [0.4,'#000'] //0.1透明度的白色背景
-			});
-			$.post('/db/commentadd',{'list_id':list_id,'comment':text, 'base64':arr},function(data){
-				if(data.error_code == '0'){
-					layer.close(indexload);
-					layer.msg('评论成功成功。',{icon: 1});
-					setTimeout("window.location.href = '/db/shareorder'",2000);
-				} else {
-					layer.close(indexload);
-					layer.msg("评论失败。",{icon: 5});
-				}
-			},'json');
+			if(base.length == 0){
+				indexload = layer.load(2, {
+				  shade: [0.4,'#000'] //0.1透明度的白色背景
+				});
+				$.post('/db/commentadd',{'list_id':list_id,'comment':text},function(data){
+					if(data.error_code == '0'){
+						layer.close(indexload);
+						layer.msg('评论成功。',{icon: 1});
+						setTimeout("window.location.href = '/db/shareorder'",2000);
+					} else {
+						layer.close(indexload);
+						layer.msg("评论失败。",{icon: 5});
+					}
+				},'json');
+			} else {
+				var arr = base.notempty();
+				console.log(arr);
+				indexload = layer.load(2, {
+				  shade: [0.4,'#000'] //0.1透明度的白色背景
+				});
+				$.post('/db/commentadd',{'list_id':list_id,'comment':text, 'base64':arr},function(data){
+					if(data.error_code == '0'){
+						layer.close(indexload);
+						layer.msg('评论成功。',{icon: 1});
+						setTimeout("window.location.href = '/db/shareorder'",2000);
+					} else {
+						layer.close(indexload);
+						layer.msg("评论失败。",{icon: 5});
+					}
+				},'json');
+			}
 		}
 	});
 
