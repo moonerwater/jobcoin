@@ -178,7 +178,7 @@
 										<button class="btn link col-xs-4 right gradual">查看</button>
 									{% else %}
 										{% if item['is_comment'] == 'N' %}
-										<button class="link col-xs-4 right gradual" onclick="turn()">晒单</button>
+										<button class="link col-xs-4 right gradual" onclick="turn({{ item['list_id'] }})">晒单</button>
 										{% else %}
 										<button class="link col-xs-4 right gradual disabled">已晒单</button>
 										{% endif %}
@@ -196,9 +196,9 @@
 	{% endif %}
 </div>
 <script type="text/javascript">
-	function turn(){
+	function turn(list_id){
 		event.preventDefault();
-		window.location.href = "/db/comment";
+		window.location.href = "/db/comment/"+list_id;
 	}
 </script>
 

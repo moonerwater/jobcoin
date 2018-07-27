@@ -111,6 +111,8 @@
 										<div class="left stat2">
 									{% elseif item['type'] == 'coinmining' %}
 										<div class="left stat2">
+									{% elseif item['type'] == 'comment' %}
+										<div class="left stat2">
 									{% endif %}
 										<h5>
 											{% if item['type'] == 'reg' %}
@@ -129,6 +131,8 @@
 												二级好友夺宝返利
 											{% elseif item['type'] == 'coinmining' %}
 												夺宝挖矿返还
+											{% elseif item['type'] == 'comment' %}
+												晒单奖励
 											{% endif %}
 										</h5>
 										<p>{{ item['time'] }}</p>

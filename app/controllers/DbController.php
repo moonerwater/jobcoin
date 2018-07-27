@@ -352,12 +352,79 @@ class DbController extends ControllerH5
         $this->view->setVar('data', $data);
     }
 
-    public function strategyAction()
-    {
+    public function commentAction($id) {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
 
+        $list = \DbList::findFirst(" win_user_id = $userid and id = $id ");
+        if(!$list){
+            $this->replyFailure('id error');
+            return '';
+        }
+        $list = $list->toArray();
+        $product = \DbProduct::findFirstById($list['product_id']);
+        $list['pname'] = $product->name;
+        $list['imgs'] = explode(',', $product->imgs);
+        //
+        $this->view->setVar('data', $list);
     }
 
-    public function commentAction()
+    public function commentaddAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+
+        $list_id = $this->request->get('list_id', 'int');
+        $comment = $this->request->get('comment');
+        $base64 = $this->request->get('base64');
+        if (!$list_id) {
+            $this->replyFailure('list_id none');
+            return '';
+        }
+        if (!$comment) {
+            $this->replyFailure('comment none');
+            return '';
+        }
+        $list = \DbList::findFirst(" win_user_id = $userid and id = $list_id ");
+        if(!$list){
+            $this->replyFailure('list_id error');
+            return '';
+        }
+        $list = $list->toArray();
+
+        $listusercomment = \DbListUserComment::findFirst(" list_id = $list_id ");
+        if($listusercomment){
+            $this->replyFailure('list_id commented');
+            return '';
+        }
+
+        $listusercomment = new DbListUserComment();
+        $listusercomment->list_id = $list_id;
+        $listusercomment->product_id = $list['product_id'];
+        $listusercomment->user_id = $userid;
+        $listusercomment->comment = $comment;
+        $listusercomment->create_time = time();
+        $listusercomment->last_time = time();
+        $listusercomment->save();
+        //晒单奖励
+        $user = \User::findFirstById($userid);
+        $user->jobcoin += 10;
+        $user->last_time = time();
+        $user->save();
+        $userjobcoin = new \UserJobcoin();
+        $userjobcoin->user_id = $user->id;
+        $userjobcoin->type = 'comment';
+        $userjobcoin->jobcoin = 10;
+        $userjobcoin->create_time = time();
+        $userjobcoin->last_time = time();
+        $userjobcoin->save();
+        //
+
+        $this->reply('success', 0, $result2);
+    }
+
+    public function strategyAction()
     {
 
     }
