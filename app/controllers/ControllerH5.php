@@ -103,5 +103,36 @@ class ControllerH5 extends ControllerBase
         return $data;
     }
 
+    /**
+     * [将Base64图片转换为本地图片并保存]
+     * @E-mial wuliqiang_aa@163.com
+     * @TIME   2017-04-07
+     * @WEB    http://blog.iinu.com.cn
+     * @param  [Base64] $base64_image_content [要保存的Base64]
+     * @param  [目录] $path [要保存的路径]
+     */
+    function base64_image_content($base64_image_content,$path) {
+        //匹配出图片的格式
+        if (preg_match('/^(data:\s*image\/(\w+);base64,)/', $base64_image_content, $result)){
+            $type = $result[2];
+            $type = ($type=='jpeg'?'jpg':$type);
+            $path1 = "/var/www/html/public";
+            $new_path = $path."/".date('Ymd',time())."/";
+            if(!file_exists($path1.$new_path)){
+                //检查是否有该文件夹，如果没有就创建，并给予最高权限
+                mkdir($path1.$new_path, 0700);
+            }
+            $new_file = uniqid().".{$type}";
+            if (file_put_contents($path1.$new_path.$new_file, base64_decode(str_replace($result[1], '', $base64_image_content)))){
+                return $new_path.$new_file;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+
+    }
+
 
 }

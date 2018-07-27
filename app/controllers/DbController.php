@@ -257,6 +257,9 @@ class DbController extends ControllerH5
             $listusercomment[$k]['create_time'] = date('Y-m-d H:i:s', $v['create_time']);
             $listusercomment[$k]['comment'] = nl2br($v['comment']);
             $listusercomment[$k]['imgs'] = explode(',', $v['imgs']);
+            if(!$listusercomment[$k]['imgs'][0]){
+                $listusercomment[$k]['imgs'] = array();
+            }
             $user = \User::findFirstById($v['user_id']);
             $listusercomment[$k]['phone'] = $this->getDisablePhone($user->phone);
             $listusercomment[$k]['username'] = $user->name;
@@ -297,6 +300,9 @@ class DbController extends ControllerH5
             $listusercomment[$k]['create_time'] = date('Y-m-d H:i:s', $v['create_time']);
             $listusercomment[$k]['comment'] = nl2br($v['comment']);
             $listusercomment[$k]['imgs'] = explode(',', $v['imgs']);
+            if(!$listusercomment[$k]['imgs'][0]){
+                $listusercomment[$k]['imgs'] = array();
+            }
             $user = \User::findFirstById($v['user_id']);
             $listusercomment[$k]['phone'] = $this->getDisablePhone($user->phone);
             $listusercomment[$k]['username'] = $user->name;
@@ -404,6 +410,16 @@ class DbController extends ControllerH5
         $listusercomment->product_id = $list['product_id'];
         $listusercomment->user_id = $userid;
         $listusercomment->comment = $comment;
+        $imgs = array();
+        if($base64){
+            foreach($base64 as $k => $v){
+                $file = $this->base64_image_content($v,'/upload/dbcomment');
+                if($file){
+                    $imgs[] = $file;
+                }
+            }
+        }
+        $listusercomment->imgs = implode(',',$imgs);
         $listusercomment->create_time = time();
         $listusercomment->last_time = time();
         $listusercomment->save();
