@@ -39,51 +39,35 @@
 	<h1 class="mui-title">系统消息</h1>
 </header>
 
-<div class="mui-content none">
-	<img src="/public/img/db/noneshow.png" class="nonepng">
-	<div class="noneshow">
-		暂无系统消息。
-	</div>
-</div>
-
-<div class="mui-content">
-	<h2>2018-07-21</h2>
-	<div class="mui-card">
-		<div class="mui-card-content">
-			<div class="mui-card-content-inner">
-				<h4>JOB奖励发放</h4>
-				<p>这里显示文章摘要，让读者对文章内容有个粗略的概念...</p>
+{% if data['sysnotice'] %}
+	<div class="mui-content">
+		{% for key, item in data['sysnotice'] %}
+		<h2>{{  item['create_time'] }}</h2>
+		<div class="mui-card">
+			<div class="mui-card-content">
+				<div class="mui-card-content-inner">
+					{% if item['type'] == 'coingetwin' %}
+						<h4>中奖公告</h4>
+					{% else %}
+						<h4>其它</h4>
+					{% endif %}
+					<p>{{item['content']}}</p>
+				</div>
+			</div>
+			<div class="mui-card-footer">
+				<a href="{{ item['url'] }}" class="link">查看详情</a>
 			</div>
 		</div>
-		<div class="mui-card-footer">
-			<a href="/db/index" class="link">查看详情</a>
+		{% endfor %}
+	</div>
+{% else %}
+	<div class="mui-content">
+		<img src="/public/img/db/noneshow.png" class="nonepng">
+		<div class="noneshow">
+			暂无系统消息。
 		</div>
 	</div>
-	<h2>2018-07-21</h2>
-	<div class="mui-card">
-		<div class="mui-card-content">
-			<div class="mui-card-content-inner">
-				<h4>JOB奖励发放</h4>
-				<p>这里显示文章摘要，让读者对文章内容有个粗略的概念...</p>
-			</div>
-		</div>
-		<div class="mui-card-footer">
-			<a href="/db/index" class="link">查看详情</a>
-		</div>
-	</div>
-	<h2>2018-07-21</h2>
-	<div class="mui-card">
-		<div class="mui-card-content">
-			<div class="mui-card-content-inner">
-				<h4>JOB奖励发放</h4>
-				<p>这里显示文章摘要，让读者对文章内容有个粗略的概念...</p>
-			</div>
-		</div>
-		<div class="mui-card-footer">
-			<a href="/db/index" class="link">查看详情</a>
-		</div>
-	</div>
-</div>
+{% endif %}
 
 
 {% endblock %}

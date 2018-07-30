@@ -142,6 +142,16 @@ class DbController extends ControllerH5
             $listuserdetail = \DbListUserDetail::findFirst(" list_id = $list_id and no = $lucky_num");
             if($listuserdetail){
                 $list->win_user_id = $listuserdetail->user_id;
+
+                //
+                $sysnotice = new \DbSysNotice();
+                $sysnotice->type = 'coingetwin';
+                $sysnotice->user_id = $listuserdetail->user_id;
+                $sysnotice->content = '尊敬的用户，你是'.$list->no.'期的中奖者，请安心等待客服联系你。';
+                $sysnotice->url = '/db/detail/'.$list->id;
+                $sysnotice->create_time = time();
+                $sysnotice->last_time = time();
+                $sysnotice->save();
             }
             $list->last_time = time();
             $list->save();
@@ -325,6 +335,16 @@ class DbController extends ControllerH5
         $this->checkNoUserGoLogin();
         //
         $userid = $this->userinfo['id'];
+
+        $sysnotice = \DbSysNotice::find(array('user_id = '.$userid, 'order' => 'id desc'));
+        $sysnotice = $sysnotice->toArray();
+        foreach($sysnotice as $k => $v){
+            $sysnotice[$k]['create_time'] = date('Y-m-d H:i:s', $v['create_time']);
+
+        }
+        $data['sysnotice'] = $sysnotice;
+        //
+        $this->view->setVar('data', $data);
     }
 
     public function joinrecordAction() {
