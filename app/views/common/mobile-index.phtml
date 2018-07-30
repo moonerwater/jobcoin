@@ -50,6 +50,13 @@
                 position: relative;
                 z-index: 2;
             }
+            a,
+            a:link,
+            a:visited,
+            a:hover,
+            a:active {
+                text-decoration: none;
+            }
         </style>
         {% block css %}
             <style type="text/css">
@@ -57,15 +64,6 @@
                     background-color: #fefefe;
                     /*padding:0 20px;*/
                 }
-                a,
-                a:link,
-                a:visited,
-                a:hover,
-                a:active {
-                    text-decoration: none;
-                }
-                
-                
             </style>
         {% endblock %}
         {% block js %}
