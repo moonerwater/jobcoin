@@ -1139,6 +1139,16 @@
 														<span class="ident5"></span>账户设置
 													</a>
 												</li>
+												<li class="mui-table-view-cell">
+													<a href="javascript:void(0);" data-href="tabbar-with-chat" id="tomain2" class="mui-navigate-right">
+														<span class="ident3"></span>关于金职岛
+													</a>
+												</li>
+												<li class="mui-table-view-cell">
+													<a href="aboutus" class="mui-navigate-right">
+														<span class="ident1"></span>关于金职链
+													</a>
+												</li>
 											</ul>
 										</div>
 									</div>
@@ -1156,7 +1166,7 @@
 					</a>
 					<a class="mui-control-item" data-href="tabbar-with-chat" id="tabbar-with-chat2">
 						<span class="icon-2 iconpng"><!-- <span class="mui-badge">9</span> --></span>
-						<span class="mui-tab-label">金职岛</span>
+						<span class="mui-tab-label">金职夺宝</span>
 					</a>
 					<a class="mui-control-item" data-href="tabbar-with-contact" id="tabbar-with-contact2">
 						<span class="icon-3 iconpng"></span>
@@ -1171,11 +1181,22 @@
 	<script type="text/javascript" src="{{url('js/mjob/mui.pullToRefresh.material.js')}}"></script>
 	<script>
 
+		$('#tomain2').on('tap',function(){
+			var href = $(this).attr('data-href');
+			window.location.href = 'main#a-'+href;
+			checkHref();
+		})
+
 		$('#sliderSegmentedControl a').on('tap',function(){
 			var href = $(this).attr('data-href');
 			//console.log(href);
 			//window.location.href = 'main#'+href;
-			window.location.href = 'main#a-'+href;
+			if(href == "tabbar-with-chat") {
+				window.location.href = '/db/index';
+			} else {
+				window.location.href = 'main#a-'+href;
+			}
+			//window.location.href = 'main#a-'+href;
 			checkHref();
 		});
 

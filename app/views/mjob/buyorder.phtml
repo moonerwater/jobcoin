@@ -1,0 +1,495 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职岛 - 购买JOB币{% endblock %}
+
+
+{% block content %}
+<style type="text/css">
+	body,html,.mui-content {
+		height:100%;
+	}
+	.mui-content {
+		background: #fff;
+	}
+	div img {
+		max-width: 100%;
+	}
+	p {
+		font-size:1rem;
+	}
+	.mui-input-group {
+		background: transparent;
+	}
+	.mui-input-row p {
+		height: 40px;
+		padding: 10px 15px;
+		line-height: 21px;
+		float: right;
+	    width: 65%;
+	    margin: 0;
+	    padding-left: 0;
+	    border: 0;
+	}
+	.mui-btn-block {
+	    height: 4.62rem;
+	    border-radius: 4.62rem;
+	    font-size: 1.6rem;
+	    width: 80%;
+	    margin: 0 auto;
+	    border: 1px solid #1de291;
+	    background-color: #1de291;
+	    margin-top: 1rem;
+	    margin-bottom: 4rem;
+	}
+	#Waiting {
+		padding:20px;
+		width: 100%;
+		overflow: hidden;
+	}
+	#Waiting p {
+		font-size:1.14rem;
+		color:#c00000;
+		margin-bottom: 1rem;
+	}
+	#marquee {
+		width: 30rem;
+		height: 4rem;
+		position: relative;
+	}
+	#marquee .head {
+		width: 4rem;
+		height: 4rem;
+		border-radius: 50%;
+		margin-right: 1rem;
+		overflow: hidden;
+		position: relative;
+		float:left;
+	}
+	span.import {
+		color:#f00;
+	}
+	#Tip h2 {
+		background: #f00;
+		color:#fff;
+		text-align: center;
+	    margin: 0;
+	    padding: 1rem;
+	    margin-bottom: 1rem;
+	}
+	#Next {
+		width: 10rem;
+		display: block;
+		margin:0 auto;
+		margin-bottom: 2rem;
+	}
+	#Info h6 {
+		text-align: center;
+	}
+	#Info .infobox {
+		border:1px solid #eee;
+		background: #eee;
+		padding:15px;
+		margin-bottom: 2rem;
+	}
+	#Info .infobox .infos {
+		margin-bottom: 1rem;
+		font-size:1rem;
+	}
+	.statusbox {
+		height: 5rem;
+		margin-bottom: 2rem;
+	}
+	#statB .headbox {
+		height: 8rem;
+		width: 8rem;
+		margin:0 auto;
+		border-radius: 50%;
+		overflow:hidden;
+		position: relative;
+		margin-bottom: 1rem;
+	}
+	#statB p,
+	#statB a {
+		text-align: center;
+	}
+	#statB a {
+		width: 100%;
+		display: block;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">购买JOB币</h1>
+	<a class="mui-pull-right" href="orders">订单记录</a>
+</header>
+
+
+<div class="mui-content">
+	<div class="container">
+		<div class="statusbox">
+			<h1>这是状态栏</h1>
+		</div>
+		<div id="statA">
+			<h2>请填写委托购买订单</h2>
+			<p>*JOB充提代理当前时刻汇率：1 JOB = 0.1 元</p>
+			<p>*如果你有3笔未完成的买单,系统会暂停你的下单权限,完成后恢复</p>
+			<div class="row">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>买家姓名</label>
+						<input type="text" class="mui-input-clear" placeholder="请填写姓名" id="username">
+					</div>
+					<div class="mui-input-row">
+						<label>金职岛ID</label>
+						<input type="text" class="mui-input-clear" placeholder="请填写买家ID" value="27" disabled id="userid">
+					</div>
+					<div class="mui-input-row">
+						<label>付款账号</label>
+						<input type="text" class="mui-input-clear" placeholder="请输入付款银行账号" id="banknum">
+					</div>
+					<div class="mui-input-row">
+						<label>付款银行</label>
+						<input type="text" class="mui-input-clear" placeholder="请输入付款银行名称" id="bankname">
+					</div>
+					<div class="mui-input-row">
+						<label>购买金额</label>
+						<input type="tel" class="mui-input-clear" placeholder="请填写要购买的金额" id="money">
+					</div>
+					<div class="mui-input-row">
+						<label>（CNY）</label>
+						<p>= <span id="JOBnum" class="import">0</span> JOB</p>
+					</div>
+					<div class="mui-input-row">
+						<label></label>
+						<p>！ 单笔最少需充值5元。</p>
+					</div>
+				</form>
+			</div>
+			<a href="javascript:void(0);" class="mui-btn mui-btn-block mui-btn-success" id="Buy">购买</a>
+		</div>
+		<div id="statB" class="none">
+			<div class="headbox">
+				<img src="/public/img/db/1.jpg" class="auto-center">
+			</div>
+			<p>代理商<span class="import">鲁迅</span>正在处理中，请稍后</p>
+			<p>正常情况1小时内处理完毕，遇到订单高峰期，处理时间相应延长</p>
+			<a href="javascript:void(0)" id="showAgent">显示代理商收款账号信息</a>
+		</div>
+	</div>
+</div>
+
+<div id="Waiting" class="none">
+	<p>正在为您分配代理商，请稍后···</p>
+	<div id="marquee">
+		<div class="head"><img src="/public/img/db/1.jpg" class="auto-center"></div>
+		<div class="head"><img src="/public/img/db/1.jpg" class="auto-center"></div>
+		<div class="head"><img src="/public/img/db/1.jpg" class="auto-center"></div>
+		<div class="head"><img src="/public/img/db/1.jpg" class="auto-center"></div>
+		<div class="head"><img src="/public/img/db/1.jpg" class="auto-center"></div>
+		<div class="head"><img src="/public/img/db/1.jpg" class="auto-center"></div>
+	</div>
+</div>
+
+<div id="Tip" class="none">
+	<h2>重要提示</h2>
+	<div class="container">
+		<p>1、务必按指定的金额<span class="import paynum">0</span>元转账</p>
+		<p>小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户，不按此金额转账将在5个工作日内退款</p>
+		<p>2、务必在内<span class="import">30分钟</span>转账，否则将影响订单处理速度</p>
+		<p>3、转账时<span class="import">无需备注任何信息</span>，否则将会被代理商退回，无法完成充值</p>
+		<p>4、请使用已在前一页面填写的本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用支付宝、微信、银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
+		<button type="button" id="Next" class="mui-btn mui-btn-warning">我知道了</button>
+	</div>
+</div>
+
+<div id="Info" class="none">
+	<div class="container">
+		<div class=""></div>
+		<h6>请在<span id="time" class="import">00:30:00</span>内完成转账</h6>
+		<div class="infobox">
+			<div class="infos">
+				<div class="row">
+					<div class="col-xs-4">开户名</div>
+					<div class="col-xs-8">李小龙</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-4">账户名称</div>
+					<div class="col-xs-8">平安银行  广东深圳市中心城支行</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-4">银行卡号</div>
+					<div class="col-xs-8">6230 5800 0015 2545 258</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-4">金额</div>
+					<div class="col-xs-8"><span class="import paynum">0</span>元</div>
+				</div>
+			</div>
+			<p>1、务必<span class="import">按指定的金额</span>转账，否则将无法完成购买（小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户）</p>
+			<p>2、转账时<span class="import">无需备注任何信息</span>，否则将会被代理商退回，无法完成充值</p>
+			<p>3、请使用已在DragonEx绑定的本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用支付宝、微信、银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" src="{{url('js/mjob/bank.js')}}"></script>
+<script type="text/javascript">
+
+	 function scroll(){
+		 $("#marquee").animate({"marginLeft":"-5rem"},300,"linear",function(){
+		     $("#marquee .head:eq(0)").appendTo($("#marquee"))
+		     $("#marquee").css({"marginLeft":0})
+		 })
+	 }
+    setInterval(scroll,1);
+
+    var NowTime; 
+    var EndTime;
+
+    function getRTime(){ 
+  		var now = new Date();
+		var time = now.getTime();
+
+        var t = EndTime - time; 
+        //var d=Math.floor(t/1000/60/60/24); 
+        var h = Math.floor(t/1000/60/60%24); 
+        if(h < 10){
+        	h = "0"+h;
+        }
+        var m = Math.floor(t/1000/60%60); 
+        if(m < 10){
+        	m = "0"+m;
+        }
+        var s = Math.floor(t/1000%60); 
+        if(s < 10){
+        	s = "0"+s;
+        }
+         
+        //document.getElementById("t_d").innerHTML = d + "天"; 
+        document.getElementById("time").innerHTML = h + ":" + m + ":" + s; 
+        //document.getElementById("t_m").innerHTML = m + "分"; 
+        //document.getElementById("t_s").innerHTML = s + "秒"; 
+    }
+
+    function setTime(){
+    	setInterval(getRTime,1000);
+    }
+
+    var indexA;
+    var indexB;
+	var indexC;
+
+	$('#money').on('input propertychange', function() {
+		var val = $(this).val();
+		if(val != '' && !/^\d+$/.test(val)){
+        	layer.msg("请填写整数金额。");
+        	return false;
+        }
+		$("#JOBnum").html(val*10);
+	});
+
+	$("#banknum").blur(function(){
+		var val = $(this).val();
+		CheckBankNo(val);
+	});
+
+	$("#Buy").on('tap',function(){
+
+		var name = $('#username').val();
+		if(name == ''){
+			layer.msg("请填写买家姓名。");
+			return false;
+		}
+
+		var id = $('#userid').val();
+
+		var banknum = $('#banknum').val();
+		if(banknum == ''){
+			layer.msg("请填写银行卡号。");
+			return false;
+		}
+		CheckBankNo(banknum);
+
+		var bankname = $('#bankname').val();
+		if(bankname == ''){
+			layer.msg("请填写银行名称。");
+			return false;
+		}
+
+		var money = $('#money').val();
+		if(money == ''){
+			layer.msg("请填写充值金额。");
+			return false;
+		}
+		if(money != '' && !/^\d+$/.test(money)){
+        	layer.msg("请填写整数金额。");
+        	return false;
+        }
+        if(money < 5){
+        	layer.msg("单笔最少需充值5元。");
+        	return false;
+        }
+
+        var moneyB = (Math.random()*(0.99-0.01) + 0.01).toFixed(2);
+        var moneyC = (parseInt(money) + parseFloat(moneyB)).toFixed(2);
+        console.log(moneyC);
+
+        $(".paynum").text(moneyC);
+
+		indexA = layer.open({
+			type: 1,
+			title:false,
+			closeBtn:false,
+			style: "padding:15px;",
+			content: $("#Waiting"),
+			area: ['80%', 'auto'],
+			shadeClose: false,
+			time:3000,
+			end:function(){
+				NowTime = new Date(); 
+				EndTime = NowTime.getTime() + 1000*60*30;
+				setTime();
+				layer.close(indexA);
+				indexB = layer.open({
+					type: 1,
+					title:false,
+					closeBtn:false,
+					style: "padding:15px;",
+					content: $("#Tip"),
+					area: ['80%', 'auto'],
+					shadeClose: false,
+					time:0
+				});
+			}
+		});
+	});
+
+	$("#Next").on('tap',function(){
+		layer.close(indexB);
+		indexC = layer.open({
+			type: 1,
+			title:false,
+			closeBtn:true,
+			style: "padding:15px;",
+			content: $("#Info"),
+			area: ['80%', 'auto'],
+			shadeClose: false,
+			time:0,
+			cancel: function(){ 
+				layer.close(indexC);
+				$("#statA").hide();
+				$("#statB").show();
+			}    
+		});
+	});
+
+	$("#showAgent").on('tap',function(){
+		indexC = layer.open({
+			type: 1,
+			title:false,
+			closeBtn:true,
+			style: "padding:15px;",
+			content: $("#Info"),
+			area: ['80%', 'auto'],
+			shadeClose: false,
+			time:0,
+			cancel: function(){ 
+				layer.close(indexC);
+			}    
+		});
+	});
+
+	//bankno为银行卡号
+    function luhnCheck(bankno) {
+	    var lastNum = bankno.substr(bankno.length - 1, 1); //取出最后一位（与luhn进行比较）
+	    var first15Num = bankno.substr(0, bankno.length - 1); //前15或18位
+	    var newArr = new Array();
+	    for (var i = first15Num.length - 1; i > -1; i--) { //前15或18位倒序存进数组
+	        newArr.push(first15Num.substr(i, 1));
+	    }
+	    var arrJiShu = new Array(); //奇数位*2的积 <9
+	    var arrJiShu2 = new Array(); //奇数位*2的积 >9
+	    var arrOuShu = new Array(); //偶数位数组
+	    for (var j = 0; j < newArr.length; j++) {
+	        if ((j + 1) % 2 == 1) { //奇数位
+	            if (parseInt(newArr[j]) * 2 < 9) arrJiShu.push(parseInt(newArr[j]) * 2);
+	            else arrJiShu2.push(parseInt(newArr[j]) * 2);
+	        } else //偶数位
+	        arrOuShu.push(newArr[j]);
+	    }
+
+	    var jishu_child1 = new Array(); //奇数位*2 >9 的分割之后的数组个位数
+	    var jishu_child2 = new Array(); //奇数位*2 >9 的分割之后的数组十位数
+	    for (var h = 0; h < arrJiShu2.length; h++) {
+	        jishu_child1.push(parseInt(arrJiShu2[h]) % 10);
+	        jishu_child2.push(parseInt(arrJiShu2[h]) / 10);
+	    }
+
+	    var sumJiShu = 0; //奇数位*2 < 9 的数组之和
+	    var sumOuShu = 0; //偶数位数组之和
+	    var sumJiShuChild1 = 0; //奇数位*2 >9 的分割之后的数组个位数之和
+	    var sumJiShuChild2 = 0; //奇数位*2 >9 的分割之后的数组十位数之和
+	    var sumTotal = 0;
+	    for (var m = 0; m < arrJiShu.length; m++) {
+	        sumJiShu = sumJiShu + parseInt(arrJiShu[m]);
+	    }
+
+	    for (var n = 0; n < arrOuShu.length; n++) {
+	        sumOuShu = sumOuShu + parseInt(arrOuShu[n]);
+	    }
+
+	    for (var p = 0; p < jishu_child1.length; p++) {
+	        sumJiShuChild1 = sumJiShuChild1 + parseInt(jishu_child1[p]);
+	        sumJiShuChild2 = sumJiShuChild2 + parseInt(jishu_child2[p]);
+	    }
+	    //计算总和
+	    sumTotal = parseInt(sumJiShu) + parseInt(sumOuShu) + parseInt(sumJiShuChild1) + parseInt(sumJiShuChild2);
+
+	    //计算luhn值
+	    var k = parseInt(sumTotal) % 10 == 0 ? 10 : parseInt(sumTotal) % 10;
+	    var luhn = 10 - k;
+
+	    if (lastNum == luhn) {
+	        //console.log("验证通过");
+	        return true;
+	    } else {
+	        layer.msg("银行卡号不规范，请检查");
+	        return false;
+	    }
+	}
+
+	//检查银行卡号
+	function CheckBankNo(bankno) {
+	    var bankno = bankno.replace(/\s/g, '');
+	    if (bankno == "") {
+	        layer.msg("请填写银行卡号");
+	        return false;
+	    }
+	    var num = /^\d*$/; //全数字
+	    if (!num.exec(bankno)) {
+	        layer.msg("银行卡号必须全为数字");
+	        return false;
+	    }
+	    if (bankno.length < 16 || bankno.length > 19) {
+	        layer.msg("银行卡号长度必须在16到19之间");
+	        return false;
+	    }
+	    //开头6位
+	    var strBin = "10,18,30,35,37,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,58,60,62,65,68,69,84,87,88,94,95,98,99";
+	    if (strBin.indexOf(bankno.substring(0, 2)) == -1) {
+	        layer.msg("银行卡号开头6位不符合规范");
+	        return false;
+	    }
+	    //Luhn校验
+	    if (!luhnCheck(bankno)) {
+	        return false;
+	    }
+	    var info = bankCardAttribution(bankno);
+	    var bankname = info.bankName;
+	    //console.log(bankname);
+	    $('#bankname').val(bankname);
+	    return true;
+	}
+</script>
+
+{% endblock %}

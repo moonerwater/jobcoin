@@ -848,5 +848,30 @@ class MjobController extends ControllerH5
         
     }
 
+    public function buyorderAction()
+    {
+        
+    }
+
+    public function ordersAction()
+    {
+        
+    }
+
+    public function orderstatAction()
+    {
+        
+    }
+
+    public function orderdoneAction()
+    {
+        
+    }
+
+    public function orderfailedAction()
+    {
+        
+    }
+
 
 }

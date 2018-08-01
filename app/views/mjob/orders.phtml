@@ -1,0 +1,120 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职岛 - 订单记录{% endblock %}
+
+
+{% block content %}
+<style type="text/css">
+	body,html,.mui-content {
+		height:100%;
+		background: #fff;
+	}
+	div img {
+		max-width: 100%;
+	}
+	#segmentedControl {
+		margin-top:.5rem;
+		font-size:1.6rem;
+	}
+	.mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
+		border-bottom: 2px solid #eee;
+	}
+	table {
+		font-size:1rem;
+		margin-top:1rem;
+	}
+	table thead th {
+		color:#00f;
+	}
+	table thead th,
+	table tbody td {
+		text-align: center;
+	}
+	.table>tbody>tr>td {
+		border-top: 1px solid #eee;
+	}
+	h5 {
+		margin-top:5rem;
+		text-align: center;
+		font-size:1rem;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">订单记录</h1>
+</header>
+
+
+<div class="mui-content">
+	<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+		<a class="mui-control-item mui-active" href="#item1">处理中</a>
+		<a class="mui-control-item" href="#item2">购买成功</a>
+		<a class="mui-control-item" href="#item3">购买失败</a>
+	</div>
+	<div>
+		<div id="item1" class="mui-control-content mui-active">
+			<table class="table table-condensed">
+				<thead>
+				    <tr>
+					    <th>订单号</th>
+					    <th>金额（元）</th>
+					    <th>代理商</th>
+					    <th>提交时间</th>
+				    </tr>
+				</thead>
+			    <tbody>
+				    <tr data-id="1" data-status="buying">
+					    <td>1231321</td>
+					    <td>5894.65</td>
+					    <td>牛谋</td>
+					    <td>2018-07-29 20:10:21</td>
+				    </tr>
+			    	<tr data-id="2" data-status="done">
+					    <td>1231321</td>
+					    <td>5894.65</td>
+					    <td>牛谋</td>
+					    <td>2018-07-29 20:10:21</td>
+				    </tr>
+				    <tr data-id="3" data-status="done">
+					    <td>1231321</td>
+					    <td>5894.65</td>
+					    <td>牛谋</td>
+					    <td>2018-07-29 20:10:21</td>
+				    </tr>
+				    <tr data-id="4" data-status="failed">
+					    <td>1231321</td>
+					    <td>5894.65</td>
+					    <td>牛谋</td>
+					    <td>2018-07-29 20:10:21</td>
+				    </tr>
+			  </tbody>
+			</table>
+		</div>
+		<div id="item2" class="mui-control-content">
+			
+		</div>
+		<div id="item3" class="mui-control-content">
+			
+		</div>
+	</div>
+	<h5>对订单有疑问，请加代理商QQ联系 1343884353</h5>
+</div>
+<script type="text/javascript">
+
+	$(document).on('tap','tr',function(){
+		var id = $(this).attr('data-id');
+		var stat = $(this).attr('data-status');
+		if(stat == "buying"){
+			window.location.href = "/mjob/orderstat";
+		}
+		if(stat == "done"){
+			window.location.href = "/mjob/orderdone";
+		}
+		if(stat == "failed"){
+			window.location.href = "/mjob/orderfailed";
+		}
+		//window.location.href = "/mjob/orderstat?id="+id;
+	});
+</script>
+
+{% endblock %}

@@ -3,9 +3,9 @@
 		<span class="icon-1 iconpng"></span>
 		<span class="mui-tab-label">数据挖矿</span>
 	</a>
-	<a href="/mjob/main#a-tabbar-with-chat" class="col-xs-4 active">
+	<a href="/db/index" class="col-xs-4 active">
 		<span class="icon-2 iconpng"></span>
-		<span class="mui-tab-label">金职岛</span>
+		<span class="mui-tab-label">金职夺宝</span>
 	</a>
 	<a href="/mjob/main#a-tabbar-with-contact" class="col-xs-4">
 		<span class="icon-3 iconpng"></span>
@@ -13,5 +13,22 @@
 	</a>
 </footer>
 <script type="text/javascript">
+
 	mui('footer').on('tap','a',function(){document.location.href=this.href;});
+
+	var winHeight = $(document).scrollTop();
+    $(window).scroll(function() {
+        var scrollY = $(document).scrollTop();// 获取垂直滚动的距离，即滚动了多少
+        if (scrollY > 50){ //如果滚动距离大于550px则隐藏，否则删除隐藏类
+	        $('footer').addClass('hiddened');
+	    }else {
+	        $('footer').removeClass('hiddened');
+	    } 
+	    if (scrollY > winHeight){ //如果没滚动到顶部，删除显示类，否则添加显示类
+	        $('footer').removeClass('showed');
+	    }
+	    else {
+	        $('footer').addClass('showed');
+	    }
+    });
 </script>

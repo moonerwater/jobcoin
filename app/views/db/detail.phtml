@@ -1,5 +1,8 @@
 {% extends "common/mobile-index.phtml" %}
-{% block title  %}金职夺宝 - 商品详情{% endblock %}
+{% block title  %}金职夺宝 - {{ data['list']['name'] }}{% endblock %}
+{% block header %}
+	<meta name="description" content="{{ data['list']['name'] }}">
+{% endblock %}
 {% block css %}{{ stylesheetLink('css/db/db.css') }}{% endblock %}
 {% block content %}
 <style type="text/css">
@@ -250,7 +253,7 @@
 		display: inline-block;
 		width: 70%;
 		height: 50%;
-		line-height: 1;
+		line-height: .9;
 		font-size:3rem;
 		text-align: center;
 		color:#fff;
@@ -645,7 +648,7 @@
 				<div class="winningbox">
 					<div class="winnerrow">
 						<div class="head left">
-							<div class="imgbox auto-center"><span class="username auto-center">{{ data['list']['username'] }}</span></div>
+							<div class="imgbox auto-center"><span class="winnername auto-center">{{ data['list']['username'] }}</span></div>
 							<div class="tip"><img src="/public/img/db/winner.png" class="auto-center"></div>
 						</div>
 						<div class="userinfo left">
@@ -829,12 +832,21 @@
 
 	$(function(){
 
+		$('span.winnername').each(function(){
+			var text = $(this).text();
+			if(text != ''){
+				$(this).html(text.substring(0,1));
+			} else {
+				$(this).html('赢');
+			}
+		});
+
 		$('span.username').each(function(){
 			var text = $(this).text();
 			if(text != ''){
 				$(this).html(text.substring(0,1));
 			} else {
-				$(this).html('Win');
+				$(this).html('无');
 			}
 		});
 
@@ -934,10 +946,6 @@
 				}
 			})
 		}
-	});
-
-	$('footer a').on('tap',function(){
-		console.log('a')
 	});
 
 	mui('.winningbox').on('tap','a',function(){document.location.href=this.href;});
