@@ -142,27 +142,27 @@
 				<form class="mui-input-group">
 					<div class="mui-input-row">
 						<label>买家姓名</label>
-						<input type="text" class="mui-input-clear" placeholder="请填写姓名" id="username">
+						<input type="text" class="mui-input-clear" placeholder="请填写姓名" id="username" value="{{ userinfo['name'] }}">
 					</div>
 					<div class="mui-input-row">
 						<label>金职岛ID</label>
-						<input type="text" class="mui-input-clear" placeholder="请填写买家ID" value="27" disabled id="userid">
+						<input type="text" class="mui-input-clear" placeholder="请填写买家ID" value="{{ userinfo['id'] }}" disabled id="userid">
 					</div>
 					<div class="mui-input-row">
 						<label>付款账号</label>
-						<input type="text" class="mui-input-clear" placeholder="请输入付款银行账号" id="banknum">
+						<input type="text" class="mui-input-clear" placeholder="请输入付款银行账号" id="banknum" value="{{ data.bank_no }}">
 					</div>
 					<div class="mui-input-row">
 						<label>付款银行</label>
-						<input type="text" class="mui-input-clear" placeholder="请输入付款银行名称" id="bankname">
+						<input type="text" class="mui-input-clear" placeholder="请输入付款银行名称" id="bankname" value="{{ data.bank_name }}">
 					</div>
 					<div class="mui-input-row">
 						<label>购买金额</label>
-						<input type="tel" class="mui-input-clear" placeholder="请填写要购买的金额" id="money">
+						<input type="tel" class="mui-input-clear" placeholder="请填写要购买的金额" value="100" id="money">
 					</div>
 					<div class="mui-input-row">
 						<label>（CNY）</label>
-						<p>= <span id="JOBnum" class="import">0</span> JOB</p>
+						<p>= <span id="JOBnum" class="import">1000</span> JOB</p>
 					</div>
 					<div class="mui-input-row">
 						<label></label>

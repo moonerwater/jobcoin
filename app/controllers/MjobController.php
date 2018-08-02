@@ -848,14 +848,64 @@ class MjobController extends ControllerH5
         
     }
 
-    public function buyorderAction()
-    {
-        
+    public function buyorderAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+
+        $list = \PayinList::findFirst(array('user_id = '.$userid, 'order' => 'id desc'));
+        $this->view->setVar('data', $list);
+
+    }
+
+    public function buycoinAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+
+        $name = $this->request->get('name');
+        $bank_name = $this->request->get('bank_name');
+        $bank_no = $this->request->get('bank_no');
+        $money = $this->request->get('money');
+
+        if (!$name) {
+            $this->replyFailure('name none');
+            return '';
+        }
+        if (!$bank_name) {
+            $this->replyFailure('bank_name none');
+            return '';
+        }
+        if (!$bank_no) {
+            $this->replyFailure('bank_no none');
+            return '';
+        }
+        if (!$money) {
+            $this->replyFailure('money none');
+            return '';
+        }
+
+        $agentlist = \PayinAgent::find(array('', 'order' => 'id asc'))->toArray();
+        $agent_id = rand(0,count($agentlist)-1);
+        $list = new \PayinList();
+        $list->user_id = $userid;
+        $list->agent_id = $agentlist[$agent_id]['id'];
+        $list->money = $money;
+        $list->coin = $money*10;
+        $list->name = $name;
+        $list->bank_name = $bank_name;
+        $list->bank_no = $bank_no;
+        $list->create_time = time();
+        $list->last_time = time();
+        $list->save();
+
+
+        $this->reply('success', 0, $agentlist[$agent_id]);
     }
 
     public function ordersAction()
     {
-        
+
     }
 
     public function orderstatAction()
