@@ -179,7 +179,7 @@
 			<p>代理商<span class="import agent"></span>正在处理中，请稍后</p>
 			<p>正常情况1小时内处理完毕，遇到订单高峰期，处理时间相应延长</p>
 			<a href="javascript:void(0)" id="showAgent">显示代理商收款账号信息</a>
-			<h5>对订单有疑问，请加代理商QQ联系 1343884353</h5>
+			<h5>对订单有疑问，请加代理商QQ联系 <span id="qq"></span></h5>
 		</div>
 	</div>
 </div>
@@ -366,6 +366,7 @@
         		$("#agentName").text(data.result.real_name);
         		$("#agentBank").text(data.result.bank_name + ' ' + data.result.bank_sub);
         		$("#agentBankno").text(data.result.bank_no);
+        		$("#qq").text(data.result.qq);
 
         		NowTime = new Date(); 
 				EndTime = NowTime.getTime() + 1000*60*30;
