@@ -176,10 +176,10 @@
 			<div class="headbox">
 				<img src="/public/img/db/1.jpg" class="auto-center">
 			</div>
-			<p>代理商<span class="import">鲁迅</span>正在处理中，请稍后</p>
+			<p>代理商<span class="import agent"></span>正在处理中，请稍后</p>
 			<p>正常情况1小时内处理完毕，遇到订单高峰期，处理时间相应延长</p>
 			<a href="javascript:void(0)" id="showAgent">显示代理商收款账号信息</a>
-			<h5>对订单有疑问，请加代理商QQ联系 1343884353</h5>
+			<h5>对订单有疑问，请加代理商QQ联系 <span id="qq"></span></h5>
 		</div>
 	</div>
 </div>
@@ -210,21 +210,21 @@
 
 <div id="Info" class="none">
 	<div class="container">
-		<div class=""></div>
+		<p>你好，我是代理商<span class="agent"></span></p>
 		<h6>请在<span id="time" class="import">00:30:00</span>内完成转账</h6>
 		<div class="infobox">
 			<div class="infos">
 				<div class="row">
 					<div class="col-xs-4">开户名</div>
-					<div class="col-xs-8">李小龙</div>
+					<div class="col-xs-8" id="agentName"></div>
 				</div>
 				<div class="row">
 					<div class="col-xs-4">账户名称</div>
-					<div class="col-xs-8">平安银行  广东深圳市中心城支行</div>
+					<div class="col-xs-8" id="agentBank"></div>
 				</div>
 				<div class="row">
 					<div class="col-xs-4">银行卡号</div>
-					<div class="col-xs-8">6230 5800 0015 2545 258</div>
+					<div class="col-xs-8" id="agentBankno"></div>
 				</div>
 				<div class="row">
 					<div class="col-xs-4">金额</div>
@@ -344,7 +344,7 @@
 
         $(".paynum").text(moneyC);
 
-		indexA = layer.open({
+        indexA = layer.open({
 			type: 1,
 			title:false,
 			closeBtn:false,
@@ -352,11 +352,26 @@
 			content: $("#Waiting"),
 			area: ['80%', 'auto'],
 			shadeClose: false,
-			time:3000,
-			end:function(){
-				NowTime = new Date(); 
+			time:0
+		});
+
+        $.post('/mjob/buycoin',{
+        	"name":name,
+        	"bank_name":bankname,
+        	"bank_no":banknum,
+        	"money":moneyC
+        },function(data){
+        	if(data.error_code =="0"){
+        		$(".agent").text(data.result.name);
+        		$("#agentName").text(data.result.real_name);
+        		$("#agentBank").text(data.result.bank_name + ' ' + data.result.bank_sub);
+        		$("#agentBankno").text(data.result.bank_no);
+        		$("#qq").text(data.result.qq);
+
+        		NowTime = new Date(); 
 				EndTime = NowTime.getTime() + 1000*60*30;
 				setTime();
+
 				layer.close(indexA);
 				indexB = layer.open({
 					type: 1,
@@ -368,8 +383,35 @@
 					shadeClose: false,
 					time:0
 				});
-			}
-		});
+        	}
+        },'json');
+
+		// indexA = layer.open({
+		// 	type: 1,
+		// 	title:false,
+		// 	closeBtn:false,
+		// 	style: "padding:15px;",
+		// 	content: $("#Waiting"),
+		// 	area: ['80%', 'auto'],
+		// 	shadeClose: false,
+		// 	time:3000,
+		// 	end:function(){
+		// 		NowTime = new Date(); 
+		// 		EndTime = NowTime.getTime() + 1000*60*30;
+		// 		setTime();
+		// 		layer.close(indexA);
+		// 		indexB = layer.open({
+		// 			type: 1,
+		// 			title:false,
+		// 			closeBtn:false,
+		// 			style: "padding:15px;",
+		// 			content: $("#Tip"),
+		// 			area: ['80%', 'auto'],
+		// 			shadeClose: false,
+		// 			time:0
+		// 		});
+		// 	}
+		// });
 	});
 
 	$("#Next").on('tap',function(){
@@ -380,7 +422,7 @@
 			closeBtn:true,
 			style: "padding:15px;",
 			content: $("#Info"),
-			area: ['80%', 'auto'],
+			area: ['90%', 'auto'],
 			shadeClose: false,
 			time:0,
 			cancel: function(){ 
@@ -398,7 +440,7 @@
 			closeBtn:true,
 			style: "padding:15px;",
 			content: $("#Info"),
-			area: ['80%', 'auto'],
+			area: ['90%', 'auto'],
 			shadeClose: false,
 			time:0,
 			cancel: function(){ 
