@@ -43,6 +43,20 @@
 		text-align: center;
 		font-size:1rem;
 	}
+	#Info h6 {
+		text-align: center;
+	}
+	#Info .infobox {
+		border:1px solid #eee;
+		background: #eee;
+		padding:15px;
+		margin-bottom: 2rem;
+		margin-top:1rem;
+	}
+	#Info .infobox .infos {
+		margin-bottom: 1rem;
+		font-size:1rem;
+	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -69,5 +83,53 @@
 	</div>
 </div>
 
+<div id="Info" class="none">
+	<div class="container">
+		<div class=""></div>
+		<div class="infobox">
+			<div class="infos">
+				<div class="row">
+					<div class="col-xs-4">开户名</div>
+					<div class="col-xs-8">李小龙</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-4">账户名称</div>
+					<div class="col-xs-8">平安银行  广东深圳市中心城支行</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-4">银行卡号</div>
+					<div class="col-xs-8">6230 5800 0015 2545 258</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-4">金额</div>
+					<div class="col-xs-8"><span class="import paynum">0</span>元</div>
+				</div>
+			</div>
+			<p>1、务必<span class="import">按指定的金额</span>转账，否则将无法完成购买（小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户）</p>
+			<p>2、转账时<span class="import">无需备注任何信息</span>，否则将会被代理商退回，无法完成充值</p>
+			<p>3、请使用已在DragonEx绑定的本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用支付宝、微信、银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+
+	$("#showAgent").on('tap',function(){
+		var indexC = layer.open({
+			type: 1,
+			title:false,
+			closeBtn:true,
+			style: "padding:15px;",
+			content: $("#Info"),
+			area: ['80%', 'auto'],
+			shadeClose: false,
+			time:0,
+			cancel: function(){ 
+				layer.close(indexC);
+			}    
+		});
+	});
+
+
+</script>
 
 {% endblock %}
