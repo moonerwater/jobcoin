@@ -115,6 +115,11 @@
 		width: 100%;
 		display: block;
 	}
+	h5 {
+		margin-top:12rem;
+		text-align: center;
+		font-size:1rem;
+	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -174,6 +179,7 @@
 			<p>代理商<span class="import">鲁迅</span>正在处理中，请稍后</p>
 			<p>正常情况1小时内处理完毕，遇到订单高峰期，处理时间相应延长</p>
 			<a href="javascript:void(0)" id="showAgent">显示代理商收款账号信息</a>
+			<h5>对订单有疑问，请加代理商QQ联系 1343884353</h5>
 		</div>
 	</div>
 </div>
@@ -308,7 +314,9 @@
 			layer.msg("请填写银行卡号。");
 			return false;
 		}
-		CheckBankNo(banknum);
+		if(!CheckBankNo(banknum)){
+			return false;
+		}
 
 		var bankname = $('#bankname').val();
 		if(bankname == ''){
