@@ -63,41 +63,69 @@
 				    </tr>
 				</thead>
 			    <tbody>
-				    <tr data-id="1" data-status="buying">
-					    <td>1231321</td>
-					    <td>5894.65</td>
-					    <td>牛谋</td>
-					    <td>2018-07-29 20:10:21</td>
-				    </tr>
-			    	<tr data-id="2" data-status="done">
-					    <td>1231321</td>
-					    <td>5894.65</td>
-					    <td>牛谋</td>
-					    <td>2018-07-29 20:10:21</td>
-				    </tr>
-				    <tr data-id="3" data-status="done">
-					    <td>1231321</td>
-					    <td>5894.65</td>
-					    <td>牛谋</td>
-					    <td>2018-07-29 20:10:21</td>
-				    </tr>
-				    <tr data-id="4" data-status="failed">
-					    <td>1231321</td>
-					    <td>5894.65</td>
-					    <td>牛谋</td>
-					    <td>2018-07-29 20:10:21</td>
-				    </tr>
+					{% for key, item in data %}
+					  	{% if item['pay_type'] == 'Wait' %}
+							<tr data-id="{{ item['id'] }}" data-status="buying">
+								<td>{{ item['id'] }}</td>
+								<td>{{ item['money'] }}</td>
+								<td>{{ item['agent_name'] }}</td>
+								<td>{{ item['create_time'] }}</td>
+							</tr>
+						{% endif %}
+					{% endfor %}
 			  </tbody>
 			</table>
 		</div>
 		<div id="item2" class="mui-control-content">
-			
+			<table class="table table-condensed">
+				<thead>
+				<tr>
+					<th>订单号</th>
+					<th>金额（元）</th>
+					<th>代理商</th>
+					<th>提交时间</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for key, item in data %}
+					{% if item['pay_type'] == 'Y' %}
+						<tr data-id="{{ item['id'] }}" data-status="done">
+							<td>{{ item['id'] }}</td>
+							<td>{{ item['money'] }}</td>
+							<td>{{ item['agent_name'] }}</td>
+							<td>{{ item['create_time'] }}</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+				</tbody>
+			</table>
 		</div>
 		<div id="item3" class="mui-control-content">
-			
+			<table class="table table-condensed">
+				<thead>
+				<tr>
+					<th>订单号</th>
+					<th>金额（元）</th>
+					<th>代理商</th>
+					<th>提交时间</th>
+				</tr>
+				</thead>
+				<tbody>
+				{% for key, item in data %}
+					{% if item['pay_type'] == 'N' %}
+						<tr data-id="{{ item['id'] }}" data-status="failed">
+							<td>{{ item['id'] }}</td>
+							<td>{{ item['money'] }}</td>
+							<td>{{ item['agent_name'] }}</td>
+							<td>{{ item['create_time'] }}</td>
+						</tr>
+					{% endif %}
+				{% endfor %}
+				</tbody>
+			</table>
 		</div>
 	</div>
-	<h5>对订单有疑问，请加代理商QQ联系 1343884353</h5>
+	<!--<h5>对订单有疑问，请加代理商QQ联系 1343884353</h5>-->
 </div>
 <script type="text/javascript">
 
@@ -105,13 +133,13 @@
 		var id = $(this).attr('data-id');
 		var stat = $(this).attr('data-status');
 		if(stat == "buying"){
-			window.location.href = "/mjob/orderstat";
+			window.location.href = "/mjob/orderstat/"+id;
 		}
 		if(stat == "done"){
-			window.location.href = "/mjob/orderdone";
+			window.location.href = "/mjob/orderdone/"+id;
 		}
 		if(stat == "failed"){
-			window.location.href = "/mjob/orderfailed";
+			window.location.href = "/mjob/orderfailed/"+id;
 		}
 		//window.location.href = "/mjob/orderstat?id="+id;
 	});

@@ -903,24 +903,70 @@ class MjobController extends ControllerH5
         $this->reply('success', 0, $agentlist[$agent_id]);
     }
 
-    public function ordersAction()
-    {
+    public function ordersAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+
+        $where = " user_id = $userid ";
+        if($userid == 25){
+            $where = '';
+        }
+
+        $list = \PayinList::find(array($where, 'order' => 'id desc'))->toArray();
+        foreach($list as $k => $v) {
+            $list[$k]['create_time'] = date('Y-m-d H:i:s', $v['create_time']);
+            $agent = \PayinAgent::findFirstById($v['agent_id']);
+            $list[$k]['agent_name'] = $agent->name;
+        }
+        //
+        $this->view->setVar('data', $list);
 
     }
 
-    public function orderstatAction()
-    {
-        
+    public function orderstatAction($id) {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+
+        $where = " user_id = $userid and id = $id";
+        if($userid == 25){
+            $where = "id = $id";
+        }
+        $data['list'] = \PayinList::findFirst($where);
+        $data['agent'] = \PayinAgent::findFirstById($data['list']->agent_id);
+        //
+        $this->view->setVar('data', $data);
     }
 
-    public function orderdoneAction()
-    {
-        
+    public function orderdoneAction($id) {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+
+        $where = " user_id = $userid and id = $id";
+        if($userid == 25){
+            $where = "id = $id";
+        }
+        $data['list'] = \PayinList::findFirst($where);
+        $data['agent'] = \PayinAgent::findFirstById($data['list']->agent_id);
+        //
+        $this->view->setVar('data', $data);
     }
 
-    public function orderfailedAction()
-    {
-        
+    public function orderfailedAction($id) {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+
+        $where = " user_id = $userid and id = $id";
+        if($userid == 25){
+            $where = "id = $id";
+        }
+        $data['list'] = \PayinList::findFirst($where);
+        $data['agent'] = \PayinAgent::findFirstById($data['list']->agent_id);
+        //
+        $this->view->setVar('data', $data);
     }
 
 

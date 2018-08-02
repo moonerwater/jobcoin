@@ -71,15 +71,17 @@
 			<div class="headbox">
 				<img src="/public/img/db/1.jpg" class="auto-center">
 			</div>
-			<p>代理商<span class="import">鲁迅</span>正在处理中，请稍后</p>
+			<p>代理商<span class="import">{{ data['agent'].name }}</span>正在处理中，请稍后</p>
 			<p>正常情况1小时内处理完毕，遇到订单高峰期，处理时间相应延长</p>
 			<a href="javascript:void(0)" id="showAgent">显示代理商收款账号信息</a>
+			{% if userinfo['id'] == 25 %}
 			<div>
-				<button type="button" class="mui-btn mui-btn-success col-xs-4 left">充值成功</button>
-				<button type="button" class="mui-btn mui-btn-warning col-xs-4 right">充值失败</button>
+				<button type="button" class="mui-btn mui-btn-success col-xs-4 left">充值成功{{ data['list'].id }}</button>
+				<button type="button" class="mui-btn mui-btn-warning col-xs-4 right">充值失败{{ data['list'].id }}</button>
 			</div>
+			{% endif %}
 		</div>
-		<h5>对订单有疑问，请加代理商QQ联系 1343884353</h5>
+		<h5>对订单有疑问，请加代理商QQ联系 {{ data['agent'].qq }}</h5>
 	</div>
 </div>
 
@@ -90,19 +92,19 @@
 			<div class="infos">
 				<div class="row">
 					<div class="col-xs-4">开户名</div>
-					<div class="col-xs-8">李小龙</div>
+					<div class="col-xs-8">{{ data['agent'].real_name }}</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-4">账户名称</div>
-					<div class="col-xs-8">平安银行  广东深圳市中心城支行</div>
+					<div class="col-xs-8">{{ data['agent'].bank_name }}  {{ data['agent'].bank_sub }}</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-4">银行卡号</div>
-					<div class="col-xs-8">6230 5800 0015 2545 258</div>
+					<div class="col-xs-8">{{ data['agent'].bank_no }}</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-4">金额</div>
-					<div class="col-xs-8"><span class="import paynum">0</span>元</div>
+					<div class="col-xs-8"><span class="import paynum">{{ data['list'].money }}</span>元</div>
 				</div>
 			</div>
 			<p>1、务必<span class="import">按指定的金额</span>转账，否则将无法完成购买（小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户）</p>
