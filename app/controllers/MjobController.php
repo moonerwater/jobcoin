@@ -909,7 +909,7 @@ class MjobController extends ControllerH5
         $userid = $this->userinfo['id'];
 
         $where = " user_id = $userid ";
-        if($userid == 25){
+        if($userid == 1){
             $where = '';
         }
 
@@ -930,7 +930,7 @@ class MjobController extends ControllerH5
         $userid = $this->userinfo['id'];
 
         $where = " user_id = $userid and id = $id";
-        if($userid == 25){
+        if($userid == 1){
             $where = "id = $id";
         }
         $data['list'] = \PayinList::findFirst($where);
@@ -945,7 +945,7 @@ class MjobController extends ControllerH5
         $userid = $this->userinfo['id'];
 
         $where = " user_id = $userid and id = $id";
-        if($userid == 25){
+        if($userid == 1){
             $where = "id = $id";
         }
         $data['list'] = \PayinList::findFirst($where);
@@ -960,7 +960,7 @@ class MjobController extends ControllerH5
         $userid = $this->userinfo['id'];
 
         $where = " user_id = $userid and id = $id";
-        if($userid == 25){
+        if($userid == 1){
             $where = "id = $id";
         }
         $data['list'] = \PayinList::findFirst($where);
@@ -974,7 +974,7 @@ class MjobController extends ControllerH5
         //
         $userid = $this->userinfo['id'];
 
-        if($userid != 25 && $userid != 27){
+        if($userid != 1 && $userid != 2){
             $this->replyFailure('no power');
             return '';
         }
