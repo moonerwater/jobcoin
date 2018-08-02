@@ -969,5 +969,65 @@ class MjobController extends ControllerH5
         $this->view->setVar('data', $data);
     }
 
+    public function changeorderAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+
+        if($userid != 25 && $userid != 27){
+            $this->replyFailure('no power');
+            return '';
+        }
+
+        $id = $this->request->get('id', 'int');
+        $type = $this->request->get('type');
+        if (!$id) {
+            $this->replyFailure('id none');
+            return '';
+        }
+        if (!$type) {
+            $this->replyFailure('type none');
+            return '';
+        }
+
+        $list =  \PayinList::findFirst(" id = $id and pay_type = 'Wait' ");
+        if(!$list){
+            $this->replyFailure('list none');
+            return '';
+        }
+        if($type == 'N'){
+            $list->pay_type = 'N';
+            $list->pay_time = time();
+            $list->save();
+        }
+        elseif($type == 'Y'){
+            $list->pay_type = 'Y';
+            $list->pay_time = time();
+            $list->save();
+
+            //充值
+            $list = $list->toArray();
+            $user = \User::findFirstById($list['user_id']);
+            $user->jobcoin += $list['coin'];
+            $user->last_time = time();
+            $user->save();
+            $userjobcoin = new \UserJobcoin();
+            $userjobcoin->user_id = $list['user_id'];
+            $userjobcoin->type = 'payin';
+            $userjobcoin->jobcoin = $list['coin'];
+            $userjobcoin->create_time = time();
+            $userjobcoin->last_time = time();
+            $userjobcoin->save();
+            //
+
+        }
+        else{
+            $this->replyFailure('type error');
+            return '';
+        }
+
+        $this->reply('success', 0, $result2);
+    }
+
 
 }

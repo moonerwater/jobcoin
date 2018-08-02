@@ -74,7 +74,7 @@
 			<p>代理商<span class="import">{{ data['agent'].name }}</span>正在处理中，请稍后</p>
 			<p>正常情况1小时内处理完毕，遇到订单高峰期，处理时间相应延长</p>
 			<a href="javascript:void(0)" id="showAgent">显示代理商收款账号信息</a>
-			{% if userinfo['id'] == 25 %}
+			{% if userinfo['id'] == 25 or userinfo['id'] == 27 %}
 			<div>
 				<button type="button" class="mui-btn mui-btn-success col-xs-4 left">充值成功{{ data['list'].id }}</button>
 				<button type="button" class="mui-btn mui-btn-warning col-xs-4 right">充值失败{{ data['list'].id }}</button>

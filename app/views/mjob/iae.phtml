@@ -113,6 +113,8 @@
 										<div class="left stat2">
 									{% elseif item['type'] == 'comment' %}
 										<div class="left stat2">
+									{% elseif item['type'] == 'payin' %}
+										<div class="left stat2">
 									{% endif %}
 										<h5>
 											{% if item['type'] == 'reg' %}
@@ -133,6 +135,8 @@
 												夺宝挖矿返还
 											{% elseif item['type'] == 'comment' %}
 												晒单奖励
+											{% elseif item['type'] == 'payin' %}
+												充值
 											{% endif %}
 										</h5>
 										<p>{{ item['time'] }}</p>
