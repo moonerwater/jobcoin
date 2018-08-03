@@ -12,30 +12,44 @@
 		max-width: 100%;
 	}
 	#segmentedControl {
-		margin-top:.5rem;
+		margin-top:1.5rem;
 		font-size:1.6rem;
 	}
 	.mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
 		border-bottom: 2px solid #eee;
+		font-size: 1.6rem;
+		color:#67686e;
+	}
+	.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+		border-bottom: 2px solid #fe0b8c;
+		color:#67686e;
 	}
 	table {
 		font-size:1rem;
 		margin-top:1rem;
 	}
 	table thead th {
-		color:#00f;
+		color:#a4a6ad;
 	}
 	table thead th,
 	table tbody td {
 		text-align: center;
 	}
+	.table>thead>tr>th {
+		border:none;
+		font-weight: 300;
+	}
 	.table>tbody>tr>td {
-		border-top: 1px solid #eee;
+		/*border-top: 1px solid #eee;*/
+		border:none;
 	}
 	h5 {
-		margin-top:5rem;
 		text-align: center;
-		font-size:1rem;
+	    font-size: 1rem;
+	    position: fixed;
+	    bottom: 5%;
+	    width: 93%;
+	    color:#a4a6ad;
 	}
 </style>
 
@@ -46,26 +60,51 @@
 
 
 <div class="mui-content">
-	<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
-		<a class="mui-control-item mui-active" href="#item1">处理中</a>
-		<a class="mui-control-item" href="#item2">购买成功</a>
-		<a class="mui-control-item" href="#item3">购买失败</a>
-	</div>
-	<div>
-		<div id="item1" class="mui-control-content mui-active">
-			<table class="table table-condensed">
-				<thead>
-				    <tr>
-					    <th>订单号</th>
-					    <th>金额（元）</th>
-					    <th>代理商</th>
-					    <th>提交时间</th>
-				    </tr>
-				</thead>
-			    <tbody>
+	<div class="container">
+		<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+			<a class="mui-control-item mui-active" href="#item1">处理中</a>
+			<a class="mui-control-item" href="#item2">购买成功</a>
+			<a class="mui-control-item" href="#item3">购买失败</a>
+		</div>
+		<div>
+			<div id="item1" class="mui-control-content mui-active">
+				<table class="table table-condensed">
+					<thead>
+					    <tr>
+						    <th>订单号</th>
+						    <th>金额</th>
+						    <th>代理商</th>
+						    <th>提交时间</th>
+					    </tr>
+					</thead>
+				    <tbody>
+						{% for key, item in data %}
+						  	{% if item['pay_type'] == 'Wait' %}
+								<tr data-id="{{ item['id'] }}" data-status="buying">
+									<td>{{ item['id'] }}</td>
+									<td>{{ item['money'] }}</td>
+									<td>{{ item['agent_name'] }}</td>
+									<td>{{ item['create_time'] }}</td>
+								</tr>
+							{% endif %}
+						{% endfor %}
+				  </tbody>
+				</table>
+			</div>
+			<div id="item2" class="mui-control-content">
+				<table class="table table-condensed">
+					<thead>
+					<tr>
+						<th>订单号</th>
+						<th>金额</th>
+						<th>代理商</th>
+						<th>提交时间</th>
+					</tr>
+					</thead>
+					<tbody>
 					{% for key, item in data %}
-					  	{% if item['pay_type'] == 'Wait' %}
-							<tr data-id="{{ item['id'] }}" data-status="buying">
+						{% if item['pay_type'] == 'Y' %}
+							<tr data-id="{{ item['id'] }}" data-status="done">
 								<td>{{ item['id'] }}</td>
 								<td>{{ item['money'] }}</td>
 								<td>{{ item['agent_name'] }}</td>
@@ -73,59 +112,36 @@
 							</tr>
 						{% endif %}
 					{% endfor %}
-			  </tbody>
-			</table>
+					</tbody>
+				</table>
+			</div>
+			<div id="item3" class="mui-control-content">
+				<table class="table table-condensed">
+					<thead>
+					<tr>
+						<th>订单号</th>
+						<th>金额</th>
+						<th>代理商</th>
+						<th>提交时间</th>
+					</tr>
+					</thead>
+					<tbody>
+					{% for key, item in data %}
+						{% if item['pay_type'] == 'N' %}
+							<tr data-id="{{ item['id'] }}" data-status="failed">
+								<td>{{ item['id'] }}</td>
+								<td>{{ item['money'] }}</td>
+								<td>{{ item['agent_name'] }}</td>
+								<td>{{ item['create_time'] }}</td>
+							</tr>
+						{% endif %}
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
 		</div>
-		<div id="item2" class="mui-control-content">
-			<table class="table table-condensed">
-				<thead>
-				<tr>
-					<th>订单号</th>
-					<th>金额（元）</th>
-					<th>代理商</th>
-					<th>提交时间</th>
-				</tr>
-				</thead>
-				<tbody>
-				{% for key, item in data %}
-					{% if item['pay_type'] == 'Y' %}
-						<tr data-id="{{ item['id'] }}" data-status="done">
-							<td>{{ item['id'] }}</td>
-							<td>{{ item['money'] }}</td>
-							<td>{{ item['agent_name'] }}</td>
-							<td>{{ item['create_time'] }}</td>
-						</tr>
-					{% endif %}
-				{% endfor %}
-				</tbody>
-			</table>
-		</div>
-		<div id="item3" class="mui-control-content">
-			<table class="table table-condensed">
-				<thead>
-				<tr>
-					<th>订单号</th>
-					<th>金额（元）</th>
-					<th>代理商</th>
-					<th>提交时间</th>
-				</tr>
-				</thead>
-				<tbody>
-				{% for key, item in data %}
-					{% if item['pay_type'] == 'N' %}
-						<tr data-id="{{ item['id'] }}" data-status="failed">
-							<td>{{ item['id'] }}</td>
-							<td>{{ item['money'] }}</td>
-							<td>{{ item['agent_name'] }}</td>
-							<td>{{ item['create_time'] }}</td>
-						</tr>
-					{% endif %}
-				{% endfor %}
-				</tbody>
-			</table>
-		</div>
-	</div>
 	<!--<h5>对订单有疑问，请加代理商QQ联系 1343884353</h5>-->
+	</div>
 </div>
 <script type="text/javascript">
 

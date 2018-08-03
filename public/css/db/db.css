@@ -4,12 +4,7 @@ body,html {
 	height: 100%;
 	position: relative;
 }
-.gradual {
-	background: -webkit-linear-gradient(left, #ff0a8d , #ff5d24); /* Safari 5.1 - 6.0 */
-	background: -o-linear-gradient(right, #ff0a8d, #ff5d24); /* Opera 11.1 - 12.0 */
-	background: -moz-linear-gradient(right, #ff0a8d, #ff5d24); /* Firefox 3.6 - 15 */
-	background: linear-gradient(to right, #ff0a8d , #ff5d24); /* 标准的语法 */
-}
+
 
 footer {
 	height: 5.82rem;
