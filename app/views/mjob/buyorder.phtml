@@ -511,7 +511,7 @@
 		<p>小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户，不按此金额转账将在5个工作日内退款</p>
 		<p>2、务必在内<span class="import">30分钟</span>转账，否则将影响订单处理速度</p>
 		<p>3、转账时<span class="import">无需备注任何信息</span>，否则将会被代理商退回，无法完成充值</p>
-		<p>4、请使用已在前一页面填写的本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
+		<p class="payofbank">4、请使用已在前一页面填写的本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
 		<hr>
 		<button type="button" id="Next" class="mui-btn mui-btn-outlined">我知道了</button>
 	</div>
@@ -585,7 +585,7 @@
 			<div id="alipay"></div>
 			<p>1、务必<span class="import">按指定的金额</span>转账，否则将无法完成购买（小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户）</p>
 			<p>2、转账时<span class="import">无需备注任何信息</span>，否则将会被代理商退回，无法完成充值</p>
-			<p>3、请使用本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
+			<p class="payofbank">3、请使用本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
 		</div>
 	</div>
 </div>
@@ -648,16 +648,19 @@
 			$("#modelA").show().siblings('.modelchange').hide();
 			$("#bankpay").show().siblings('.paytype').hide();
 			$("#QRcode").hide();
+			$(".payofbank").show();
 		}
 		if(mo == "B"){
 			$("#modelB").show().siblings('.modelchange').hide();
 			$("#alipay").show().siblings('.paytype').hide();
 			$("#QRcode").show();
+			$(".payofbank").hide();
 		}
 		if(mo == "C"){
 			$("#modelC").show().siblings('.modelchange').hide();
 			$("#wechatpay").show().siblings('.paytype').hide();
 			$("#QRcode").show();
+			$(".payofbank").hide();
 		}
 		model = mo;
 		console.log(model)

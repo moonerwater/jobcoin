@@ -827,6 +827,18 @@
 
 <script type="text/javascript">
 
+	$(window).scroll(function() {
+		if($('footer').hasClass('hiddened')){
+			console.log("232321")
+			$("#buy").css('bottom','1.82rem');
+			$(".buybox").css('bottom','0');
+		} else {
+			console.log("AAA")
+			$("#buy").css('bottom','6.82rem');
+			$(".buybox").css('bottom','5.82rem');
+		}
+	});
+
 	var userid = "{{ userinfo['id'] }}";
 	var hasnum = "{{ data['list']['has_num'] }}";
 
@@ -852,7 +864,6 @@
 
 		$('.selectnun .btn').each(function(){
 			var num = parseInt($(this).attr("data-value"));
-			console.log(num)
 			if(num > hasnum){
 				$(this).attr('disabled',true);
 			}

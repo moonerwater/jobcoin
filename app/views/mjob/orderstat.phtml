@@ -151,6 +151,10 @@
 				<div class="infos">
 					{% if data['list'].pay_method =='bank'  %}
 					<div class="row">
+						<div class="col-xs-4">支付方式</div>
+						<div class="col-xs-8">银行转账</div>
+					</div>
+					<div class="row">
 						<div class="col-xs-4">开户名</div>
 						<div class="col-xs-8">{{ data['agent'].real_name }}</div>
 					</div>
@@ -164,10 +168,18 @@
 					</div>
 					{% elseif data['list'].pay_method =='alipay' %}
 					<div class="row">
+						<div class="col-xs-5">支付方式</div>
+						<div class="col-xs-7">支付宝转账</div>
+					</div>
+					<div class="row">
 						<div class="col-xs-5">支付宝昵称</div>
 						<div class="col-xs-7">{{ data['agent'].alipay_no }}</div>
 					</div>
 					{% elseif data['list'].pay_method =='weixin' %}
+					<div class="row">
+						<div class="col-xs-5">支付方式</div>
+						<div class="col-xs-7">微信转账</div>
+					</div>
 					<div class="row">
 						<div class="col-xs-5">微信昵称</div>
 						<div class="col-xs-7">{{ data['agent'].weixin_no }}</div>
@@ -193,7 +205,9 @@
 				</div>
 				<p>1、务必<span class="import">按指定的金额</span>转账，否则将无法完成购买（小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户）</p>
 				<p>2、转账时<span class="import">无需备注任何信息</span>，否则将会被代理商退回，无法完成充值</p>
+				{% if data['list'].pay_method =='bank'  %}
 				<p>3、请使用本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
+				{% endif %}
 			
 		</div>
 	</div>
