@@ -18,7 +18,7 @@
 		font-size:1rem;
 	}
 	.box {
-		margin-top:10rem;
+		margin-top:8rem;
 	}
 	.box .headbox {
 		height: 8rem;
@@ -49,15 +49,21 @@
 	    width: 93%;
 	    color:#a4a6ad;
 	}
-	#Info h6 {
-		text-align: center;
-		margin: 1.2rem 0;
-	}
 	#Info h6,
-	#info .col-xs-4 {
+	#Info .col-xs-4,
+	#Info .col-xs-5 {
 		color:#a4a6ad;
 	}
+	#Info .col-xs-4,
+	#Info .col-xs-5 {
+		text-align: right;
+	}
 	#Info .col-xs-8,
+	#Info .col-xs-7 {
+		padding-left: 0;
+	}
+	#Info .col-xs-8,
+	#Info .col-xs-7
 	#Info p {
 		color:#67686e;
 	}
@@ -82,6 +88,20 @@
 		background: #e6e9fb;
 		padding:10px;
 		float:right;
+	}
+	#QRcode {
+		height:6rem;
+		margin:1rem auto;
+		position: relative;
+	}
+	#QRcode .col-xs-5,
+	#QRcode .col-xs-7 {
+		height: 100%;
+		line-height: 6rem;
+		font-size:1rem;
+	}
+	#QRcode .col-xs-7 {
+		width: 6rem;
 	}
 </style>
 
@@ -127,8 +147,9 @@
 			<div class="cls"></div>
 		</div>
 		<div class="infobox" style="margin-top:20px;">
-			{% if data['list'].pay_method =='bank'  %}
+			
 				<div class="infos">
+					{% if data['list'].pay_method =='bank'  %}
 					<div class="row">
 						<div class="col-xs-4">开户名</div>
 						<div class="col-xs-8">{{ data['agent'].real_name }}</div>
@@ -141,19 +162,39 @@
 						<div class="col-xs-4">银行卡号</div>
 						<div class="col-xs-8">{{ data['agent'].bank_no }}</div>
 					</div>
+					{% elseif data['list'].pay_method =='alipay' %}
 					<div class="row">
-						<div class="col-xs-4">金额</div>
-						<div class="col-xs-8"><span class="import paynum">{{ data['list'].money }}</span>元</div>
+						<div class="col-xs-5">支付宝昵称</div>
+						<div class="col-xs-7">{{ data['agent'].alipay_no }}</div>
 					</div>
+					{% elseif data['list'].pay_method =='weixin' %}
+					<div class="row">
+						<div class="col-xs-5">微信昵称</div>
+						<div class="col-xs-7">{{ data['agent'].weixin_no }}</div>
+					</div>
+					{% endif %}
+					<div class="row">
+						<!-- <div class="col-xs-4">金额</div>
+						<div class="col-xs-8"><span class="import paynum">{{ data['list'].money }}</span>元</div> -->
+						<div class="col-xs-12" style="text-align:center;font-size:1rem;margin-top:1rem;">金额 <span class="import paynum">{{ data['list'].money }}</span> 元</div>
+					</div>
+					{% if data['list'].pay_method =='alipay' %}
+					<div id="QRcode">
+						<div class="col-xs-5">支付二维码</div>
+						<div class="col-xs-7 rel"><img src="{{ data['agent'].alipay_img }}" class="auto-center"></div>
+					</div>
+					{% endif %}
+					{% if data['list'].pay_method =='weixin' %}
+					<div id="QRcode">
+						<div class="col-xs-5">支付二维码</div>
+						<div class="col-xs-7 rel"><img src="{{ data['agent'].weixin_img }}" class="auto-center"></div>
+					</div>
+					{% endif %}
 				</div>
 				<p>1、务必<span class="import">按指定的金额</span>转账，否则将无法完成购买（小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户）</p>
 				<p>2、转账时<span class="import">无需备注任何信息</span>，否则将会被代理商退回，无法完成充值</p>
-				<p>3、请使用已在DragonEx绑定的本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用支付宝、微信、银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
-			{% elseif data['list'].pay_method =='alipay' %}
-				{{ data['agent'].alipay_no }}{{ data['agent'].alipay_img }}
-			{% elseif data['list'].pay_method =='weixin' %}
-				{{ data['agent'].weixin_no }}{{ data['agent'].weixin_img }}
-			{% endif %}
+				<p>3、请使用本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
+			
 		</div>
 	</div>
 </div>

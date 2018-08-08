@@ -35,6 +35,10 @@
 	table tbody td {
 		text-align: center;
 	}
+	table tbody td span.mui-icon,
+	table tbody td span.mui-icon-extra {
+		font-size:.5rem;
+	}
 	.table>thead>tr>th {
 		border:none;
 		font-weight: 300;
@@ -83,7 +87,15 @@
 								<tr data-id="{{ item['id'] }}" data-status="buying">
 									<td>{{ item['id'] }}</td>
 									<td>{{ item['money'] }}</td>
-									<td>{{ item['agent_name'] }}{{ item['pay_method'] }}</td>
+									<td>{{ item['agent_name'] }}
+										{% if item['pay_method'] =='bank'  %}
+											<span class="mui-icon-extra mui-icon-extra-card"></span>
+										{% elseif item['pay_method'] =='alipay' %}
+											<span class="mui-icon-extra mui-icon-extra-alipay"></span>
+										{% elseif item['pay_method'] =='weixin' %}
+											<span class="mui-icon mui-icon-weixin"></span>
+										{% endif %}
+									</td>
 									<td>{{ item['create_time'] }}</td>
 								</tr>
 							{% endif %}
@@ -107,7 +119,15 @@
 							<tr data-id="{{ item['id'] }}" data-status="done">
 								<td>{{ item['id'] }}</td>
 								<td>{{ item['money'] }}</td>
-								<td>{{ item['agent_name'] }}{{ item['pay_method'] }}</td>
+								<td>{{ item['agent_name'] }}
+									{% if item['pay_method'] =='bank'  %}
+										<span class="mui-icon-extra mui-icon-extra-card"></span>
+									{% elseif item['pay_method'] =='alipay' %}
+										<span class="mui-icon-extra mui-icon-extra-alipay"></span>
+									{% elseif item['pay_method'] =='weixin' %}
+										<span class="mui-icon mui-icon-weixin"></span>
+									{% endif %}
+								</td>
 								<td>{{ item['create_time'] }}</td>
 							</tr>
 						{% endif %}
@@ -131,7 +151,15 @@
 							<tr data-id="{{ item['id'] }}" data-status="failed">
 								<td>{{ item['id'] }}</td>
 								<td>{{ item['money'] }}</td>
-								<td>{{ item['agent_name'] }}{{ item['pay_method'] }}</td>
+								<td>{{ item['agent_name'] }}
+									{% if item['pay_method'] =='bank'  %}
+										<span class="mui-icon-extra mui-icon-extra-card"></span>
+									{% elseif item['pay_method'] =='alipay' %}
+										<span class="mui-icon-extra mui-icon-extra-alipay"></span>
+									{% elseif item['pay_method'] =='weixin' %}
+										<span class="mui-icon mui-icon-weixin"></span>
+									{% endif %}
+								</td>
 								<td>{{ item['create_time'] }}</td>
 							</tr>
 						{% endif %}
