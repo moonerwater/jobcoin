@@ -863,32 +863,51 @@ class MjobController extends ControllerH5
         //
         $userid = $this->userinfo['id'];
 
+        $paytype = $this->request->get('paytype');
         $name = $this->request->get('name');
         $bank_name = $this->request->get('bank_name');
         $bank_no = $this->request->get('bank_no');
         $money = $this->request->get('money');
 
+        if (!$paytype) {
+            $this->replyFailure('paytype none');
+            return '';
+        }
         if (!$name) {
             $this->replyFailure('name none');
             return '';
         }
-        if (!$bank_name) {
+        /*if (!$bank_name) {
             $this->replyFailure('bank_name none');
             return '';
         }
         if (!$bank_no) {
             $this->replyFailure('bank_no none');
             return '';
-        }
+        }*/
         if (!$money) {
             $this->replyFailure('money none');
             return '';
         }
 
-        $agentlist = \PayinAgent::find(array('', 'order' => 'id asc'))->toArray();
+        if($paytype == 'bank'){
+            $agentlist = \PayinAgent::find(array("can_bank = 'Y' ", 'order' => 'id asc'))->toArray();
+        }
+        elseif($paytype == 'alipay'){
+            $agentlist = \PayinAgent::find(array("can_alipay = 'Y' ", 'order' => 'id asc'))->toArray();
+        }
+        elseif($paytype == 'weixin'){
+            $agentlist = \PayinAgent::find(array("can_weixin = 'Y' ", 'order' => 'id asc'))->toArray();
+        }
+        else{
+            $this->replyFailure('pay method error');
+            return '';
+        }
+
         $agent_id = rand(0,count($agentlist)-1);
         $list = new \PayinList();
         $list->user_id = $userid;
+        $list->pay_method = $paytype;
         $list->agent_id = $agentlist[$agent_id]['id'];
         $list->money = $money;
         $list->coin = $money*10;
