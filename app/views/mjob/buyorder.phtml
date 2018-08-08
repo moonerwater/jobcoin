@@ -110,19 +110,23 @@
 	}
 	#Info h6 {
 		text-align: center;
-		margin: 1.2rem 0;
+		margin: .8rem 0;
 	}
 	#Info h6,
-	#Info .col-xs-4 {
+	#Info .col-xs-4,
+	#Info .col-xs-5 {
 		color:#a4a6ad;
 	}
-	#Info .col-xs-4 {
+	#Info .col-xs-4,
+	#Info .col-xs-5 {
 		text-align: right;
 	}
-	#Info .col-xs-8 {
+	#Info .col-xs-8,
+	#Info .col-xs-7 {
 		padding-left: 0;
 	}
 	#Info .col-xs-8,
+	#Info .col-xs-7
 	#Info p {
 		color:#67686e;
 	}
@@ -132,8 +136,8 @@
 	#Info .infobox {
 		border:1px solid #eee;
 		background: #f4f5f9;
-		padding:15px;
-		margin-bottom: 2rem;
+		padding:10px;
+		margin-bottom: 1rem;
 	}
 	#Info .infobox .infos {
 		margin-bottom: 1rem;
@@ -360,11 +364,19 @@
 	    transform: scaleY(0);
 		  }
 	}
-
 	#QRcode {
-		height:8rem;
+		height:6rem;
 		margin:1rem auto;
 		position: relative;
+	}
+	#QRcode .col-xs-5,
+	#QRcode .col-xs-7 {
+		height: 100%;
+		line-height: 6rem;
+		font-size:1rem;
+	}
+	#QRcode .col-xs-7 {
+		width: 6rem;
 	}
 </style>
 
@@ -505,7 +517,7 @@
 	</div>
 </div>
 
-<div id="Info" class="none">
+<div id="Info" class="">
 	<div class="container">	
 		<div style="margin-top:10px;">
 			<div class="col-xs-2 rel">
@@ -542,37 +554,38 @@
 					</div>
 					<div id="alipay" class='none paytype'>
 						<div class="row">
-							<div class="col-xs-4">支付方式</div>
-							<div class="col-xs-8">支付宝转账</div>
+							<div class="col-xs-5">支付方式</div>
+							<div class="col-xs-7">支付宝转账</div>
 						</div>
 						<div class="row">
-							<div class="col-xs-4">支付宝昵称</div>
-							<div class="col-xs-8" id="alipayName"></div>
+							<div class="col-xs-5">支付宝昵称</div>
+							<div class="col-xs-7" id="alipayName"></div>
 						</div>
 					</div>
 					<div id="wechatpay" class='none paytype'>
 						<div class="row">
-							<div class="col-xs-4">支付方式</div>
-							<div class="col-xs-8">微信转账</div>
+							<div class="col-xs-5">支付方式</div>
+							<div class="col-xs-7">微信转账</div>
 						</div>
 						<div class="row">
-							<div class="col-xs-4">微信昵称</div>
-							<div class="col-xs-8" id="wechatName"></div>
+							<div class="col-xs-5">微信昵称</div>
+							<div class="col-xs-7" id="wechatName"></div>
 						</div>
 					</div>
 					<div class="row">
-						<div class="col-xs-4">金额</div>
-						<div class="col-xs-8"><span class="import paynum">0</span> 元</div>
+						<!-- <div class="col-xs-4"></div> -->
+						<div class="col-xs-12" style="text-align:center;font-size:1rem;margin-top:1rem;">金额 <span class="import paynum">0</span> 元</div>
 					</div>
 					<div id="QRcode" class='none'>
-						<img src="/public/img/mjob/head4.png" class="auto-center">
+						<div class="col-xs-5">支付二维码：</div>
+						<div class="col-xs-7 rel"><img src="/public/img/mjob/head4.png" class="auto-center"></div>
 					</div>
 				</div>
 			
 			<div id="alipay"></div>
 			<p>1、务必<span class="import">按指定的金额</span>转账，否则将无法完成购买（小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户）</p>
 			<p>2、转账时<span class="import">无需备注任何信息</span>，否则将会被代理商退回，无法完成充值</p>
-			<p>3、请使用已在DragonEx绑定的本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用支付宝、微信、银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
+			<p>3、请使用本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
 		</div>
 	</div>
 </div>
@@ -793,8 +806,8 @@
 	        },function(data){
 	        	if(data.error_code =="0"){
 	        		$(".agent").text(data.result.name);
-	        		$("#alipayName").text(data.result.real_name);
-	        		$("#QRcode img").attr(data.result.img);
+	        		$("#alipayName").text(data.result.alipay_no);
+	        		$("#QRcode img").attr('src',data.result.alipay_img);
 	        		$("#qq").text(data.result.qq);
 
 	        		NowTime = new Date(); 
@@ -823,8 +836,8 @@
 	        },function(data){
 	        	if(data.error_code =="0"){
 	        		$(".agent").text(data.result.name);
-	        		$("#wechatName").text(data.result.real_name);
-	        		$("#QRcode img").attr(data.result.img);
+	        		$("#wechatName").text(data.result.weixin_no);
+	        		$("#QRcode img").attr('src',data.result.weixin_img);
 	        		$("#qq").text(data.result.qq);
 
 	        		NowTime = new Date(); 
