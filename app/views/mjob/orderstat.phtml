@@ -101,7 +101,7 @@
 			<p>正常情况1小时内处理完毕</p>
 			<p>遇到订单高峰期，处理时间相应延长</p>
 			<a href="javascript:void(0)" id="showAgent">显示代理商收款账号信息</a>
-			{% if (userinfo['id'] == 1 or userinfo['id'] == 2) and data['list'].pay_type =='Wait'  %}
+			{% if canadmin and data['list'].pay_type =='Wait'  %}
 			<div>
 				<button type="button" class="mui-btn mui-btn-success col-xs-4 left" data-stat="Y" data-id="{{ data['list'].id }}">充值成功</button>
 				<button type="button" class="mui-btn mui-btn-warning col-xs-4 right"  data-stat="N" data-id="{{ data['list'].id }}">充值失败</button>
@@ -127,27 +127,33 @@
 			<div class="cls"></div>
 		</div>
 		<div class="infobox" style="margin-top:20px;">
-			<div class="infos">
-				<div class="row">
-					<div class="col-xs-4">开户名</div>
-					<div class="col-xs-8">{{ data['agent'].real_name }}</div>
+			{% if data['list'].pay_method =='bank'  %}
+				<div class="infos">
+					<div class="row">
+						<div class="col-xs-4">开户名</div>
+						<div class="col-xs-8">{{ data['agent'].real_name }}</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4">账户名称</div>
+						<div class="col-xs-8">{{ data['agent'].bank_name }}  {{ data['agent'].bank_sub }}</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4">银行卡号</div>
+						<div class="col-xs-8">{{ data['agent'].bank_no }}</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4">金额</div>
+						<div class="col-xs-8"><span class="import paynum">{{ data['list'].money }}</span>元</div>
+					</div>
 				</div>
-				<div class="row">
-					<div class="col-xs-4">账户名称</div>
-					<div class="col-xs-8">{{ data['agent'].bank_name }}  {{ data['agent'].bank_sub }}</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-4">银行卡号</div>
-					<div class="col-xs-8">{{ data['agent'].bank_no }}</div>
-				</div>
-				<div class="row">
-					<div class="col-xs-4">金额</div>
-					<div class="col-xs-8"><span class="import paynum">{{ data['list'].money }}</span>元</div>
-				</div>
-			</div>
-			<p>1、务必<span class="import">按指定的金额</span>转账，否则将无法完成购买（小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户）</p>
-			<p>2、转账时<span class="import">无需备注任何信息</span>，否则将会被代理商退回，无法完成充值</p>
-			<p>3、请使用已在DragonEx绑定的本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用支付宝、微信、银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
+				<p>1、务必<span class="import">按指定的金额</span>转账，否则将无法完成购买（小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户）</p>
+				<p>2、转账时<span class="import">无需备注任何信息</span>，否则将会被代理商退回，无法完成充值</p>
+				<p>3、请使用已在DragonEx绑定的本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用支付宝、微信、银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
+			{% elseif data['list'].pay_method =='alipay' %}
+				{{ data['agent'].alipay_no }}{{ data['agent'].alipay_img }}
+			{% elseif data['list'].pay_method =='weixin' %}
+				{{ data['agent'].weixin_no }}{{ data['agent'].weixin_img }}
+			{% endif %}
 		</div>
 	</div>
 </div>

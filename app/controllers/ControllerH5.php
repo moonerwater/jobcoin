@@ -84,6 +84,16 @@ class ControllerH5 extends ControllerBase
         return $score;
     }
 
+    protected function checkCanAdmin($userid) {
+        if($userid == 25 || $userid == 27){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
     protected function request_post($url = '', $param = '') {
         if (empty($url) || empty($param)) {
             return false;

@@ -928,7 +928,7 @@ class MjobController extends ControllerH5
         $userid = $this->userinfo['id'];
 
         $where = " user_id = $userid ";
-        if($userid == 25){
+        if($this->checkCanAdmin($userid)){
             $where = '';
         }
 
@@ -949,13 +949,14 @@ class MjobController extends ControllerH5
         $userid = $this->userinfo['id'];
 
         $where = " user_id = $userid and id = $id";
-        if($userid == 25){
+        if($this->checkCanAdmin($userid)){
             $where = "id = $id";
         }
         $data['list'] = \PayinList::findFirst($where);
         $data['agent'] = \PayinAgent::findFirstById($data['list']->agent_id);
         //
         $this->view->setVar('data', $data);
+        $this->view->setVar('canadmin', $this->checkCanAdmin($userid));
     }
 
     public function orderdoneAction($id) {
@@ -964,7 +965,7 @@ class MjobController extends ControllerH5
         $userid = $this->userinfo['id'];
 
         $where = " user_id = $userid and id = $id";
-        if($userid == 25){
+        if($this->checkCanAdmin($userid)){
             $where = "id = $id";
         }
         $data['list'] = \PayinList::findFirst($where);
@@ -979,7 +980,7 @@ class MjobController extends ControllerH5
         $userid = $this->userinfo['id'];
 
         $where = " user_id = $userid and id = $id";
-        if($userid == 25){
+        if($this->checkCanAdmin($userid)){
             $where = "id = $id";
         }
         $data['list'] = \PayinList::findFirst($where);
@@ -993,7 +994,7 @@ class MjobController extends ControllerH5
         //
         $userid = $this->userinfo['id'];
 
-        if($userid != 25 && $userid != 27){
+        if(!$this->checkCanAdmin($userid)){
             $this->replyFailure('no power');
             return '';
         }

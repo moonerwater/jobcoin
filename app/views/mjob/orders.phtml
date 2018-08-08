@@ -83,7 +83,7 @@
 								<tr data-id="{{ item['id'] }}" data-status="buying">
 									<td>{{ item['id'] }}</td>
 									<td>{{ item['money'] }}</td>
-									<td>{{ item['agent_name'] }}</td>
+									<td>{{ item['agent_name'] }}{{ item['pay_method'] }}</td>
 									<td>{{ item['create_time'] }}</td>
 								</tr>
 							{% endif %}
@@ -107,7 +107,7 @@
 							<tr data-id="{{ item['id'] }}" data-status="done">
 								<td>{{ item['id'] }}</td>
 								<td>{{ item['money'] }}</td>
-								<td>{{ item['agent_name'] }}</td>
+								<td>{{ item['agent_name'] }}{{ item['pay_method'] }}</td>
 								<td>{{ item['create_time'] }}</td>
 							</tr>
 						{% endif %}
@@ -131,7 +131,7 @@
 							<tr data-id="{{ item['id'] }}" data-status="failed">
 								<td>{{ item['id'] }}</td>
 								<td>{{ item['money'] }}</td>
-								<td>{{ item['agent_name'] }}</td>
+								<td>{{ item['agent_name'] }}{{ item['pay_method'] }}</td>
 								<td>{{ item['create_time'] }}</td>
 							</tr>
 						{% endif %}
