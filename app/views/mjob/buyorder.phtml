@@ -360,6 +360,12 @@
 	    transform: scaleY(0);
 		  }
 	}
+
+	#QRcode {
+		height:8rem;
+		margin:1rem auto;
+		position: relative;
+	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -416,14 +422,14 @@
 					</div>
 					<div id="modelB" class="none modelchange">
 						<div class="mui-input-row">
-							<label>支付宝账号</label>
-							<input type="text" class="mui-input-clear" placeholder="请填写支付宝账号" id="alipayname" value="{{ userinfo['name'] }}">
+							<label>支付宝昵称</label>
+							<input type="text" class="mui-input-clear" placeholder="请填写支付宝昵称" id="alipayname" value="{{ userinfo['name'] }}">
 						</div>
 					</div>
 					<div id="modelC" class="none modelchange">
 						<div class="mui-input-row">
-							<label>微信账号</label>
-							<input type="text" class="mui-input-clear" placeholder="请填写微信账号" id="wechatname" value="{{ userinfo['name'] }}">
+							<label>微信昵称</label>
+							<input type="text" class="mui-input-clear" placeholder="请填写微信昵称" id="wechatname" value="{{ userinfo['name'] }}">
 						</div>
 					</div>
 					<div class="mui-input-row">
@@ -499,7 +505,7 @@
 	</div>
 </div>
 
-<div id="Info" class="none">
+<div id="Info" class="">
 	<div class="container">	
 		<div style="margin-top:10px;">
 			<div class="col-xs-2 rel">
@@ -515,24 +521,55 @@
 		</div>
 		<h6>请在 <span id="time" class="import">00:30:00</span> 内完成转账</h6>
 		<div class="infobox">
-			<div class="infos">
-				<div class="row">
-					<div class="col-xs-4">开户名</div>
-					<div class="col-xs-8" id="agentName"></div>
+				<div class="infos">
+					<div id="bankpay" class="paytype">
+						<div class="row">
+							<div class="col-xs-4">支付方式</div>
+							<div class="col-xs-8">银行转账</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-4">开户名</div>
+							<div class="col-xs-8" id="agentName"></div>
+						</div>
+						<div class="row">
+							<div class="col-xs-4">账户名称</div>
+							<div class="col-xs-8" id="agentBank"></div>
+						</div>
+						<div class="row">
+							<div class="col-xs-4">银行卡号</div>
+							<div class="col-xs-8" id="agentBankno"></div>
+						</div>
+					</div>
+					<div id="alipay" class='none paytype'>
+						<div class="row">
+							<div class="col-xs-4">支付方式</div>
+							<div class="col-xs-8">支付宝转账</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-4">支付宝昵称</div>
+							<div class="col-xs-8" id="alipayName"></div>
+						</div>
+					</div>
+					<div id="wechatpay" class='none paytype'>
+						<div class="row">
+							<div class="col-xs-4">支付方式</div>
+							<div class="col-xs-8">微信转账</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-4">微信昵称</div>
+							<div class="col-xs-8" id="wechatName"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-4">金额</div>
+						<div class="col-xs-8"><span class="import paynum">0</span> 元</div>
+					</div>
+					<div id="QRcode" class='none'>
+						<img src="/public/img/mjob/head4.png" class="auto-center">
+					</div>
 				</div>
-				<div class="row">
-					<div class="col-xs-4">账户名称</div>
-					<div class="col-xs-8" id="agentBank"></div>
-				</div>
-				<div class="row">
-					<div class="col-xs-4">银行卡号</div>
-					<div class="col-xs-8" id="agentBankno"></div>
-				</div>
-				<div class="row">
-					<div class="col-xs-4">金额</div>
-					<div class="col-xs-8"><span class="import paynum">0</span> 元</div>
-				</div>
-			</div>
+			
+			<div id="alipay"></div>
 			<p>1、务必<span class="import">按指定的金额</span>转账，否则将无法完成购买（小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户）</p>
 			<p>2、转账时<span class="import">无需备注任何信息</span>，否则将会被代理商退回，无法完成充值</p>
 			<p>3、请使用已在DragonEx绑定的本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用支付宝、微信、银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
@@ -558,7 +595,7 @@
     var indexB;
 	var indexC;
 
-	var model;
+	var model = "A";
 
     function getRTime(){ 
   		var now = new Date();
@@ -596,12 +633,18 @@
 		par.siblings().removeClass('raidoactive');
 		if(mo == "A"){
 			$("#modelA").show().siblings('.modelchange').hide();
+			$("#bankpay").show().siblings('.paytype').hide();
+			$("#QRcode").hide();
 		}
 		if(mo == "B"){
 			$("#modelB").show().siblings('.modelchange').hide();
+			$("#alipay").show().siblings('.paytype').hide();
+			$("#QRcode").show();
 		}
 		if(mo == "C"){
 			$("#modelC").show().siblings('.modelchange').hide();
+			$("#wechatpay").show().siblings('.paytype').hide();
+			$("#QRcode").show();
 		}
 		model = mo;
 		console.log(model)
@@ -660,7 +703,7 @@
 
 			var aliname = $("#alipayname").val();
 			if(aliname == ''){
-				layer.msg("请填写支付宝账号。");
+				layer.msg("请填写支付宝昵称。");
 				return false;
 			}
 
@@ -670,12 +713,11 @@
 
 			var wenname = $("#wechatname").val();
 			if(wenname == ''){
-				layer.msg("请填写支付宝账号。");
+				layer.msg("请填写微信昵称。");
 				return false;
 			}
 
 		}
-
 
 		var money = $('#money').val();
 		if(money == ''){
@@ -697,6 +739,8 @@
 
         $(".paynum").text(moneyC);
 
+        console.log(model)
+
         indexA = layer.open({
 			type: 1,
 			title:false,
@@ -710,6 +754,7 @@
 
         if(model == "A"){
 	        $.post('/mjob/buycoin',{
+	        	"paytype":"bank",
 	        	"name":name,
 	        	"bank_name":bankname,
 	        	"bank_no":banknum,
@@ -741,10 +786,64 @@
 	        },'json');
         }
         if(model == "B"){
-        	console.log(aliname)
+        	$.post('/mjob/buycoin',{
+	        	"paytype":"alipay",
+	        	"name":aliname,
+	        	"money":moneyC
+	        },function(data){
+	        	if(data.error_code =="0"){
+	        		$(".agent").text(data.result.name);
+	        		$("#alipayName").text(data.result.real_name);
+	        		$("#QRcode img").attr(data.result.img);
+	        		$("#qq").text(data.result.qq);
+
+	        		NowTime = new Date(); 
+					EndTime = NowTime.getTime() + 1000*60*30;
+					setTime();
+
+					layer.close(indexA);
+					indexB = layer.open({
+						type: 1,
+						title:false,
+						closeBtn:false,
+						style: "padding:15px;",
+						content: $("#Tip"),
+						area: ['80%', 'auto'],
+						shadeClose: false,
+						time:0
+					});
+	        	}
+	        },'json');
         }
         if(model == "C"){
-        	console.log(wenname)
+        	$.post('/mjob/buycoin',{
+	        	"paytype":"alipay",
+	        	"name":wenname,
+	        	"money":moneyC
+	        },function(data){
+	        	if(data.error_code =="0"){
+	        		$(".agent").text(data.result.name);
+	        		$("#wechatName").text(data.result.real_name);
+	        		$("#QRcode img").attr(data.result.img);
+	        		$("#qq").text(data.result.qq);
+
+	        		NowTime = new Date(); 
+					EndTime = NowTime.getTime() + 1000*60*30;
+					setTime();
+
+					layer.close(indexA);
+					indexB = layer.open({
+						type: 1,
+						title:false,
+						closeBtn:false,
+						style: "padding:15px;",
+						content: $("#Tip"),
+						area: ['80%', 'auto'],
+						shadeClose: false,
+						time:0
+					});
+	        	}
+	        },'json');
         }
 		// indexA = layer.open({
 		// 	type: 1,
