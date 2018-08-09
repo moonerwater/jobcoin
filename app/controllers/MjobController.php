@@ -470,7 +470,7 @@ class MjobController extends ControllerH5
         //
         $data['time'] = date("Y-m-d H:i");
         //
-        $user = \User::find(array('', 'order' => 'score desc, id asc', 'limit'=>5));
+        $user = \User::find(array('', 'order' => 'score desc, id asc', 'limit'=>10));
         $data['userlist'] = $user->toArray();
         foreach($data['userlist'] as $k => $v){
             $data['userlist'][$k]['phone'] = $this->getDisablePhone($v['phone']);

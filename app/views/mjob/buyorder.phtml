@@ -399,16 +399,16 @@
 			<h4>请选择支付方式：</h4>
 			<div class="choose">
 				<div class="mui-input-row mui-radio mui-left raidoactive">
-					<label><span class="mui-icon-extra mui-icon-extra-card"></span>银联</label>
-					<input name="pay" type="radio" checked data-model="A">
+					<label><span class="mui-icon mui-icon-weixin"></span>微信</label>
+					<input name="pay" type="radio" data-model="C" checked>
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
 					<label><span class="mui-icon-extra mui-icon-extra-alipay"></span>支付宝</label>
 					<input name="pay" type="radio" data-model="B">
 				</div>
 				<div class="mui-input-row mui-radio mui-left">
-					<label><span class="mui-icon mui-icon-weixin"></span>微信</label>
-					<input name="pay" type="radio" data-model="C">
+					<label><span class="mui-icon-extra mui-icon-extra-card"></span>银联</label>
+					<input name="pay" type="radio" data-model="A">
 				</div>
 				<div class='cls'></div>
 			</div>
@@ -418,7 +418,19 @@
 						<label>金职岛ID</label>
 						<input type="text" class="mui-input-clear" placeholder="请填写买家ID" value="{{ userinfo['id'] }}" disabled id="userid">
 					</div> -->
-					<div id="modelA" class="modelchange">
+					<div id="modelC" class=" modelchange">
+						<div class="mui-input-row">
+							<label>微信昵称</label>
+							<input type="text" class="mui-input-clear" placeholder="请填写微信昵称" id="wechatname" value="{{ userinfo['name'] }}">
+						</div>
+					</div>
+					<div id="modelB" class="none modelchange">
+						<div class="mui-input-row">
+							<label>支付宝昵称</label>
+							<input type="text" class="mui-input-clear" placeholder="请填写支付宝昵称" id="alipayname" value="{{ userinfo['name'] }}">
+						</div>
+					</div>
+					<div id="modelA" class="modelchange none">
 						<div class="mui-input-row">
 							<label>开户人</label>
 							<input type="text" class="mui-input-clear" placeholder="请填写姓名" id="username" value="{{ userinfo['name'] }}">
@@ -430,18 +442,6 @@
 						<div class="mui-input-row">
 							<label>付款银行</label>
 							<input type="text" class="mui-input-clear" placeholder="请输入付款银行名称" id="bankname" value="{{ data.bank_name }}">
-						</div>
-					</div>
-					<div id="modelB" class="none modelchange">
-						<div class="mui-input-row">
-							<label>支付宝昵称</label>
-							<input type="text" class="mui-input-clear" placeholder="请填写支付宝昵称" id="alipayname" value="{{ userinfo['name'] }}">
-						</div>
-					</div>
-					<div id="modelC" class="none modelchange">
-						<div class="mui-input-row">
-							<label>微信昵称</label>
-							<input type="text" class="mui-input-clear" placeholder="请填写微信昵称" id="wechatname" value="{{ userinfo['name'] }}">
 						</div>
 					</div>
 					<div class="mui-input-row">
@@ -511,7 +511,7 @@
 		<p>小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户，不按此金额转账将在5个工作日内退款</p>
 		<p>2、务必在内<span class="import">30分钟</span>转账，否则将影响订单处理速度</p>
 		<p>3、转账时<span class="import">无需备注任何信息</span>，否则将会被代理商退回，无法完成充值</p>
-		<p class="payofbank">4、请使用已在前一页面填写的本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
+		<p class="payofbank none">4、请使用已在前一页面填写的本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
 		<hr>
 		<button type="button" id="Next" class="mui-btn mui-btn-outlined">我知道了</button>
 	</div>
@@ -534,7 +534,27 @@
 		<h6>请在 <span id="time" class="import">00:30:00</span> 内完成转账</h6>
 		<div class="infobox">
 				<div class="infos">
-					<div id="bankpay" class="paytype">
+					<div id="wechatpay" class=' paytype'>
+						<div class="row">
+							<div class="col-xs-5">支付方式</div>
+							<div class="col-xs-7">微信转账</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-5">微信昵称</div>
+							<div class="col-xs-7" id="wechatName"></div>
+						</div>
+					</div>
+					<div id="alipay" class='none paytype'>
+						<div class="row">
+							<div class="col-xs-5">支付方式</div>
+							<div class="col-xs-7">支付宝转账</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-5">支付宝昵称</div>
+							<div class="col-xs-7" id="alipayName"></div>
+						</div>
+					</div>
+					<div id="bankpay" class="paytype none">
 						<div class="row">
 							<div class="col-xs-4">支付方式</div>
 							<div class="col-xs-8">银行转账</div>
@@ -552,31 +572,11 @@
 							<div class="col-xs-8" id="agentBankno"></div>
 						</div>
 					</div>
-					<div id="alipay" class='none paytype'>
-						<div class="row">
-							<div class="col-xs-5">支付方式</div>
-							<div class="col-xs-7">支付宝转账</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-5">支付宝昵称</div>
-							<div class="col-xs-7" id="alipayName"></div>
-						</div>
-					</div>
-					<div id="wechatpay" class='none paytype'>
-						<div class="row">
-							<div class="col-xs-5">支付方式</div>
-							<div class="col-xs-7">微信转账</div>
-						</div>
-						<div class="row">
-							<div class="col-xs-5">微信昵称</div>
-							<div class="col-xs-7" id="wechatName"></div>
-						</div>
-					</div>
 					<div class="row">
 						<!-- <div class="col-xs-4"></div> -->
 						<div class="col-xs-12" style="text-align:center;font-size:1rem;margin-top:1rem;">金额 <span class="import paynum">0</span> 元</div>
 					</div>
-					<div id="QRcode" class='none'>
+					<div id="QRcode" class=''>
 						<div class="col-xs-5">支付二维码</div>
 						<div class="col-xs-7 rel"><img src="/public/img/mjob/head4.png" class="auto-center"></div>
 					</div>
@@ -585,7 +585,7 @@
 			<div id="alipay"></div>
 			<p>1、务必<span class="import">按指定的金额</span>转账，否则将无法完成购买（小数点后随机增加的金额是您该笔转账的专属凭证，且会与整数部分一同充入您的账户）</p>
 			<p>2、转账时<span class="import">无需备注任何信息</span>，否则将会被代理商退回，无法完成充值</p>
-			<p class="payofbank">3、请使用本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
+			<p class="payofbank none">3、请使用本人银行卡转账(支持网上银行,手机银行)，<span class="import">禁止使用银联APP、ATM、POS机等第三方支付平台转账，否则将一律退回！！！</span></p>
 		</div>
 	</div>
 </div>
@@ -608,7 +608,7 @@
     var indexB;
 	var indexC;
 
-	var model = "A";
+	var model = "C";
 
     function getRTime(){ 
   		var now = new Date();
@@ -685,8 +685,6 @@
 		var val = $(this).val();
 		CheckBankNo(val);
 	});
-
-
 
 	$("#Buy").on('tap',function(){
 
