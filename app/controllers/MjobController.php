@@ -100,7 +100,7 @@ class MjobController extends ControllerH5
 
                 $user = new \User();
                 $user->score = 30;
-                $user->jobcoin = 100;
+                $user->jobcoin = 50;
                 $user->code_system = $this->buildCode('user', 6);
                 $user->phone = $mobile;
                 $user->code_user = $code_user;
@@ -120,7 +120,7 @@ class MjobController extends ControllerH5
                 $userjobcoin = new \UserJobcoin();
                 $userjobcoin->user_id = $user->id;
                 $userjobcoin->type = 'reg';
-                $userjobcoin->jobcoin = 100;
+                $userjobcoin->jobcoin = 50;
                 $userjobcoin->create_time = time();
                 $userjobcoin->last_time = time();
                 $userjobcoin->save();
