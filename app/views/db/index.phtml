@@ -277,7 +277,7 @@
 									<button class="btn link col-xs-4 right gradual">立即购买</button>
 								{% endif %}
 
-								{% if item['is_end'] == 'N' and item['timeout'] == 'Y' %}
+								{% if item['is_end'] == 'N' and item['timeout'] == 'Y' and canadmin %}
 									<button>退还钱{{ item['id'] }}</button>
 								{% endif %}
 

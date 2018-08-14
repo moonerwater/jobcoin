@@ -15,7 +15,7 @@ class DbController extends ControllerH5
     public function indexAction() {
         //$this->checkNoUserGoLogin();
         //
-        //$userid = $this->userinfo['id'];
+        $userid = $this->userinfo['id'];
 
         //
         $list = \DbList::find(array('', 'order' => 'create_time desc'));
@@ -33,6 +33,7 @@ class DbController extends ControllerH5
         $data['list'] = $list;
         //
         $this->view->setVar('data', $data);
+        $this->view->setVar('canadmin', $this->checkCanAdmin($userid));
     }
 
     public function buycountAction() {
