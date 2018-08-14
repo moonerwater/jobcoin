@@ -170,44 +170,46 @@ class DbController extends ControllerH5
                 $userjobcoin->create_time = time();
                 $userjobcoin->last_time = time();
                 $userjobcoin->save();
-            }
-        }
-        //邀请时的奖励
-        $user = \User::findFirstById($userid);
-        $code_user = $user->code_user;
-        if($code_user){
-            $user = \User::findFirst(" code_system = '$code_user'");
-            if($user){
-                //一级
-                $user->jobcoin += $jobcoin*0.1;
-                $user->save();
 
-                $userjobcoin = new \UserJobcoin();
-                $userjobcoin->user_id = $user->id;
-                $userjobcoin->type = 'coingetfor1';
-                $userjobcoin->jobcoin = $jobcoin*0.1;
-                $userjobcoin->create_time = time();
-                $userjobcoin->last_time = time();
-                $userjobcoin->save();
-
-                //二级
+                //邀请时的奖励
+                $user = \User::findFirstById($v['user_id']);
                 $code_user = $user->code_user;
-                $user = \User::findFirst(" code_system = '$code_user'");
-                if($user){
-                    $user->jobcoin += $jobcoin*0.05;
-                    $user->save();
+                if($code_user){
+                    $user = \User::findFirst(" code_system = '$code_user'");
+                    if($user){
+                        //一级
+                        $user->jobcoin += $v['num']*0.1;
+                        $user->save();
 
-                    $userjobcoin = new \UserJobcoin();
-                    $userjobcoin->user_id = $user->id;
-                    $userjobcoin->type = 'coingetfor2';
-                    $userjobcoin->jobcoin = $jobcoin*0.05;
-                    $userjobcoin->create_time = time();
-                    $userjobcoin->last_time = time();
-                    $userjobcoin->save();
+                        $userjobcoin = new \UserJobcoin();
+                        $userjobcoin->user_id = $user->id;
+                        $userjobcoin->type = 'coingetfor1';
+                        $userjobcoin->jobcoin = $v['num']*0.1;
+                        $userjobcoin->create_time = time();
+                        $userjobcoin->last_time = time();
+                        $userjobcoin->save();
+
+                        //二级
+                        $code_user = $user->code_user;
+                        $user = \User::findFirst(" code_system = '$code_user'");
+                        if($user){
+                            $user->jobcoin += $v['num']*0.05;
+                            $user->save();
+
+                            $userjobcoin = new \UserJobcoin();
+                            $userjobcoin->user_id = $user->id;
+                            $userjobcoin->type = 'coingetfor2';
+                            $userjobcoin->jobcoin = $v['num']*0.05;
+                            $userjobcoin->create_time = time();
+                            $userjobcoin->last_time = time();
+                            $userjobcoin->save();
+                        }
+                    }
                 }
+                //
             }
         }
-        //
+
 
         $this->reply('success', 0, $result2);
 
