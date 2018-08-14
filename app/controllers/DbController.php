@@ -18,13 +18,17 @@ class DbController extends ControllerH5
         //$userid = $this->userinfo['id'];
 
         //
-        $list = \DbList::find(array('', 'order' => 'id desc'));
+        $list = \DbList::find(array('', 'order' => 'create_time desc'));
         $list = $list->toArray();
         foreach($list as $k => $v){
             $product = \DbProduct::findFirstById($v['product_id']);
             $list[$k]['name'] = $product->name;
             $list[$k]['imgs'] = explode(',', $product->imgs);
             $list[$k]['percent'] = (number_format($v['already_num']/$v['need_num']*100, 2));
+            $list[$k]['timeout'] = 'N';
+            if($v['overtime'] < time() && $v['overtime'] >0 ){
+                $list[$k]['timeout'] = 'Y';
+            }
         }
         $data['list'] = $list;
         //
@@ -61,6 +65,14 @@ class DbController extends ControllerH5
         $count = $jobcoin/50;
         if($has_num - $count < 0){
             $this->replyFailure('count max error');
+            return '';
+        }
+        if($list['overtime'] < time() && $list['overtime'] >0 ){
+            $this->replyFailure('timeout error');
+            return '';
+        }
+        if($list['is_end'] == 'Y'){
+            $this->replyFailure('is end error');
             return '';
         }
         $user = \User::findFirstById($userid);
@@ -533,7 +545,7 @@ class DbController extends ControllerH5
         $list->save();
 
         $list = \DbList::findFirstById($list->id);
-        $list->no = date('Ym').$list->id;
+        $list->no = date('Y').$list->id;
         $list->save();
         $this->reply('success', 0, array('id'=>$list->id));
 
