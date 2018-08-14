@@ -496,6 +496,49 @@ class DbController extends ControllerH5
         $this->reply('success', 0, $result2);
     }
 
+    public function addcoingetAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+
+        $product_id = $this->request->get('product_id', 'int');
+        if (!$product_id) {
+            $this->replyFailure('product_id none');
+            return '';
+        }
+        if ($this->userinfo['can_coinget'] != 'Y') {
+            $this->replyFailure('no power');
+            return '';
+        }
+        $product = \DbProduct::findFirstById($product_id);
+        if(!$product){
+            $this->replyFailure('product_id error');
+            return '';
+        }
+
+        $list = \DbList::findFirst(" user_id =  $userid and is_end = 'N' ");
+        if($list){
+            $this->replyFailure('你有正在进行的夺宝，请等待进行中的夺宝结束再发起夺宝');
+            return '';
+        }
+        //
+
+        $list = new \DbList();
+        $list->user_id = $userid;
+        $list->product_id = $product_id;
+        $list->need_num = $product->need_num;
+        $list->overtime = strtotime(" + ".$product->daytime."days");
+        $list->create_time = time();
+        $list->last_time = time();
+        $list->save();
+
+        $list = \DbList::findFirstById($list->id);
+        $list->no = date('Ym').$list->id;
+        $list->save();
+        $this->reply('success', 0, array('id'=>$list->id));
+
+    }
+
     public function myadminAction()
     {
 
