@@ -1,0 +1,235 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职夺宝 - 夺宝进度{% endblock %}
+{% block css %}{{ stylesheetLink('css/db/db.css') }}{% endblock %}
+{% block content %}
+<style type="text/css">
+	html,body,.mui-content {
+		height: 100%;
+		background: #f5f5f5;
+	}
+	.mui-segmented-control.mui-segmented-control-inverted {
+		    border-bottom: 1px solid #eee;
+	}
+	.mui-segmented-control.mui-segmented-control-inverted .mui-control-item {
+		color:#a4a6ad;
+		font-size:1.6rem;
+		height: 4rem;
+    	line-height: 4rem;
+	}
+	.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+		color:#67686e;
+		border-bottom: 2px solid #fe088f;
+	}
+	.mui-table-view {
+		margin-bottom: 6.82rem;
+		background: none;
+	}
+	.mui-table-view:before,
+	.mui-table-view:after {
+		background: transparent;
+	}
+	.mui-table-view-cell {
+		height: 11.5rem;
+		padding:15px;
+		overflow: inherit !important;
+	}
+	.mui-table-view-cell .item {
+		height: 100%;
+		display: block;
+		margin:0 !important;
+		padding:0 !important;
+		overflow: inherit !important;
+		white-space: inherit !important;
+	}
+	.mui-table-view .mui-media-object {
+		width: 6.46rem;
+		max-width:6.46rem;
+		height: 6.46rem;
+	}
+	.mui-table-view-cell:after {
+		right: 15px;
+	}
+	.mui-table-view-cell .title {
+		height: 3rem;
+		color:#67686e;
+		line-height: 1.58rem;
+		font-size:1.14rem;
+		overflow: hidden;
+	}
+	.mui-table-view-cell .status {
+		height: 2.5rem;
+		font-size: 1rem;
+	}
+	.mui-table-view-cell .infotext {
+		font-size:1rem;
+		color:#8f8f94;
+	}
+	.mui-table-view-cell .infotext span,
+	.mui-table-view-cell .status span {
+		color:#ff2a63;
+	}
+	.mui-table-view-cell .status .rate,
+	.mui-table-view-cell .status .link {
+		padding:0;
+	}
+	.mui-table-view-cell .status .rate.col-xs-7 {
+		width: 65%;
+	}
+	.mui-table-view-cell .status .rate p {
+		font-size:1rem;
+	}
+	.mui-table-view-cell .status .rate .progressrow {
+		width: 100%;
+		height: 5px;
+		background: #d7dae7;
+		border-radius: 5px;
+		position:relative;
+	}
+	.mui-table-view-cell .status .rate .progress {
+		position: absolute;
+		top:0;
+		left:0;
+		height: 5px;
+		border-radius: 5px;
+	}
+	.mui-table-view-cell .status .link {
+		height: 2.09rem;
+		line-height: 2.09rem;
+		border-radius: 2.09rem;
+		text-align: center;
+		font-size: 1.14rem;
+		color:#fff;
+	}
+	.mui-table-view-cell .status .link.disabled {
+		background: #d7dae7;
+	}
+	.mui-table-view-cell .statimg {
+		position: absolute;
+		width: 5rem;
+		height: 5rem;
+		top:3.6rem;
+		right:1rem;
+	}
+	.mui-table-view-cell.statA .statimg {
+		background:  url("/public/img/db/tfailed.png") no-repeat center;
+		background-size: contain;
+	}
+	.mui-table-view-cell.statB .statimg {
+		background:  url("/public/img/db/tdone.png") no-repeat center;
+		background-size: contain;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">夺宝进度</h1>
+</header>
+
+<div class="mui-content">
+	<div class="contaner">
+		<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+			<a href="#item1" class="mui-control-item mui-active">当前夺宝</a>
+			<a href="#item2" class="mui-control-item">历史夺宝</a>
+		</div>
+		<div class="feedbackbox">
+			<div id="item1" class="mui-control-content mui-active">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media statA">
+						<a href="/db/detail/2" class="item">
+							<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/i1.jpg">
+							<div class="mui-media-body">
+								<div class="title">
+									Apple iPad 平板电脑 2018年新款9.7英寸（128G WLAN版/A10 芯片/Retina显示屏/Touch ID MRJP2CH/A）金色
+								</div>
+								<div class="infotext">开始时间：<span>2018</span> 年 <span>9</span> 月 <span>45</span> 日</div>
+								<div class="infotext">所需人次：<span>2500</span> 人次</div>
+								<div class="status">
+									<div class="rate col-xs-7">
+										<p>夺宝进度：<span>10%</span></p>
+										<div class="progressrow">
+											<div class="progress gradual" style="width:10%"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div id="item2" class="mui-control-content">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media statA">
+						<div class="statimg"></div>
+						<a href="/db/detail/2" class="item">
+							<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/i1.jpg">
+							<div class="mui-media-body">
+								<div class="title">
+									Apple iPad 平板电脑 2018年新款9.7英寸（128G WLAN版/A10 芯片/Retina显示屏/Touch ID MRJP2CH/A）金色
+								</div>
+								<div class="infotext">开始时间：<span>2018</span> 年 <span>9</span> 月 <span>45</span> 日</div>
+								<div class="infotext">所需人次：<span>2500</span> 人次</div>
+								<div class="status">
+									<div class="rate col-xs-7">
+										<p>夺宝进度：<span>10%</span></p>
+										<div class="progressrow">
+											<div class="progress gradual" style="width:10%"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media statB">
+						<div class="statimg"></div>
+						<a href="/db/detail/2" class="item">
+							<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/i1.jpg">
+							<div class="mui-media-body">
+								<div class="title">
+									Apple iPad 平板电脑 2018年新款9.7英寸（128G WLAN版/A10 芯片/Retina显示屏/Touch ID MRJP2CH/A）金色
+								</div>
+								<div class="infotext">开始时间：<span>2018</span> 年 <span>9</span> 月 <span>45</span> 日</div>
+								<div class="infotext">所需人次：<span>2500</span> 人次</div>
+								<div class="infotext">已获奖励：<span>500</span> JOB币</div>
+								<div class="status">
+									<div class="rate col-xs-7">
+										<p>夺宝进度：<span>100%</span></p>
+										<div class="progressrow">
+											<div class="progress gradual" style="width:100%"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell mui-media statA">
+						<div class="statimg"></div>
+						<a href="/db/detail/2" class="item">
+							<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/i1.jpg">
+							<div class="mui-media-body">
+								<div class="title">
+									Apple iPad 平板电脑 2018年新款9.7英寸（128G WLAN版/A10 芯片/Retina显示屏/Touch ID MRJP2CH/A）金色
+								</div>
+								<div class="infotext">开始时间：<span>2018</span> 年 <span>9</span> 月 <span>45</span> 日</div>
+								<div class="infotext">所需人次：<span>2500</span> 人次</div>
+								<div class="status">
+									<div class="rate col-xs-7">
+										<p>夺宝进度：<span>10%</span></p>
+										<div class="progressrow">
+											<div class="progress gradual" style="width:10%"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
+{% block footer %}
+       {{ partial('common/footer_Db')}}
+{% endblock %}

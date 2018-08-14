@@ -593,12 +593,12 @@
 <script type="text/javascript" src="{{url('js/mjob/bank.js')}}"></script>
 <script type="text/javascript">
 
-	 function scroll(){
-		 $("#marquee").animate({"marginLeft":"-5rem"},300,"linear",function(){
-		     $("#marquee .head:eq(0)").appendTo($("#marquee"))
-		     $("#marquee").css({"marginLeft":0})
-		 })
-	 }
+	function scroll(){
+		$("#marquee").animate({"marginLeft":"-5rem"},300,"linear",function(){
+		    $("#marquee .head:eq(0)").appendTo($("#marquee"))
+		    $("#marquee").css({"marginLeft":0})
+		});
+	}
     setInterval(scroll,1);
 
     var NowTime; 
@@ -617,22 +617,33 @@
         var t = EndTime - time; 
         //var d=Math.floor(t/1000/60/60/24); 
         var h = Math.floor(t/1000/60/60%24); 
-        if(h < 10){
+        if(h < 10 && h > 0){
         	h = "0"+h;
         }
+        if(h <= 0) {
+        	h = "00";
+        }
         var m = Math.floor(t/1000/60%60); 
-        if(m < 10){
+        if(m < 10 && m > 0){
         	m = "0"+m;
         }
+        if(m <= 0){
+        	m = "00";
+        }
         var s = Math.floor(t/1000%60); 
-        if(s < 10){
+        if(s < 10 && s > 0){
         	s = "0"+s;
+        }
+        if(s <= 0){
+        	s = "00";
         }
          
         //document.getElementById("t_d").innerHTML = d + "天"; 
         document.getElementById("time").innerHTML = h + ":" + m + ":" + s; 
         //document.getElementById("t_m").innerHTML = m + "分"; 
         //document.getElementById("t_s").innerHTML = s + "秒"; 
+        
+        
     }
 
     function setTime(){

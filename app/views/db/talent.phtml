@@ -1,0 +1,233 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职夺宝 - 夺宝达人{% endblock %}
+{% block css %}{{ stylesheetLink('css/db/db.css') }}{% endblock %}
+{% block content %}
+<style type="text/css">
+	html,body,.mui-content {
+		height: 100%;
+		background: #fff;
+	}
+	.container {
+		top:-5.6rem;
+	}
+	.banner {
+		height: 7rem;
+		position: relative;
+		background: #1f36bf url("/public/img/mjob/recordbanner.png") no-repeat 80%;
+		background-size: contain;
+	}
+	.box {
+		position: relative;
+	}
+	.box > div {
+		background: #fff;
+		border-radius: 1rem;
+		margin-bottom: 1rem;
+		overflow: hidden;
+	}
+	.box .apply {
+		height: 13.4rem;
+		padding: 1.45rem;
+		background: url("/public/img/db/apply.jpg") no-repeat 80%;
+		background-size: cover;
+		border: 1px solid #eee;
+    	box-shadow: 1px 2px 8px 0px #ececec;
+	}
+	.box .apply h2 {
+		font-size:1.6rem;
+		color:#fe6c53;
+		font-weight: 700;
+		margin:0;
+		margin-bottom: 1.2rem;
+		margin-top:1rem;
+	}
+	.box .apply h4 {
+		font-size:1.14rem;
+		color:#9e9e9e;
+		margin:0;
+		margin-bottom: .4rem;
+	}
+	.box .apply a {
+		display: inline-block;
+		width: 6.4rem;
+		height: 2rem;
+		line-height: 2rem;
+		font-size:1rem;
+		color: #fff;
+		border-radius: 2rem;
+		background: #fe6c53;
+		text-align: center;
+		margin-top: .6rem;
+	}
+	.mui-table-view {
+		margin-top: 0 !important;
+		margin-bottom: 6.82rem;
+	}
+	.mui-table-view:before,
+	.mui-table-view:after {
+		background: transparent;
+	}
+	.mui-table-view-cell {
+		height: 7.6rem;
+		padding:0;
+		margin-bottom: 1rem;
+	}
+	.mui-table-view-cell .item {
+		height: 100%;
+		display: block;
+		margin:0 !important;
+		padding:0 !important;
+		overflow: inherit !important;
+		white-space: inherit !important;
+	}
+	.mui-table-view .mui-media-object {
+		width: 6.46rem;
+		max-width:6.46rem;
+		height: 6.46rem;
+	}
+	.mui-table-view .mui-media-body {
+		border-bottom: 1px solid #eee;
+		padding-bottom: .2rem;
+	}
+	.mui-table-view-cell:after {
+		background: transparent;
+	}
+	.mui-table-view-cell .title {
+		height: 3rem;
+		/*margin-bottom: 1.4rem;*/
+		color:#67686e;
+		line-height: 1.58rem;
+		font-size:1.14rem;
+		overflow: hidden;
+	}
+	.mui-table-view-cell .num {
+		height: 1.4rem;
+		line-height: 1.4rem;
+		font-size:1rem;
+		color:#67686e;
+	}
+	.mui-table-view-cell .num span,
+	.mui-table-view-cell .status span {
+		color:#ff2a63;
+	}
+	.mui-table-view-cell .status {
+		height: 2.5rem;
+		font-size: 1rem;
+	}
+	.mui-table-view-cell .status .rate,
+	.mui-table-view-cell .status .link {
+		padding:0;
+	}
+	.mui-table-view-cell .status .rate.col-xs-7 {
+		width: 65%;
+	}
+	.mui-table-view-cell .status .rate p {
+		font-size:1rem;
+	}
+	.mui-table-view-cell .status .link {
+		height: 2.09rem;
+		line-height: 2.09rem;
+		border-radius: 2.09rem;
+		text-align: center;
+		font-size: 1.14rem;
+		color:#fff;
+	}
+	.mui-table-view-cell .status .link.disabled {
+		background: #d7dae7;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">夺宝达人</h1>
+</header>
+
+<div class="mui-content">
+	<div class="banner"></div>
+	<div class="container rel">
+		<div class="box">
+			<div class="apply">
+				<h2>申请成为夺宝达人</h2>
+				<h4>成功发起夺宝</h4>
+				<h4>分享6%丰富奖励</h4>
+				<a href="/db/talentrules" id="Apply">马上申请</a>
+			</div>
+		</div>
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell mui-media statA">
+				<a href="/db/detail/2" class="item">
+					<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/i1.jpg">
+					<div class="mui-media-body">
+						<div class="title">
+							Apple iPad 平板电脑 2018年新款9.7英寸（128G WLAN版/A10 芯片/Retina显示屏/Touch ID MRJP2CH/A）金色						\
+						</div>
+						<div class="num">获得者：<span>7</span> 天</div>
+						<div class="status">
+							<div class="rate col-xs-7">
+								<p>购买次数：<span>2500</span> 人次</p>
+								<p>个人记录：<span>500</span> JOB币</p>
+							</div>
+							<button class="btn link col-xs-4 right gradual goapply">发起夺宝</button>
+						</div>
+					</div>
+				</a>
+			</li>
+			<!-- <li class="mui-table-view-cell mui-media statA">
+				<a href="/db/detail/2" class="item">
+					<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/i1.jpg">
+					<div class="mui-media-body">
+						<div class="title">
+							Apple iPad 平板电脑 2018年新款9.7英寸（128G WLAN版/A10 芯片/Retina显示屏/Touch ID MRJP2CH/A）金色						\
+						</div>
+						<div class="num">获得者：<span>7</span> 天</div>
+						<div class="status">
+							<div class="rate col-xs-7">
+								<p>购买次数：<span>2500</span> 人次</p>
+								<p>个人记录：<span>500</span> JOB币</p>
+							</div>
+							<button class="btn link col-xs-4 right gradual">发起夺宝</button>
+						</div>
+					</div>
+				</a>
+			</li> -->
+		</ul>
+	</div>
+</div>
+<script type="text/javascript">
+
+	$(".goapply").on('tap',function(){
+
+		var userstat = "N";
+
+		if(userstat == "N"){
+			var btnArray = ['取消', '马上申请'];
+			mui.confirm('申请成为夺宝达人并经过金职岛官方审核后才可发起夺宝赚取6%丰富奖励哦', '您需要申请成为夺宝达人', btnArray, function(e) {
+				if (e.index == 1) {
+					window.location.href = "/db/talentrules";
+				} else {
+					
+				}
+			})
+		} 
+		if(userstat == "Y"){
+			var btnArray = ['取消', '去看看'];
+			mui.confirm('『我的夺宝』中可以查看到你发起的夺宝进度哦', '恭喜你成功发起夺宝！', btnArray, function(e) {
+				if (e.index == 1) {
+					window.location.href = "/db/tprogress";
+				} else {
+					
+				}
+			})
+		}
+
+	})
+
+	
+
+</script>
+
+
+{% endblock %}
+{% block footer %}
+       {{ partial('common/footer_Db')}}
+{% endblock %}

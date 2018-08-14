@@ -1,0 +1,154 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职夺宝 - 我的夺宝{% endblock %}
+{% block css %}{{ stylesheetLink('css/db/db.css') }}{% endblock %}
+{% block content %}
+<style type="text/css">
+	html,body {
+		height: 100%;
+	}
+	#tabbar-with-contact .banner {
+		height: 7rem;
+		position: relative;
+		background: #1f36bf url("/public/img/mjob/recordbanner.png") no-repeat center;
+		background-size: contain;
+	}
+	#tabbar-with-contact .box {
+		position: relative;
+		top:-2.6rem;
+	}
+	#tabbar-with-contact .box > div {
+		background: #fff;
+		border-radius: 1rem;
+		margin-bottom: 1rem;
+		overflow: hidden;
+	}
+	#tabbar-with-contact .box .myfriends {
+		padding: 1.45rem;
+	}
+	#tabbar-with-contact .mui-table-view-cell:after {
+		left: 0;
+	}
+	#tabbar-with-contact .mui-table-view .mui-media-object {
+		height: 6.83rem;
+		max-width: inherit;
+		width: 6.83rem;
+		display: inline-block;
+		border-radius: 50%;
+		overflow: hidden;
+		background: #56d87a;
+		position:relative;
+	}
+	#tabbar-with-contact .mui-table-view .mui-media-object .text {
+		color:#fff;
+		font-size:4rem;
+		text-align: center;
+		width: 4rem;
+		height: 4rem;
+		line-height: 4rem;
+	}
+	#tabbar-with-contact .mui-table-view .mui-media-body {
+		margin-top: 1.2rem;
+		font-size: 2rem;
+	}
+	#tabbar-with-contact .rules a.mui-navigate-right span {
+		display: inline-block;
+		margin-right: .5rem;
+		width: 1.5rem;
+		height: 1.5rem;
+		position: relative;
+		top:.3rem;
+	}
+	#tabbar-with-contact .rules a.mui-navigate-right span.ident1 {
+		background: url("/public/img/mjob/ideicon1.png") no-repeat center;
+		background-size: contain;
+	}
+	#tabbar-with-contact .rules a.mui-navigate-right span.ident2 {
+		background: url("/public/img/mjob/ideicon2.png") no-repeat center;
+		background-size: contain;
+	}
+	#tabbar-with-contact .rules a.mui-navigate-right span.ident3 {
+		background: url("/public/img/mjob/ideicon3.png") no-repeat center;
+		background-size: contain;
+	}
+	#tabbar-with-contact .rules a.mui-navigate-right span.ident4 {
+		background: url("/public/img/mjob/ideicon4.png") no-repeat center;
+		background-size: contain;
+	}
+	#tabbar-with-contact .rules a.mui-navigate-right span.ident5 {
+		background: url("/public/img/mjob/ideicon5.png") no-repeat center;
+		background-size: contain;
+	}
+	.mui-table-view:before,
+	.mui-table-view:after {
+		background-color:transparent;
+	}
+	
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">我的夺宝</h1>
+</header>
+
+<div class="mui-content" style="height: 100%;" id="tabbar-with-contact">
+	<div class="banner">
+		<!-- <div class="auto-center"><img src="/public/img/mjob/landlogo.png" class="auto-center"></div> -->
+	</div>
+	<div class="container rel">
+		<div class="box">
+			<div class="myfriends">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell mui-media">
+						<span class="mui-media-object mui-pull-left">
+							<span class="text auto-center">无</span>
+						</span>
+						<div class="mui-media-body">
+							<span>{{ data['username'] }}</span>
+							<p class="mui-ellipsis">金职岛第{{ data['userrank'] }}位居民</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="rules">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<a href="/mjob/assets" class="mui-navigate-right">
+							<span class="ident2"></span>我的资产
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="/db/joinrecord" class="mui-navigate-right">
+							<span class="ident3"></span>参与记录
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="tprogress" class="mui-navigate-right">
+							<span class="ident4"></span>夺宝进度
+						</a>
+					</li>
+					<li class="mui-table-view-cell none">
+						<a href="#" class="mui-navigate-right">
+							<span class="ident5"></span>收货地址
+						</a>
+					</li>
+					<li class="mui-table-view-cell none">
+						<a href="#" class="mui-navigate-right">
+							<span class="ident3"></span>常见问题
+						</a>
+					</li>
+					<li class="mui-table-view-cell none">
+						<a href="#" class="mui-navigate-right">
+							<span class="ident1"></span>联系我们
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
+{% block footer %}
+       {{ partial('common/footer_Db')}}
+{% endblock %}

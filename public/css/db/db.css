@@ -64,3 +64,9 @@ footer a .mui-tab-label {
 footer a.active .mui-tab-label {
 	color: #374fff !important;
 }
+header .mui-pull-right span.icon {
+	position: relative;
+    width: 1.5rem;
+    height: 100%;
+    display: inline-block;
+}

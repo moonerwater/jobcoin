@@ -465,6 +465,28 @@ class DbController extends ControllerH5
 
     }
 
+    public function talentAction()
+    {
+
+    }
+
+    public function talentrulesAction()
+    {
+
+    }
+
+    public function myadminAction()
+    {
+
+    }
+
+    public function tprogressAction()
+    {
+
+    }
+
+
+
 
 
 }

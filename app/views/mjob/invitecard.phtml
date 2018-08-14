@@ -74,11 +74,22 @@
 		color:#65676e;
 		font-size:1.4rem;
 	}
-	.container img {
+	/*.container img {
 		display: block;
 		width: 9.15rem;
 		height: 9.15rem;
 		margin:1rem auto;
+	}*/
+
+	#QRCode {
+		display: block;
+		width: 9.15rem;
+		height: 9.15rem;
+		margin:1rem auto;
+	}
+	#QRCode img {
+		width: 100%;
+		height: 100%;
 	}
 </style>
 
@@ -100,8 +111,13 @@
 	<hr>
 	<h5>我是“{{ data['username'] }}”，金职岛第{{ data['userrank'] }}号居民</h5>
 	<h5>我在金职岛等你，不见不散</h5>
-	<img src="http://qr.liantu.com/api.php?text=http://www.jobchain.us/mjob/index?invitecode={{ data['code_system'] }}"/>
+	<!-- <img id="QRcode" src="http://qr.liantu.com/api.php?text=http://www.jobchain.us/mjob/index?invitecode={{ data['code_system'] }}"/> -->
+	<div id="QRCode"></div>
 	<h5>扫码进入金职岛</h5>
+	<h5>如有需要，请截屏保存二维码</h5>
 </div>
-
+<script type="text/javascript" src="{{url('js/qrcode.min.js')}}"></script>
+<script type="text/javascript">
+	new QRCode(document.getElementById("QRCode"), "http://www.jobchain.us/mjob/index?invitecode={{ data['code_system'] }}");
+</script>
 {% endblock %}

@@ -1,0 +1,93 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职夺宝 - 达人规则{% endblock %}
+{% block css %}{{ stylesheetLink('css/db/db.css') }}{% endblock %}
+{% block content %}
+<style type="text/css">
+	html,body,.mui-content {
+		height: 100%;
+		background: #efeff4;
+	}
+	.banner {
+		height: 0;
+    	padding: 17.4%;
+		position: relative;
+		background:url("/public/img/db/talentrules.jpg") no-repeat center;
+		background-size: contain;
+	}
+	.container {
+		padding:15px;
+	}
+	.container p {
+		color:#67686e;
+		font-size:1.34rem;
+		line-height: 1.34rem;
+		margin-bottom: 0;
+	}
+	.container button {
+		width: 50%;
+	    height: 3.62rem;
+	    border-radius: 3.62rem;
+	    font-size: 1.6rem;
+	    text-align: center;
+	    color: #fff;
+	    background: #fe6c53;
+	    margin: 0 auto;
+	    margin-top: 1rem;
+	    margin-bottom: 6rem;
+    	display: block;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">达人规则</h1>
+</header>
+
+<div class="mui-content">
+	<div class="banner"></div>
+	<div class="container">
+		<p>1、发起的夺宝成功完成，获得本期夺宝参与总金额6%的奖励（举例：张三发起了价值2000元的手机夺宝活动，当夺宝活动满人开奖时，张三可获得120元奖励）</p><br>
+		<p>2、每一个夺宝产品对应不同的价值、所需的JOB币人次以及有效活动时段（在该时段内需完成夺宝商品的购买，若超时未完成则夺宝失效）</p><br>
+		<p>3、只有当已发起的夺宝已完成或超期结束，才可进行下一期夺宝活动的发起</p><br>
+		<p>4、已拥有本人作为群主的单独微信群，成员达300人以上</p><br>
+		<p>5、微信群内的成员已通过群主邀请后注册为金职岛会员（注册金职岛会员将获得奖励）</p><br>
+		<button>马上申请</button>
+	</div>
+</div>
+<script type="text/javascript">
+
+	$("button").on('tap',function(){
+
+		var userstat = "N";
+
+		if(userstat == "N"){
+			var btnArray = ['取消', '好的'];
+			mui.confirm('金职岛工作人员将在两个工作日内联系您并进行人工审核达人申请资质', '您已提交申请', btnArray, function(e) {
+				if (e.index == 1) {
+					window.location.href = "/db/talent";
+				} else {
+					
+				}
+			})
+		} 
+		if(userstat == "Y"){
+			var btnArray = ['取消', '去看看'];
+			mui.confirm('您可以直接参与夺宝哦', '您已经是夺宝达人', btnArray, function(e) {
+				if (e.index == 1) {
+					window.location.href = "/db/talent";
+				} else {
+					
+				}
+			})
+		}
+
+	})
+
+	
+
+</script>
+
+{% endblock %}
+{% block footer %}
+       {{ partial('common/footer_Db')}}
+{% endblock %}
