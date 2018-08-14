@@ -254,6 +254,10 @@ class DbController extends ControllerH5
             $list['phone'] = $this->getDisablePhone($user->phone);
             $list['username'] = $user->name;
         }
+        $list['timeout'] = 'N';
+        if($list['overtime'] < time() && $list['overtime'] >0 ){
+            $list['timeout'] = 'Y';
+        }
         $user = \User::findFirstById($userid);
         $list['jobcoin'] = $user->jobcoin;
         $data['list'] = $list;

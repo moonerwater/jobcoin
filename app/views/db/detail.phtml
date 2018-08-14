@@ -639,7 +639,7 @@
 				<span class="tips">{{ data['list']['no'] }}期</span>
 				{{ data['list']['name'] }}
 			</div>
-			{% if data['list']['is_end'] == 'Y' %}
+			{% if data['list']['is_end'] == 'Y' and data['list']['win_user_id'] >0 %}
 				<div class="winningbox">
 					<div class="winnerrow">
 						<div class="head left">
@@ -668,6 +668,11 @@
 					</div>
 					<div class="consume right rel"><span>50</span>JOB币/人次</div>
 				</div>
+				{% if data['list']['timeout'] == 'Y' %}
+					已过期{{ data['list']['overtime'] }}
+				{% else %}
+					正在进行{{ data['list']['overtime'] }}
+				{% endif %}
 			{% endif %}
 		</div>
 		{% if data['listusertotal'] %}
@@ -755,7 +760,8 @@
 	</div>
 </div>
 
-{% if data['list']['is_end'] != 'Y' %}
+{% if data['list']['is_end'] == 'Y' or data['list']['timeout'] == 'Y' %}
+{% else %}
 <a href="#" class="gradual" id="buy">立即购买</a>
 {% endif %}
 
