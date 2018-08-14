@@ -154,24 +154,26 @@
 			</div>
 		</div>
 		<ul class="mui-table-view">
+			{% for key, item in data['list'] %}
 			<li class="mui-table-view-cell mui-media statA">
 				<a href="/db/detail/2" class="item">
-					<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/i1.jpg">
+					<img class="mui-media-object mui-pull-left" src="{{ item['imgs'][0] }}">
 					<div class="mui-media-body">
 						<div class="title">
-							Apple iPad 平板电脑 2018年新款9.7英寸（128G WLAN版/A10 芯片/Retina显示屏/Touch ID MRJP2CH/A）金色						\
+							{{ item['name'] }}
 						</div>
-						<div class="num">获得者：<span>7</span> 天</div>
+						<div class="num">获得者：<span>{{ item['daytime'] }}</span> 天</div>
 						<div class="status">
 							<div class="rate col-xs-7">
-								<p>购买次数：<span>2500</span> 人次</p>
-								<p>个人记录：<span>500</span> JOB币</p>
+								<p>购买次数：<span>{{ item['need_num'] }}</span> 人次</p>
+								<!--<p>个人记录：<span>500</span> JOB币</p>-->
 							</div>
-							<button class="btn link col-xs-4 right gradual goapply">发起夺宝</button>
+							<button class="btn link col-xs-4 right gradual goapply">发起夺宝{{ userinfo['can_coinget'] }}</button>
 						</div>
 					</div>
 				</a>
 			</li>
+			{% endfor %}
 			<!-- <li class="mui-table-view-cell mui-media statA">
 				<a href="/db/detail/2" class="item">
 					<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/i1.jpg">

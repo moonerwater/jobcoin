@@ -462,19 +462,38 @@ class DbController extends ControllerH5
         $this->reply('success', 0, $result2);
     }
 
-    public function strategyAction()
-    {
+    public function talentAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+        //
+        $product = \DbProduct::find(array('', 'order' => 'id desc'));
+        $product = $product->toArray();
+        foreach($product as $k => $v){
+            $product[$k]['imgs'] = explode(',', $v['imgs']);
+        }
+        $data['list'] = $product;
+        //
+        $this->view->setVar('data', $data);
 
     }
 
-    public function talentAction()
-    {
-
+    public function talentrulesAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
     }
 
-    public function talentrulesAction()
-    {
+    public function applycoingetAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
 
+        $user = \User::findFirstById($userid);
+        $user->coinget_applytime = time();
+        $user->save();
+
+        $this->reply('success', 0, $result2);
     }
 
     public function myadminAction()
@@ -487,8 +506,10 @@ class DbController extends ControllerH5
 
     }
 
+    public function strategyAction()
+    {
 
-
+    }
 
 
 }
