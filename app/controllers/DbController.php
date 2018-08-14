@@ -555,9 +555,24 @@ class DbController extends ControllerH5
 
     }
 
-    public function myadminAction()
-    {
+    public function myadminAction() {
+        $this->checkNoUserGoLogin();
+        //
+        //$this->view->disable();
+        $userid = $this->userinfo['id'];
+        //
+        $user = \User::find(array('', 'order' => 'id asc'));
+        foreach($user as $k => $v){
+            if($v->id == $userid){
+                $data['userrank'] = $k+1;
+            }
+        }
+        //
+        $data['username'] = $this->userinfo['name'];
+        $data['username'] = $data['username'] ? $data['username'] : $this->userinfo['phone'];
 
+        //print_r($data);
+        $this->view->setVar('data', $data);
     }
 
     public function tprogressAction()
