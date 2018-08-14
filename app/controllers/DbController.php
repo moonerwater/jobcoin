@@ -575,8 +575,27 @@ class DbController extends ControllerH5
         $this->view->setVar('data', $data);
     }
 
-    public function tprogressAction()
-    {
+    public function tprogressAction() {
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+
+        //
+        $list = \DbList::find(array("", 'order' => 'create_time desc'));
+        $list = $list->toArray();
+        foreach($list as $k => $v){
+            $product = \DbProduct::findFirstById($v['product_id']);
+            $list[$k]['name'] = $product->name;
+            $list[$k]['imgs'] = explode(',', $product->imgs);
+            $list[$k]['percent'] = (number_format($v['already_num']/$v['need_num']*100, 2));
+            $list[$k]['timeout'] = 'N';
+            if($v['overtime'] < time() && $v['overtime'] >0 ){
+                $list[$k]['timeout'] = 'Y';
+            }
+        }
+        $data['list'] = $list;
+        //
+        $this->view->setVar('data', $data);
 
     }
 

@@ -134,94 +134,63 @@
 		<div class="feedbackbox">
 			<div id="item1" class="mui-control-content mui-active">
 				<ul class="mui-table-view">
-					<li class="mui-table-view-cell mui-media statA">
-						<a href="/db/detail/2" class="item">
-							<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/i1.jpg">
-							<div class="mui-media-body">
-								<div class="title">
-									Apple iPad 平板电脑 2018年新款9.7英寸（128G WLAN版/A10 芯片/Retina显示屏/Touch ID MRJP2CH/A）金色
-								</div>
-								<div class="infotext">开始时间：<span>2018</span> 年 <span>9</span> 月 <span>45</span> 日</div>
-								<div class="infotext">所需人次：<span>2500</span> 人次</div>
-								<div class="status">
-									<div class="rate col-xs-7">
-										<p>夺宝进度：<span>10%</span></p>
-										<div class="progressrow">
-											<div class="progress gradual" style="width:10%"></div>
+					{% for key, item in data['list'] %}
+						{% if item['is_end'] == 'N' %}
+						<li class="mui-table-view-cell mui-media statA">
+							<a href="/db/detail/{{ item['id'] }}" class="item">
+								<img class="mui-media-object mui-pull-left" src="{{ item['imgs'][0] }}">
+								<div class="mui-media-body">
+									<div class="title">
+										{{ item['name'] }}
+									</div>
+									<div class="infotext">开始时间：{{ item['create_time'] }}<span>2018</span> 年 <span>9</span> 月 <span>45</span> 日</div>
+									<div class="infotext">所需人次：<span>{{ item['need_num'] }}</span> 人次</div>
+									<div class="status">
+										<div class="rate col-xs-7">
+											<p>夺宝进度：<span>{{ item['percent'] }}%</span></p>
+											<div class="progressrow">
+												<div class="progress gradual" style="width:{{ item['percent'] }}%"></div>
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</a>
-					</li>
+							</a>
+						</li>
+						{% endif %}
+					{% endfor %}
 				</ul>
 			</div>
 			<div id="item2" class="mui-control-content">
 				<ul class="mui-table-view">
-					<li class="mui-table-view-cell mui-media statA">
-						<div class="statimg"></div>
-						<a href="/db/detail/2" class="item">
-							<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/i1.jpg">
-							<div class="mui-media-body">
-								<div class="title">
-									Apple iPad 平板电脑 2018年新款9.7英寸（128G WLAN版/A10 芯片/Retina显示屏/Touch ID MRJP2CH/A）金色
-								</div>
-								<div class="infotext">开始时间：<span>2018</span> 年 <span>9</span> 月 <span>45</span> 日</div>
-								<div class="infotext">所需人次：<span>2500</span> 人次</div>
-								<div class="status">
-									<div class="rate col-xs-7">
-										<p>夺宝进度：<span>10%</span></p>
-										<div class="progressrow">
-											<div class="progress gradual" style="width:10%"></div>
+					{% for key, item in data['list'] %}
+						{% if item['is_end'] == 'Y' %}
+							{% if item['win_user_id'] > 0 %}
+							<li class="mui-table-view-cell mui-media statB">
+							{% else %}
+							<li class="mui-table-view-cell mui-media statA">
+							{% endif %}
+								<div class="statimg"></div>
+								<a href="/db/detail/{{ item['id'] }}" class="item">
+									<img class="mui-media-object mui-pull-left" src="{{ item['imgs'][0] }}">
+									<div class="mui-media-body">
+										<div class="title">
+											{{ item['name'] }}
+										</div>
+										<div class="infotext">开始时间：{{ item['create_time'] }}<span>2018</span> 年 <span>9</span> 月 <span>45</span> 日</div>
+										<div class="infotext">所需人次：<span>{{ item['need_num'] }}</span> 人次</div>
+										<div class="status">
+											<div class="rate col-xs-7">
+												<p>夺宝进度：<span>{{ item['percent'] }}%</span></p>
+												<div class="progressrow">
+													<div class="progress gradual" style="width:{{ item['percent'] }}%"></div>
+												</div>
+											</div>
 										</div>
 									</div>
-								</div>
-							</div>
-						</a>
-					</li>
-					<li class="mui-table-view-cell mui-media statB">
-						<div class="statimg"></div>
-						<a href="/db/detail/2" class="item">
-							<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/i1.jpg">
-							<div class="mui-media-body">
-								<div class="title">
-									Apple iPad 平板电脑 2018年新款9.7英寸（128G WLAN版/A10 芯片/Retina显示屏/Touch ID MRJP2CH/A）金色
-								</div>
-								<div class="infotext">开始时间：<span>2018</span> 年 <span>9</span> 月 <span>45</span> 日</div>
-								<div class="infotext">所需人次：<span>2500</span> 人次</div>
-								<div class="infotext">已获奖励：<span>500</span> JOB币</div>
-								<div class="status">
-									<div class="rate col-xs-7">
-										<p>夺宝进度：<span>100%</span></p>
-										<div class="progressrow">
-											<div class="progress gradual" style="width:100%"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</a>
-					</li>
-					<li class="mui-table-view-cell mui-media statA">
-						<div class="statimg"></div>
-						<a href="/db/detail/2" class="item">
-							<img class="mui-media-object mui-pull-left" src="/upload/dbproduct/i1.jpg">
-							<div class="mui-media-body">
-								<div class="title">
-									Apple iPad 平板电脑 2018年新款9.7英寸（128G WLAN版/A10 芯片/Retina显示屏/Touch ID MRJP2CH/A）金色
-								</div>
-								<div class="infotext">开始时间：<span>2018</span> 年 <span>9</span> 月 <span>45</span> 日</div>
-								<div class="infotext">所需人次：<span>2500</span> 人次</div>
-								<div class="status">
-									<div class="rate col-xs-7">
-										<p>夺宝进度：<span>10%</span></p>
-										<div class="progressrow">
-											<div class="progress gradual" style="width:10%"></div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</a>
-					</li>
+								</a>
+							</li>
+						{% endif %}
+					{% endfor %}
 				</ul>
 			</div>
 		</div>
