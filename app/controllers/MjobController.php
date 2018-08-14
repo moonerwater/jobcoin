@@ -510,7 +510,7 @@ class MjobController extends ControllerH5
         //
         $userid = $this->userinfo['id'];
         //
-        $userjobcoin = \UserJobcoin::find(array('user_id ='.$userid, 'order' => 'create_time desc'));
+        $userjobcoin = \UserJobcoin::find(array('user_id ='.$userid, 'order' => 'id desc'));
         $userjobcoin = $userjobcoin->toArray();
         foreach($userjobcoin as $k => $v){
             $userjobcoin[$k]['time'] = date('Y-m-d H:i:s', $v['create_time']);

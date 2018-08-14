@@ -117,6 +117,8 @@
 										<div class="left stat2">
 									{% elseif item['type'] == 'refundcoin' %}
 										<div class="left stat2">
+									{% elseif item['type'] == 'coinvipmining' %}
+										<div class="left stat2">
 									{% endif %}
 										<h5>
 											{% if item['type'] == 'reg' %}
@@ -141,6 +143,8 @@
 												充值
 											{% elseif item['type'] == 'refundcoin' %}
 												夺宝退款
+											{% elseif item['type'] == 'coinvipmining' %}
+												夺宝达人奖励
 											{% endif %}
 										</h5>
 										<p>{{ item['time'] }}</p>

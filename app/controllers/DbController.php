@@ -169,6 +169,21 @@ class DbController extends ControllerH5
             $list->last_time = time();
             $list->save();
 
+            //发起夺宝的奖励
+            if($list->user_id > 0){
+                $user = \User::findFirstById($list->user_id);
+                $user->jobcoin += $list->need_num*50*0.06;
+                $user->last_time = time();
+                $user->save();
+                $userjobcoin = new \UserJobcoin();
+                $userjobcoin->user_id = $user->id;
+                $userjobcoin->type = 'coinvipmining';
+                $userjobcoin->jobcoin = $list->need_num*50*0.06;
+                $userjobcoin->create_time = time();
+                $userjobcoin->last_time = time();
+                $userjobcoin->save();
+            }
+
             //挖矿分红奖励
             $listuser = $this->db->fetchAll("SELECT user_id,sum(num) as num FROM db_list_user WHERE list_id= $list_id GROUP by user_id");
             foreach($listuser as $k => $v){
