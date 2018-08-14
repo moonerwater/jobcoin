@@ -582,7 +582,7 @@ class DbController extends ControllerH5
         $userid = $this->userinfo['id'];
 
         //
-        $list = \DbList::find(array("", 'order' => 'create_time desc'));
+        $list = \DbList::find(array(" user_id = $userid ", 'order' => 'create_time desc'));
         $list = $list->toArray();
         foreach($list as $k => $v){
             $product = \DbProduct::findFirstById($v['product_id']);
@@ -597,6 +597,61 @@ class DbController extends ControllerH5
         $data['list'] = $list;
         //
         $this->view->setVar('data', $data);
+
+    }
+
+    public function refundcoinAction(){
+        $this->checkNoUserGoLogin();
+        //
+        $userid = $this->userinfo['id'];
+
+        $list_id = $this->request->get('list_id', 'int');
+        if (!$list_id) {
+            $this->replyFailure('list_id none');
+            return '';
+        }
+        if(!$this->checkCanAdmin($userid)){
+            $this->replyFailure('no power');
+            return '';
+        }
+
+        $list = \DbList::findFirstById($list_id);
+        if(!$list){
+            $this->replyFailure('list_id error');
+            return '';
+        }
+        $list = $list->toArray();
+        //
+        if($list['overtime'] < time() && $list['overtime'] >0 && $list['is_end'] == 'N'){
+            //挖矿分红奖励
+            $listuser = $this->db->fetchAll("SELECT user_id,sum(num) as num FROM db_list_user WHERE list_id= $list_id GROUP by user_id");
+            foreach($listuser as $k => $v){
+                $user = \User::findFirstById($v['user_id']);
+                $user->jobcoin += $v['num'];
+                $user->last_time = time();
+                $user->save();
+                $userjobcoin = new \UserJobcoin();
+                $userjobcoin->user_id = $user->id;
+                $userjobcoin->type = 'refundcoin';
+                $userjobcoin->jobcoin = $v['num'];
+                $userjobcoin->create_time = time();
+                $userjobcoin->last_time = time();
+                $userjobcoin->save();
+            }
+
+            $list = \DbList::findFirstById($list_id);
+            $list->is_end = 'Y';
+            $list->end_time = time();
+            $list->win_user_id = 0;
+            $list->last_time = time();
+            $list->save();
+
+            $this->reply('success', 0, $result2);
+        }
+        else{
+            $this->replyFailure('data error');
+            return '';
+        }
 
     }
 
