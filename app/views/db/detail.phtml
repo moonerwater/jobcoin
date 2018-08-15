@@ -593,6 +593,35 @@
 	#timeout {
 		color:#ff2a63;
 	}
+	.mui-slider-indicator {
+		bottom:3rem;
+	}
+	#slider .timerow {
+		position: absolute;
+		width: 100%;
+		height: 2.8rem;
+		left:0;
+		bottom:0;
+		background: url("/public/img/db/timebg.png") no-repeat center;
+		background-size: cover;
+		z-index: 2;
+		font-size: 1rem;
+		line-height: 3rem;
+		color:#fff;
+	}
+	#slider .timerow > div {
+		text-align: center;
+	}
+	#slider .timerow span.time {
+		display: inline-block;
+		width: 1.4rem;
+		height: 1.4rem;
+		line-height: 1.7rem;
+		background: rgba(0,0,0,.6);
+		text-align: center;
+		border-radius: 2px;
+
+	}
 </style>
 
 <!--微信接口-分享-->
@@ -606,6 +635,36 @@
 
 <div class="mui-content">
 	<div id="slider" class="mui-slider">
+		<div class="timerow">
+			<div class="col-xs-4">剩余人次：<span>{{ data['list']['has_num'] }}</span></div>
+			<div class="col-xs-8">
+				<span>
+					{% if data['list']['timeout'] == 'Y' %}
+						{% if data['list']['win_user_id'] > 0 %}
+							已过期
+						{% else %}
+							夺宝失败，已退款
+						{% endif %}
+					{% else %}
+						{% if data['list']['is_end'] == 'N' %}
+							{% if data['list']['overtime'] == '0' %}
+								无限制时间
+							{% else %}
+								<div id="timeout" class="none" data-id="{{ data['list']['overtime'] }}"></div>
+							剩余时长<span class="time" id="day">00</span>天<span class="time" id="hour">00</span>时<span class="time" id="minus">00</span>分<span class="time" id="second">00</span>秒<span class="time" id="mesc">00</span>
+							{% endif %}
+						{% elseif data['list']['is_end'] == 'Y' %}
+							{% if data['list']['win_user_id'] > 0 %}
+								已开奖
+							{% else %}
+								夺宝失败，已退款
+							{% endif %}
+								
+						{% endif %}
+					{% endif %}
+				</span>
+			</div>
+		</div>
 		<div class="mui-slider-group mui-slider-loop">
 			<div class="mui-slider-item itembox mui-slider-item-duplicate">
 				<a href="#">
@@ -653,6 +712,7 @@
 							<p><span class="tit">本期参与：</span><span class="pink">{{ data['list']['already_num'] }}</span>人次</p>
 							<p><span class="tit">幸运号码：</span><span class="pink">{{ data['list']['lucky_num'] }}</span></p>
 							<p><span class="tit">揭晓时间：</span>{{ data['list']['end_time'] }}</p>
+							<p><span class="tit">发起人：</span><strong>{{ data['list']['createphone'] }}</strong></p>
 						</div>
 						<div class="cls"></div>
 					</div>
@@ -662,26 +722,19 @@
 				<div class="progressbox">
 					<div class="person">
 						<div class="left">总需<span>{{ data['list']['need_num'] }}</span>人次</div>
-						<div class="right">剩余<span>{{ data['list']['has_num'] }}</span>人次</div>
+						<!-- <div class="right">剩余<span>{{ data['list']['has_num'] }}</span>人次</div> -->
 						<div class="cls"></div>
 					</div>
 					<div class="progressrow">
 						<div class="progress gradual" style="width:{{ data['list']['percent'] }}%"></div>
 					</div>
 					<div class="left rel">
-						{% if data['list']['timeout'] == 'Y' %}
-							已过期{{ data['list']['overtime'] }}
-						{% else %}
-							{% if data['list']['overtime'] == '0' %}
-							{% else %}
-								正在进行 <span id="timeout"></span>
-							{% endif %}
-						{% endif %}
+						发起人：<strong>{{ data['list']['createphone'] }}</strong>
 					</div>
 					<div class="consume right rel"><span>50</span>JOB币/人次</div>
 				</div>
 			{% endif %}
-			{{ data['list']['createphone'] }}
+			
 		</div>
 		{% if data['listusertotal'] %}
 			<div class="row record joined mui-collapse mui-table-view-cell">
@@ -837,33 +890,53 @@
 <script type="text/javascript">
 
 	var timeout = "{{ data['list']['overtime'] }}";
+	var T;
 
 	function getCountDown(timestamp){
-        setInterval(function(){
+        T = setInterval(function(){
             var nowTime = new Date();
             var endTime = new Date(timestamp * 1000);
 
             var t = endTime.getTime() - nowTime.getTime();
-            var hour=Math.floor(t/1000/60/60%24);
-            var min=Math.floor(t/1000/60%60);
-            var sec=Math.floor(t/1000%60);
+            var day = Math.floor(t/1000/60/60/24);
+            var hour = Math.floor(t/1000/60/60%24);
+            var min = Math.floor(t/1000/60%60);
+            var sec = Math.floor(t/1000%60);
+            var mesc = Math.floor(t%1000/10);
 
+            if (day < 10) {
+                day = "0" + day;
+            }
             if (hour < 10) {
-                 hour = "0" + hour;
+                hour = "0" + hour;
             }
             if (min < 10) {
-                 min = "0" + min;
+                min = "0" + min;
             }
             if (sec < 10) {
-                 sec = "0" + sec;
+                sec = "0" + sec;
             }
-            var countDownTime = hour + ":" + min + ":" + sec;
-            $("#timeout").html(countDownTime);
+            if (mesc < 10){
+            	mesc = "0"+ mesc;
+            }
+            //var countDownTime = hour + ":" + min + ":" + sec;
+            $("#day").html(day);
+            $("#hour").html(hour);
+            $("#minus").html(min);
+            $("#second").html(sec);
+            $("#mesc").html(mesc);
+            
+            if(day == 0 && hour == 0 && min == 0 && sec == 0 && mesc == 0){
+            	clearInterval(T);
+            	$("#buy").hide();
+            }
         
-        },1000);
+        },1);
     }
 
-    getCountDown(timeout);
+    if(timeout != "0"){
+    	getCountDown(timeout);
+    }
 
 	$(window).scroll(function() {
 		if($('footer').hasClass('hiddened')){

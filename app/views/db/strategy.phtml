@@ -6,7 +6,57 @@
 	html,body {
 		height: 100%;
 	}
-	
+	.banner {
+		height: 0;
+	    padding: 18.4%;
+	    position: relative;
+	    background: url(/public/img/db/strabg.jpg) no-repeat center;
+	    background-size: contain;
+	}
+	.container {
+		padding:2rem;
+	}
+	.container h4,
+	.container p {
+		color:#514d4d;
+	}
+	.container h4 {
+		font-size:1.6rem;
+		font-weight: 700;
+		position: relative;
+		margin-bottom: 2rem;
+	}
+	.container h4::after {
+		content: '';
+		position: absolute;
+		left:0;
+		bottom:-8px;
+		width: 2rem;
+		height:5px;
+		background: #6a24ba;
+	}
+	.container p {
+		font-size:1.2rem;
+		margin-bottom: 5px;
+	}
+	.container h5 {
+		font-size:1.2rem;
+		font-weight: 700;
+		margin:1rem auto;
+		color:#ff5a27;
+	}
+	.container a {
+		display: block;
+		width: 65%;
+		line-height: 2.8rem;;
+		border-radius: 3rem;
+		font-size:1.4rem;
+		color:#514d4d;
+		border:2px solid #a4a6ad;
+		margin:2rem auto;
+		text-align: center;
+		padding:0;
+	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -15,9 +65,19 @@
 </header>
 
 <div class="mui-content">
-	<img src="/public/img/db/noneshow.png" class="nonepng">
-	<div class="noneshow">
-		暂无提升余额攻略。
+	<div class="banner"></div>
+	<div class="container rel">
+		<h4>免费方式</h4>
+		<p>授权您的职业信用数据，获得算力，每天都能免费挖矿</p>
+		<p>①完善实名身份信息，可快速提高算力</p>
+		<p>②第三方平台授权：通过授权学信网/智联招聘、前程无忧等职业类第三方平台的账户，JOBChain将采集到居民的身份要素和职业特质，完善你的区块链职业身份的同时，可快速提升挖矿的算力，该方式是最快提升算力的方式。</p>
+		<p>③每日登陆、及时收取挖出的JOB币</p>
+		<h5>每日登陆、及时收取挖出的JOB币等积极用户行为也会持续提升算力。点滴积累，勤劳致富！</h5>
+		<a href="/mjob/promote">点此去授权数据</a>
+		<h4>付费方式</h4>
+		<p>通过代理商，在区块链数字货币交易所Lion.bi买入JOB币</p>
+		<a href="/mjob/buyorder" class="gradual mui-btn-block">点此去委托代理商</a>
+		<br><br><br><br>
 	</div>
 </div>
 
