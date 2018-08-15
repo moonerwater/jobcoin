@@ -276,6 +276,11 @@ class DbController extends ControllerH5
         }
         $user = \User::findFirstById($userid);
         $list['jobcoin'] = $user->jobcoin;
+        $list['createphone'] = '系统';
+        if($list['user_id']) {
+            $user = \User::findFirstById($list['user_id']);
+            $list['createphone'] = $this->getDisablePhone($user->phone);
+        }
         $data['list'] = $list;
         //
         $listuserdetail = \DbListUserDetail::find(array('user_id = '.$userid.' and list_id = '.$id, 'order' => 'id asc'));
