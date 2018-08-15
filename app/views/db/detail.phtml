@@ -590,7 +590,9 @@
 	p.rules span {
 		color:#ff2a63;
 	}
-	
+	#timeout {
+		color:#ff2a63;
+	}
 </style>
 
 <!--微信接口-分享-->
@@ -666,13 +668,18 @@
 					<div class="progressrow">
 						<div class="progress gradual" style="width:{{ data['list']['percent'] }}%"></div>
 					</div>
+					<div class="left rel">
+						{% if data['list']['timeout'] == 'Y' %}
+							已过期{{ data['list']['overtime'] }}
+						{% else %}
+							{% if data['list']['overtime'] == '0' %}
+							{% else %}
+								正在进行 <span id="timeout"></span>
+							{% endif %}
+						{% endif %}
+					</div>
 					<div class="consume right rel"><span>50</span>JOB币/人次</div>
 				</div>
-				{% if data['list']['timeout'] == 'Y' %}
-					已过期{{ data['list']['overtime'] }}
-				{% else %}
-					正在进行{{ data['list']['overtime'] }}
-				{% endif %}
 			{% endif %}
 		</div>
 		{% if data['listusertotal'] %}
@@ -828,13 +835,40 @@
 
 <script type="text/javascript">
 
+	var timeout = "{{ data['list']['overtime'] }}";
+
+	function getCountDown(timestamp){
+        setInterval(function(){
+            var nowTime = new Date();
+            var endTime = new Date(timestamp * 1000);
+
+            var t = endTime.getTime() - nowTime.getTime();
+            var hour=Math.floor(t/1000/60/60%24);
+            var min=Math.floor(t/1000/60%60);
+            var sec=Math.floor(t/1000%60);
+
+            if (hour < 10) {
+                 hour = "0" + hour;
+            }
+            if (min < 10) {
+                 min = "0" + min;
+            }
+            if (sec < 10) {
+                 sec = "0" + sec;
+            }
+            var countDownTime = hour + ":" + min + ":" + sec;
+            $("#timeout").html(countDownTime);
+        
+        },1000);
+    }
+
+    getCountDown(timeout);
+
 	$(window).scroll(function() {
 		if($('footer').hasClass('hiddened')){
-			console.log("232321")
 			$("#buy").css('bottom','1.82rem');
 			$(".buybox").css('bottom','0');
 		} else {
-			console.log("AAA")
 			$("#buy").css('bottom','6.82rem');
 			$(".buybox").css('bottom','5.82rem');
 		}

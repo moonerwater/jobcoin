@@ -143,7 +143,7 @@
 									<div class="title">
 										{{ item['name'] }}
 									</div>
-									<div class="infotext">开始时间：{{ item['create_time'] }}<span>2018</span> 年 <span>9</span> 月 <span>45</span> 日</div>
+									<div class="infotext">开始时间：<span onload="toTime({{ item['create_time'] }},'year')"></span> 年 <span onload="toTime({{ item['create_time'] }},'month')"></span> 月 <span onload="toTime({{ item['create_time'] }},'day')"></span> 日</div>
 									<div class="infotext">所需人次：<span>{{ item['need_num'] }}</span> 人次</div>
 									<div class="status">
 										<div class="rate col-xs-7">
@@ -176,7 +176,7 @@
 										<div class="title">
 											{{ item['name'] }}
 										</div>
-										<div class="infotext">开始时间：{{ item['create_time'] }}<span>2018</span> 年 <span>9</span> 月 <span>45</span> 日</div>
+										<div class="infotext">开始时间：{{ item['create_time'] }}<span></span> 年 <span>9</span> 月 <span>45</span> 日</div>
 										<div class="infotext">所需人次：<span>{{ item['need_num'] }}</span> 人次</div>
 										<div class="status">
 											<div class="rate col-xs-7">
@@ -196,7 +196,33 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
 
+	function toTime(time,type) {
+		console.log(time)
+        var date = new Date(time * 1000);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
+        Y = date.getFullYear() + '-';
+        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        D = date.getDate() + ' ';
+        // h = date.getHours() + ':';
+        // m = date.getMinutes() + ':';
+        // s = date.getSeconds();
+        if(type == "year"){
+        	return Y;
+        	//document.write(Y);
+        }
+        if(type == "month"){
+        	return M;
+        	//document.write(M);
+        }
+        if(type == "day"){
+        	return D;
+        	//document.write(D);
+        }
+        alert('111')
+        //return Y+M+D+h+m+s;
+    }
+</script>
 
 {% endblock %}
 {% block footer %}

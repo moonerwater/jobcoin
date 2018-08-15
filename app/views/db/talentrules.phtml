@@ -51,24 +51,25 @@
 		<p>3、只有当已发起的夺宝已完成或超期结束，才可进行下一期夺宝活动的发起</p><br>
 		<p>4、已拥有本人作为群主的单独微信群，成员达300人以上</p><br>
 		<p>5、微信群内的成员已通过群主邀请后注册为金职岛会员（注册金职岛会员将获得奖励）</p><br>
-		<button>马上申请{{ userinfo['can_coinget'] }}</button>
+		<button>马上申请</button>
 	</div>
 </div>
 <script type="text/javascript">
 
 	$("button").on('tap',function(){
 
-		var userstat = "N";
+		var userstat = "{{ userinfo['can_coinget'] }}";
 
 		if(userstat == "N"){
-			var btnArray = ['取消', '好的'];
-			mui.confirm('金职岛工作人员将在两个工作日内联系您并进行人工审核达人申请资质', '您已提交申请', btnArray, function(e) {
-				if (e.index == 1) {
-					window.location.href = "/db/talent";
+			$.get('/db/applycoinget',function(data){
+				if(data.error_code == "0"){
+					mui.alert('金职岛工作人员将在两个工作日内联系您并进行人工审核达人申请资质', '您已提交申请',function(){
+						window.location.href = "/db/talent";
+					});
 				} else {
-					
+					layer.msg(data.error_code,{icon: 5,time:3000});
 				}
-			})
+			},'json');
 		} 
 		if(userstat == "Y"){
 			var btnArray = ['取消', '去看看'];
