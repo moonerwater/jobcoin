@@ -125,8 +125,13 @@
 						</a>
 					</li>
 					<li class="mui-table-view-cell">
-						<a href="tprogress" class="mui-navigate-right">
+						<a href="/db/tprogress" class="mui-navigate-right">
 							<span class="ident4"></span>夺宝进度
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<a href="/db/message" class="mui-navigate-right">
+							<span class="ident5"></span>系统消息
 						</a>
 					</li>
 					<li class="mui-table-view-cell none">
@@ -149,7 +154,28 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
 
+	function checkName( name ) {
+	    var regu = /[\u4E00-\u9FA5]/;
+	    var re = new RegExp(regu);
+	    if (re.test(name)) {
+	        return true;  
+	    }
+	    else {
+	        return false;
+	    }
+	};
+
+	$(function(){
+		var text = $('.mui-media-body span').text();
+		if(!checkName(text)){
+			$('.mui-media-object .text').html('无');
+		} else {
+			$('.mui-media-object .text').html(text.substring(0,1));
+		}
+	});
+</script>
 
 {% endblock %}
 {% block footer %}
