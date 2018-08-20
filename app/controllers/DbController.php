@@ -52,7 +52,7 @@ class DbController extends ControllerH5
             $this->replyFailure('jobcoin none');
             return '';
         }
-        if($jobcoin%50 != 0){
+        if($jobcoin%10 != 0){
             $this->replyFailure('jobcoin error');
             return '';
         }
@@ -63,7 +63,7 @@ class DbController extends ControllerH5
         }
         $list = $list->toArray();
         $has_num = $list['need_num'] - $list['already_num'];
-        $count = $jobcoin/50;
+        $count = $jobcoin/10;
         if($has_num - $count < 0){
             $this->replyFailure('count max error');
             return '';
@@ -172,13 +172,13 @@ class DbController extends ControllerH5
             //发起夺宝的奖励
             if($list->user_id > 0){
                 $user = \User::findFirstById($list->user_id);
-                $user->jobcoin += $list->need_num*50*0.06;
+                $user->jobcoin += $list->need_num*10*0.05;
                 $user->last_time = time();
                 $user->save();
                 $userjobcoin = new \UserJobcoin();
                 $userjobcoin->user_id = $user->id;
                 $userjobcoin->type = 'coinvipmining';
-                $userjobcoin->jobcoin = $list->need_num*50*0.06;
+                $userjobcoin->jobcoin = $list->need_num*10*0.05;
                 $userjobcoin->create_time = time();
                 $userjobcoin->last_time = time();
                 $userjobcoin->save();
@@ -206,13 +206,13 @@ class DbController extends ControllerH5
                     $user = \User::findFirst(" code_system = '$code_user'");
                     if($user){
                         //一级
-                        $user->jobcoin += $v['num']*0.1;
+                        $user->jobcoin += $v['num']*0.05;
                         $user->save();
 
                         $userjobcoin = new \UserJobcoin();
                         $userjobcoin->user_id = $user->id;
                         $userjobcoin->type = 'coingetfor1';
-                        $userjobcoin->jobcoin = $v['num']*0.1;
+                        $userjobcoin->jobcoin = $v['num']*0.05;
                         $userjobcoin->create_time = time();
                         $userjobcoin->last_time = time();
                         $userjobcoin->save();
@@ -221,13 +221,13 @@ class DbController extends ControllerH5
                         $code_user = $user->code_user;
                         $user = \User::findFirst(" code_system = '$code_user'");
                         if($user){
-                            $user->jobcoin += $v['num']*0.05;
+                            $user->jobcoin += $v['num']*0.02;
                             $user->save();
 
                             $userjobcoin = new \UserJobcoin();
                             $userjobcoin->user_id = $user->id;
                             $userjobcoin->type = 'coingetfor2';
-                            $userjobcoin->jobcoin = $v['num']*0.05;
+                            $userjobcoin->jobcoin = $v['num']*0.02;
                             $userjobcoin->create_time = time();
                             $userjobcoin->last_time = time();
                             $userjobcoin->save();
@@ -484,13 +484,13 @@ class DbController extends ControllerH5
         $listusercomment->save();
         //晒单奖励
         $user = \User::findFirstById($userid);
-        $user->jobcoin += 10;
+        $user->jobcoin += 2;
         $user->last_time = time();
         $user->save();
         $userjobcoin = new \UserJobcoin();
         $userjobcoin->user_id = $user->id;
         $userjobcoin->type = 'comment';
-        $userjobcoin->jobcoin = 10;
+        $userjobcoin->jobcoin = 2;
         $userjobcoin->create_time = time();
         $userjobcoin->last_time = time();
         $userjobcoin->save();
