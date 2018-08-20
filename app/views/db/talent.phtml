@@ -162,7 +162,7 @@
 						<div class="title">
 							{{ item['name'] }}
 						</div>
-						<div class="num">获得者：<span>{{ item['daytime'] }}</span> 天</div>
+						<div class="num">有效时长：<span>{{ item['daytime'] }}</span> 天</div>
 						<div class="status">
 							<div class="rate col-xs-7">
 								<p>购买次数：<span>{{ item['need_num'] }}</span> 人次</p>
@@ -214,7 +214,7 @@
 		} 
 		if(userstat == "Y"){
 			var btnArray = ['取消', '发起'];
-			mui.confirm('您要发起该商品的夺宝吗？', '确认发起夺宝', btnArray, function(e) {
+			mui.confirm('您要发起该商品的夺宝吗？', '发起夺宝', btnArray, function(e) {
 				if (e.index == 1) {
 					$.post('/db/addcoinget',{'product_id':id},function(data){
 						if(data.error_code == '0'){
