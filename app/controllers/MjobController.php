@@ -134,14 +134,14 @@ class MjobController extends ControllerH5
                     $user = \User::findFirst(" code_system = '$code_user'");
                     if($user){
                         //一级
-                        $user->jobcoin += 4;
+                        $user->jobcoin += 5;
                         $user->candy += 10;
                         $user->save();
 
                         $userjobcoin = new \UserJobcoin();
                         $userjobcoin->user_id = $user->id;
                         $userjobcoin->type = 'regfor1';
-                        $userjobcoin->jobcoin = 4;
+                        $userjobcoin->jobcoin = 5;
                         $userjobcoin->create_time = time();
                         $userjobcoin->last_time = time();
                         $userjobcoin->save();
