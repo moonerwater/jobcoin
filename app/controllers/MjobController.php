@@ -594,11 +594,18 @@ class MjobController extends ControllerH5
     }
 
     public function invitecardAction() {
-        $this->checkNoUserGoLogin();
         //
-        $userid = $this->userinfo['id'];
+        $userid = $this->request->get('userid', 'int');
+        $userinfo = \User::findFirstById($userid);
+        if($userinfo){
+            $userinfo = $userinfo->toArray();
+        }
+        else{
+            $this->replyFailure('error');
+            return '';
+        }
         $data = array();
-        $data['code_system'] = $this->userinfo['code_system'];
+        $data['code_system'] = $userinfo['code_system'];
         //
         $user = \User::find(array('', 'order' => 'id asc'));
         foreach($user as $k => $v){
@@ -607,8 +614,8 @@ class MjobController extends ControllerH5
             }
         }
         //
-        $data['username'] = $this->userinfo['name'];
-        $data['username'] = $data['username'] ? $data['username'] : $this->userinfo['phone'];
+        $data['username'] = $userinfo['name'];
+        $data['username'] = $data['username'] ? $data['username'] : $userinfo['phone'];
 
         //
         $this->view->setVar('data', $data);
