@@ -85,7 +85,7 @@ class ControllerH5 extends ControllerBase
     }
 
     protected function checkCanAdmin($userid) {
-        if($userid == 25 || $userid == 27){
+        if($userid == 1 || $userid == 2){
             return true;
         }
         else{
