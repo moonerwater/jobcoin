@@ -504,7 +504,7 @@ class DbController extends ControllerH5
         //
         $userid = $this->userinfo['id'];
         //
-        $product = \DbProduct::find(array('', 'order' => 'id desc'));
+        $product = \DbProduct::find(array('', 'order' => 'id asc'));
         $product = $product->toArray();
         foreach($product as $k => $v){
             $product[$k]['imgs'] = explode(',', $v['imgs']);
