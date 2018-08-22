@@ -267,40 +267,51 @@
 					金职夺宝开放，开启夺宝狂欢！
 				</a>
 			</div>
-			<ul class="mui-table-view">
-				{% for key, item in data['list'] %}
-				<li class="mui-table-view-cell mui-media">
-					<a href="detail/{{ item['id'] }}" class="item">
-						<img class="mui-media-object mui-pull-left" src="{{ item['imgs'][0] }}">
-						<div class="mui-media-body rel">
-							<div class="title">
-								<span class="tips">{{ item['no'] }}期</span>
-								{{ item['name'] }}
-							</div>
-							<div class="status">
-								<div class="rate col-xs-7">
-									<p>夺宝进度：<span>{{ item['percent'] }}%</span></p>
-									<div class="progressrow">
-										<div class="progress gradual" style="width:{{ item['percent'] }}%"></div>
+			<div id="segmentedControl" class="mui-segmented-control" style="margin-bottom:1rem;">
+				<a href="#item1" class="mui-control-item mui-active">数码产品</a>
+				<a href="#item2" class="mui-control-item">通信话费</a>
+				<a href="#item3" class="mui-control-item">热门抢购</a>
+			</div>
+			<div id="selected">
+				<div id="item1" class="mui-control-content mui-active">
+					<ul class="mui-table-view">
+						{% for key, item in data['list'] %}
+						<li class="mui-table-view-cell mui-media">
+							<a href="detail/{{ item['id'] }}" class="item">
+								<img class="mui-media-object mui-pull-left" src="{{ item['imgs'][0] }}">
+								<div class="mui-media-body rel">
+									<div class="title">
+										<span class="tips">{{ item['no'] }}期</span>
+										{{ item['name'] }}
 									</div>
+									<div class="status">
+										<div class="rate col-xs-7">
+											<p>夺宝进度：<span>{{ item['percent'] }}%</span></p>
+											<div class="progressrow">
+												<div class="progress gradual" style="width:{{ item['percent'] }}%"></div>
+											</div>
+										</div>
+										{% if item['is_end'] == 'Y' or item['timeout'] == 'Y' %}
+											<button class="link col-xs-4 right gradual disabled">立即购买</button>
+										{% else %}
+											<button class="btn link col-xs-4 right gradual">立即购买</button>
+										{% endif %}
+
+										
+
+									</div>
+									{% if item['is_end'] == 'N' and item['timeout'] == 'Y' and canadmin %}
+										<button class="backmoney" data-id="{{ item['id'] }}">退还钱</button>
+									{% endif %}
 								</div>
-								{% if item['is_end'] == 'Y' or item['timeout'] == 'Y' %}
-									<button class="link col-xs-4 right gradual disabled">立即购买</button>
-								{% else %}
-									<button class="btn link col-xs-4 right gradual">立即购买</button>
-								{% endif %}
-
-								
-
-							</div>
-							{% if item['is_end'] == 'N' and item['timeout'] == 'Y' and canadmin %}
-								<button class="backmoney" data-id="{{ item['id'] }}">退还钱</button>
-							{% endif %}
-						</div>
-					</a>
-				</li>
-				{% endfor %}
-			</ul>
+							</a>
+						</li>
+						{% endfor %}
+					</ul>
+				</div>
+				<div id="item2" class="mui-control-content"></div>
+				<div id="item3" class="mui-control-content"></div>
+			</div>
 		</div>
 	</div>
 </div>
