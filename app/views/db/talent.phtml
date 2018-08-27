@@ -72,6 +72,9 @@
 		padding:0;
 		margin-bottom: 1rem;
 	}
+	.mui-table-view-cell.mui-active {
+		background: #fff;
+	}
 	.mui-table-view-cell .item {
 		height: 100%;
 		display: block;
@@ -135,6 +138,17 @@
 	.mui-table-view-cell .status .link.disabled {
 		background: #d7dae7;
 	}
+	.mui-segmented-control {
+		border: 1px solid #3552fc;
+	}
+	.mui-segmented-control .mui-control-item.mui-active {
+		background-color: #3552fc;
+	}
+	.mui-segmented-control .mui-control-item {
+		color: #3552fc;
+	    border-color: #3552fc;
+	    border-left: 1px solid #3552fc;
+	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -154,9 +168,9 @@
 			</div>
 		</div>
 		<div id="segmentedControl" class="mui-segmented-control" style="margin-bottom:1rem;">
-			<a href="#item1" class="mui-control-item mui-active">数码产品</a>
-			<a href="#item2" class="mui-control-item">通信话费</a>
-			<a href="#item3" class="mui-control-item">热门抢购</a>
+			<a href="#item1" class="mui-control-item mui-active">手机数码</a>
+			<a href="#item2" class="mui-control-item">话费流量</a>
+			<a href="#item3" class="mui-control-item">超值抢购</a>
 		</div>
 		<div id="selected">
 			<div id="item1" class="mui-control-content mui-active">
@@ -164,7 +178,7 @@
 					{% for key, item in data['list'] %}
 					{% if item['type'] == 1 %}
 					<li class="mui-table-view-cell mui-media statA">
-						<a href="/db/detail/2" class="item">
+						<!-- <a href="/db/detail/2" class="item"> -->
 							<img class="mui-media-object mui-pull-left" src="{{ item['imgs'][0] }}">
 							<div class="mui-media-body">
 								<div class="title">
@@ -179,7 +193,7 @@
 									<button class="btn link col-xs-4 right gradual goapply" data-id="{{ item['id'] }}">发起夺宝</button>
 								</div>
 							</div>
-						</a>
+						<!-- </a> -->
 					</li>
 					{% endif %}
 					{% endfor %}
