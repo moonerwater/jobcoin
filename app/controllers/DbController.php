@@ -161,7 +161,7 @@ class DbController extends ControllerH5
                 $sysnotice = new \DbSysNotice();
                 $sysnotice->type = 'coingetwin';
                 $sysnotice->user_id = $listuserdetail->user_id;
-                $sysnotice->content = '尊敬的用户，你是'.$list->no.'期的中奖者，请安心等待客服联系你。';
+                $sysnotice->content = '尊敬的用户，恭喜您成为'.$list->no.'期的中奖者，请加金职岛小秘书微信号lion8558，提供您的详细快递地址信息，我们尽快为您快递奖品。';
                 $sysnotice->url = '/db/detail/'.$list->id;
                 $sysnotice->create_time = time();
                 $sysnotice->last_time = time();
