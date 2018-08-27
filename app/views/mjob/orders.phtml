@@ -75,7 +75,11 @@
 				<table class="table table-condensed">
 					<thead>
 					    <tr>
-						    <th>订单号</th>
+							{% if canadmin %}
+							<th>充值昵称</th>
+							{% else %}
+							<th>订单号</th>
+							{% endif %}
 						    <th>金额</th>
 						    <th>代理商</th>
 						    <th>提交时间</th>
@@ -85,7 +89,11 @@
 						{% for key, item in data %}
 						  	{% if item['pay_type'] == 'Wait' %}
 								<tr data-id="{{ item['id'] }}" data-status="buying">
+									{% if canadmin %}
+									<td>{{ item['name'] }}</td>
+									{% else %}
 									<td>{{ item['id'] }}</td>
+									{% endif %}
 									<td>{{ item['money'] }}</td>
 									<td>{{ item['agent_name'] }}
 										{% if item['pay_method'] =='bank'  %}
@@ -107,7 +115,11 @@
 				<table class="table table-condensed">
 					<thead>
 					<tr>
+						{% if canadmin %}
+						<th>充值昵称</th>
+						{% else %}
 						<th>订单号</th>
+						{% endif %}
 						<th>金额</th>
 						<th>代理商</th>
 						<th>提交时间</th>
@@ -117,7 +129,11 @@
 					{% for key, item in data %}
 						{% if item['pay_type'] == 'Y' %}
 							<tr data-id="{{ item['id'] }}" data-status="done">
+								{% if canadmin %}
+								<td>{{ item['name'] }}</td>
+								{% else %}
 								<td>{{ item['id'] }}</td>
+								{% endif %}
 								<td>{{ item['money'] }}</td>
 								<td>{{ item['agent_name'] }}
 									{% if item['pay_method'] =='bank'  %}
@@ -139,7 +155,11 @@
 				<table class="table table-condensed">
 					<thead>
 					<tr>
+						{% if canadmin %}
+						<th>充值昵称</th>
+						{% else %}
 						<th>订单号</th>
+						{% endif %}
 						<th>金额</th>
 						<th>代理商</th>
 						<th>提交时间</th>
@@ -149,7 +169,11 @@
 					{% for key, item in data %}
 						{% if item['pay_type'] == 'N' %}
 							<tr data-id="{{ item['id'] }}" data-status="failed">
+								{% if canadmin %}
+								<td>{{ item['name'] }}</td>
+								{% else %}
 								<td>{{ item['id'] }}</td>
+								{% endif %}
 								<td>{{ item['money'] }}</td>
 								<td>{{ item['agent_name'] }}
 									{% if item['pay_method'] =='bank'  %}

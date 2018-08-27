@@ -952,6 +952,7 @@ class MjobController extends ControllerH5
         }
         //
         $this->view->setVar('data', $list);
+        $this->view->setVar('canadmin', $this->checkCanAdmin($userid));
 
     }
 
