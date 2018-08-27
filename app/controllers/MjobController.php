@@ -925,6 +925,11 @@ class MjobController extends ControllerH5
         $list->last_time = time();
         $list->save();
 
+        $sms = new \Sms();
+        if (!$sms->sendSms($agentlist[$agent_id]['phone'], 'agentGet', array())) {
+            /*$this->replyFailure('发送失败');
+            return '';*/
+        }
 
         $this->reply('success', 0, $agentlist[$agent_id]);
     }

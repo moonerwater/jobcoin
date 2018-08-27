@@ -12,7 +12,7 @@ class Sms extends \Phalcon\Mvc\User\Component
     public function __construct()
     {
         $this->config = new Ini(__DIR__.'/../config/smsinfo.conf');
-        $this->tplArray = array('userSign' => '83189', 'userFindPassword' => '6518', 'userEditPhone' => '6518', 'orderPay' => '6525', 'orderSend' => '19945');
+        $this->tplArray = array('userSign' => '83189', 'agentGet' => '97007', 'userEditPhone' => '6518', 'orderPay' => '6525', 'orderSend' => '19945');
     }
 
     public function sendSms($mobile, $tplId, $tplValue){
