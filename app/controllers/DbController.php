@@ -485,13 +485,13 @@ class DbController extends ControllerH5
         $listusercomment->save();
         //晒单奖励
         $user = \User::findFirstById($userid);
-        $user->jobcoin += 2;
+        $user->jobcoin += 5;
         $user->last_time = time();
         $user->save();
         $userjobcoin = new \UserJobcoin();
         $userjobcoin->user_id = $user->id;
         $userjobcoin->type = 'comment';
-        $userjobcoin->jobcoin = 2;
+        $userjobcoin->jobcoin = 5;
         $userjobcoin->create_time = time();
         $userjobcoin->last_time = time();
         $userjobcoin->save();
