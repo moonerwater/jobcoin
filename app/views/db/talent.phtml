@@ -148,6 +148,8 @@
 		color: #3552fc;
 	    border-color: #3552fc;
 	    border-left: 1px solid #3552fc;
+	    line-height: 2.8rem;
+	    font-size: 1.2rem;
 	}
 </style>
 
@@ -204,7 +206,7 @@
 					{% for key, item in data['list'] %}
 					{% if item['type'] == 2 %}
 					<li class="mui-table-view-cell mui-media statA">
-						<a href="/db/detail/2" class="item">
+						<!-- <a href="/db/detail/2" class="item"> -->
 							<img class="mui-media-object mui-pull-left" src="{{ item['imgs'][0] }}">
 							<div class="mui-media-body">
 								<div class="title">
@@ -219,7 +221,7 @@
 									<button class="btn link col-xs-4 right gradual goapply" data-id="{{ item['id'] }}">发起夺宝</button>
 								</div>
 							</div>
-						</a>
+						<!-- </a> -->
 					</li>
 					{% endif %}
 					{% endfor %}
@@ -230,7 +232,7 @@
 					{% for key, item in data['list'] %}
 					{% if item['type'] == 3 %}
 					<li class="mui-table-view-cell mui-media statA">
-						<a href="/db/detail/2" class="item">
+						<!-- <a href="/db/detail/2" class="item"> -->
 							<img class="mui-media-object mui-pull-left" src="{{ item['imgs'][0] }}">
 							<div class="mui-media-body">
 								<div class="title">
@@ -245,7 +247,7 @@
 									<button class="btn link col-xs-4 right gradual goapply" data-id="{{ item['id'] }}">发起夺宝</button>
 								</div>
 							</div>
-						</a>
+						<!-- </a> -->
 					</li>
 					{% endif %}
 					{% endfor %}
