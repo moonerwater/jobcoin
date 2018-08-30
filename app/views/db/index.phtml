@@ -138,7 +138,7 @@
 		border-radius: 1.52rem;
 	}
 	.mui-table-view-cell .status {
-		height: 2.5rem;
+		/*height: 2.5rem;*/
 		font-size: 1rem;
 	}
 	.mui-table-view-cell .status .rate,
@@ -320,10 +320,11 @@
 										{% else %}
 											<button class="btn link col-xs-4 right gradual">立即购买</button>
 										{% endif %}
-
+										<div class="cls"></div>
 										
 
 									</div>
+
 									{% if item['is_end'] == 'N' and item['timeout'] == 'Y' and canadmin %}
 										<button class="backmoney" data-id="{{ item['id'] }}">退还钱</button>
 									{% endif %}
