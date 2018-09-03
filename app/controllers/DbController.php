@@ -240,6 +240,22 @@ class DbController extends ControllerH5
                 }
                 //
             }
+            //如果是超值抢购，并且是系统发起的，则自动新开一个夺宝
+            $product = \DbProduct::findFirstById($list->product_id);
+            if($product->type == 3 && $list->user_id == 0){
+                $list = new \DbList();
+                $list->user_id = 0;
+                $list->product_id = $product->id;
+                $list->need_num = $product->need_num;
+                $list->create_time = time()+385939477;
+                $list->last_time = time()+385939477;
+                $list->save();
+
+                $list = \DbList::findFirstById($list->id);
+                $list->no = date('Y').$list->id;
+                $list->save();
+            }
+
         }
 
 
