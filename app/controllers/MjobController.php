@@ -182,6 +182,19 @@ class MjobController extends ControllerH5
                     }
                 }
 
+                //新用户注册送5个币挖矿
+                $randMoney = array(0.5,1.5,0.5,2.0,0.5);
+                foreach($randMoney as $k => $v){
+                    $userscorelist = new \UserScoreList();
+                    $userscorelist->user_id = $userid;
+                    $userscorelist->jobcoinno = uniqid().$this->randomString(4);
+                    $userscorelist->jobcoin = $v;
+                    $userscorelist->create_time = time();
+                    $userscorelist->last_time = time();
+                    $userscorelist->save();
+                }
+                //
+
             }
             $userLogin = \User::findFirst(array(
                 sprintf(" id = ".$userid),
