@@ -33,11 +33,14 @@ class DbController extends ControllerH5
         }
         $data['list'] = $list;
         //
-        $sysnotice = \DbSysNotice::findFirst(" user_id = $userid and is_read = 'N' ");
-        $this->view->setVar('sysnotice', $sysnotice);
+        if($userid){
+            $sysnotice = \DbSysNotice::findFirst(" user_id = $userid and is_read = 'N' ");
+            $this->view->setVar('sysnotice', $sysnotice);
+            $this->view->setVar('canadmin', $this->checkCanAdmin($userid));
+        }
 
         $this->view->setVar('data', $data);
-        $this->view->setVar('canadmin', $this->checkCanAdmin($userid));
+
     }
 
     public function buycountAction() {
