@@ -253,6 +253,12 @@
 			opacity: 0;
 		}
 	}
+	#sharebanner {
+		padding:6.6%;
+		background: url('/public/img/db/bannerfoot.jpg') no-repeat center;
+	    background-size: contain;
+	    margin-bottom: 10px;
+	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -261,7 +267,9 @@
 </header>
 
 <div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+	<div id="sharebanner"></div>
 	<div class="container mui-scroll">
+		
 		{% if data['listusercomment'] %}
 			{% for key, item in data['listusercomment'] %}
 				<div class="comment">
