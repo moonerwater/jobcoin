@@ -631,6 +631,23 @@ class MjobController extends ControllerH5
         $data['username'] = $data['username'] ? $data['username'] : $userinfo['phone'];
 
         //
+        require_once (APP_PATH.'app/library/phpqrcode/phpqrcode.php');
+        $qrpath = APP_PATH.'public/upload/qrimg/qr_'.$userid.'.png';
+        QRcode::png('http://www.jobchain.us/mjob/index?invitecode='.$data['code_system'], $qrpath , 'L', 6, 1);
+
+
+        $path_1 = APP_PATH.'public/img/mjob/qrcode.png';
+        $path_2 = $qrpath;
+        $image_1 = imagecreatefrompng($path_1);
+        $image_2 = imagecreatefrompng($path_2);
+        $image_3 = imageCreatetruecolor(imagesx($image_1),imagesy($image_1));
+        $color = imagecolorallocate($image_3, 255, 255, 255);
+        imagefill($image_3, 0, 0, $color);
+        imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
+        imagecopymerge($image_3, $image_2, 350, 860, 0, 0, imagesx($image_2), imagesy($image_2), 100);
+        var_dump(imagepng($image_3, APP_PATH.'public/upload/qrimg/img_'.$userid.'.png'));
+        $data['qrimg'] = '/upload/qrimg/img_'.$userid.'.png';
+
         $this->view->setVar('data', $data);
     }
 
