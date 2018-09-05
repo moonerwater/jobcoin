@@ -117,7 +117,6 @@
 	<h5>如有需要，请截屏保存二维码</h5>
 </div>
 <script type="text/javascript" src="{{url('js/qrcode.min.js')}}"></script>
-<script type="text/javascript" src="{{url('js/html2canvas.min.js')}}"></script>
 <script type="text/javascript">
 	new QRCode(document.getElementById("QRCode"), "http://www.jobchain.us/mjob/index?invitecode={{ data['code_system'] }}");
 </script>
