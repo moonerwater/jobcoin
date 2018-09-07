@@ -1,0 +1,45 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职岛 - 关于金职链{% endblock %}
+
+
+{% block content %}
+<style type="text/css">
+	body,html {
+		height:100%;
+	}
+	
+	#allmap {
+		width: 100%;height: 100%;overflow: hidden;margin:0;display: none;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">关于金职链</h1>
+</header>
+
+<div id="allmap"></div>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=36O14NhaK4ciWsoaG3xgNnngT29wiEpB"></script>
+<script type="text/javascript">
+	var cityName;
+	var code;
+	var lng;	//经度
+	var lat;	//纬度
+	var map = new BMap.Map("allmap");
+	// var point = new BMap.Point(116.331398,39.897445);
+	// map.centerAndZoom(point,12);
+
+	function myFun(result){
+		console.log(result)
+		lng = result.center.lng;
+		lat = result.center.lat;
+		code = result.code;
+		cityName = result.name;
+		//map.setCenter(cityName);
+		console.log("当前定位城市:"+cityName);
+		console.log(lng,lat)
+	}
+	var myCity = new BMap.LocalCity();
+	myCity.get(myFun);
+</script>
+{% endblock %}

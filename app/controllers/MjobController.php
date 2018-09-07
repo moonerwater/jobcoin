@@ -7,6 +7,11 @@ class MjobController extends ControllerH5
         parent::initialize();
     }
 
+    public function mapAction()
+    {
+       
+    }
+
     public function indexAction() {
         $invitecode = $this->request->get('invitecode', 'string');
         $this->view->setVar('invitecode', $invitecode);
@@ -644,7 +649,7 @@ class MjobController extends ControllerH5
         $color = imagecolorallocate($image_3, 255, 255, 255);
         imagefill($image_3, 0, 0, $color);
         imagecopyresampled($image_3, $image_1, 0, 0, 0, 0, imagesx($image_1), imagesy($image_1), imagesx($image_1), imagesy($image_1));
-        imagecopymerge($image_3, $image_2, 350, 860, 0, 0, imagesx($image_2), imagesy($image_2), 100);
+        imagecopymerge($image_3, $image_2, 312, 868, 0, 0, imagesx($image_2), imagesy($image_2), 100);
         var_dump(imagepng($image_3, APP_PATH.'public/upload/qrimg/img_'.$userid.'.png'));
         $data['qrimg'] = '/upload/qrimg/img_'.$userid.'.png';
 
