@@ -1038,7 +1038,7 @@
 		var buynum = $("#buyNum").val();
 		if(balance >= need){
 			var urlArr = window.location.href.split('/');
-    		var list_id = urlArr[5];
+    		var list_id = {{ data['list']['id'] }};
     		var btnArray = ['再想想', '买买买'];
 			mui.confirm("确定以"+need+"JOB币的价格购买？", '购买确认', btnArray, function(e) {
 				if (e.index == 1) {
