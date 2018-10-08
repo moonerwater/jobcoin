@@ -403,29 +403,44 @@
 			margin-top:.6rem;
 		}
 		.news {
-			width: 100%;
-			height: 3.23rem;
-			line-height: 3.23rem;
-			border-radius: 3.23rem;
-			background-color: #3552fc;
-			margin-top: 1.2rem;
-			margin-bottom: 1.64rem;
-			color:#fff;
-			padding:0 1.2rem;
-			font-size: 1rem;
+		    width: 100%;
+		    height: 3.23rem;
+		    line-height: 3.23rem;
+		    border-radius: 3.23rem;
+		    background-color: #3552fc;
+		    margin-top: 1rem;
+		    margin-bottom: 1rem;
+		    color: #fff;
+		    padding: 0 1.2rem;
+		    font-size: 1rem;
+		    /*background: url('/public/img/db/bannerfoot.jpg') no-repeat center;
+		    background-size: contain;*/
 		}
 		.news a {
-			color:#fff;
+		    color: #fff;
 		}
-		.news span {
+		.news span.tit {
+		    display: inline-block;
+		    float:left;
+		    width: 24%;
+		    height: 1.96rem;
+		    line-height: 2rem;
+		    border-radius: 1.96rem;
+		    text-align: center;
+		    background-color: #fe4b28;
+		    margin-right: .3rem;
+		    margin-left: -.5rem;
+		    margin-top:.65rem;
+
+		}
+		.news marquee {
+			width: 70%;
+			float:left;
+		}
+		.news span.text {
+			color:#fff;
 			display: inline-block;
-			width: 3.48rem;
-			height: 1.96rem;
-			line-height: 1.96rem;
-			border-radius: 1.96rem;
-			text-align: center;
-			background-color: #fe4b28;
-			margin-right: .3rem;
+			margin-right:10px;
 		}
 		.datalist {
 			padding:.63rem;
@@ -913,6 +928,28 @@
 				font-size: 2rem;
 				text-align: center;
 		    }
+		    #FollowBar {
+		    	position: absolute;
+		    	top:0;
+		    	left:0;
+		    	width: 100%;
+		    	height: 100%;
+		    	background: rgba(0,0,0,0.6);
+		    	z-index:9999;
+		    }
+		    #FollowBar .followbox {
+				width: 80%;
+				height: 50%;
+		    }
+		    #FollowBar .followbox .followclose {
+		    	width: 2rem;
+		    	height: 2rem;
+		    	position: absolute;
+		    	top:10%;
+		    	right:10%;
+		    	background: url("/public/img/mjob/close.png") center no-repeat;
+				background-size: contain;
+		    }
 	</style>
 
 	<!-- <header class="mui-bar mui-bar-nav">
@@ -924,6 +961,12 @@
 			
 			<div class="mui-slider-group">
 				<div id="tabbar" class="mui-slider-item mui-control-content mui-active">
+					<div id="FollowBar" class="none">
+						<div class="followbox auto-center">
+							<img src="/public/img/mjob/follow.png" class="auto-center">
+							<div class="followclose"></div>
+						</div>
+					</div>
 					<div class="mui-scroll-wrapper">
 						<div class="mui-scroll scroll">
 							<div class="container">
@@ -1001,9 +1044,17 @@
 									<div class="cls"></div>
 								</div>
 								<div class="news">
-									<a href="#">
-										<span>头条</span>
-										金职岛开放注册，开启挖矿狂欢！
+									<a href="#" class="clearfix">
+										<span class="tit">夺宝快报</span>
+										
+										<marquee loop="-1" scrollamount="5" scrolldelay="100" >
+											<span class="text">恭喜手机号为133****5111的用户中奖！</span>
+											<span class="text">恭喜手机号为137****9077的用户中奖！</span>
+											<span class="text">恭喜手机号为138****8000的用户中奖！</span>
+											<span class="text">恭喜手机号为133****5114的用户中奖！</span>
+											<span class="text">恭喜手机号为137****9080的用户中奖！</span>
+										</marquee>
+										
 									</a>
 								</div>
 								<div class="miningdata datalist">
@@ -1233,6 +1284,9 @@
 			
 		});
 
+		//点击数量
+		var clicknum = 0;
+		
 		//矿显示数量
 		var minenum2 = 5;
 		var minenum = minenum2;
@@ -1380,12 +1434,26 @@
 
 		});
 
+		$("#FollowBar .followclose").on('tap',function(){
+			$("#FollowBar").fadeOut(200);
+			var date = new Date();
+			date.setTime(date.getTime()+60*60*24*3*1000);
+			$.cookie('follow2', 1, {expires: date});
+		});
+
 		$('.minesbox').on('tap','.datacoin',function(){
 			var _this = $(this);
 			_this.removeClass('datacoin');
 			var id = _this.attr('data-id');
 			var mid = _this.attr('data-mineid');
 			var mine = _this.attr('data-mine');
+
+			if(clicknum <= 4){
+				clicknum++;
+			}
+			if(clicknum == 5 && $.cookie('follow2') == undefined){
+				$("#FollowBar").fadeIn(200);
+			}
 			//console.log(_this,$("[data-mineid='"+mid+"']"));
 			//$('.minesbox').off('tap',$("[data-mineid='"+mid+"']"));
 			//$("[data-mineid='"+mid+"']").off('tap');

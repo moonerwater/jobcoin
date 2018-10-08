@@ -81,16 +81,28 @@
 	.news a {
 	    color: #fff;
 	}
-	.news span {
+	.news span.tit {
 	    display: inline-block;
-	    width: 5.48rem;
+	    float:left;
+	    width: 24%;
 	    height: 1.96rem;
-	    line-height: 1.96rem;
+	    line-height: 2rem;
 	    border-radius: 1.96rem;
 	    text-align: center;
 	    background-color: #fe4b28;
 	    margin-right: .3rem;
+	    margin-left: -.5rem;
+	    margin-top:.65rem;
 
+	}
+	.news marquee {
+		width: 70%;
+		float:left;
+	}
+	.news span.text {
+		color:#fff;
+		display: inline-block;
+		margin-right:10px;
 	}
 	.mui-table-view {
 		margin-bottom: 6.82rem;
@@ -292,15 +304,21 @@
 				</div>
 			</div>
 			<div class="news">
-				<a href="#">
-					<span>夺宝快报</span>
-					金职夺宝开放，开启夺宝狂欢！
+				<a href="#" class="clearfix">
+					<span class="tit">夺宝快报</span>
+					<marquee loop="-1" scrollamount="5" scrolldelay="100" >
+						<span class="text">恭喜手机号为133****5111的用户中奖！</span>
+						<span class="text">恭喜手机号为137****9077的用户中奖！</span>
+						<span class="text">恭喜手机号为138****8000的用户中奖！</span>
+						<span class="text">恭喜手机号为133****5114的用户中奖！</span>
+						<span class="text">恭喜手机号为137****9080的用户中奖！</span>
+					</marquee>
 				</a>
 			</div>
 			<div id="segmentedControl" class="mui-segmented-control" style="margin-bottom:1rem;">
 				<a href="#item1" class="mui-control-item mui-active">手机数码</a>
 				<a href="#item2" class="mui-control-item">话费流量</a>
-				<a href="#item3" class="mui-control-item">超值抢购</a>
+				<a href="#item3" class="mui-control-item">超值夺宝</a>
 			</div>
 			<div id="selected">
 				<div id="item1" class="mui-control-content mui-active">
@@ -323,9 +341,9 @@
 											</div>
 										</div>
 										{% if item['is_end'] == 'Y' or item['timeout'] == 'Y' %}
-											<button class="link col-xs-4 right gradual disabled">立即购买</button>
+											<button class="link col-xs-4 right gradual disabled">立即夺宝</button>
 										{% else %}
-											<button class="btn link col-xs-4 right gradual">立即购买</button>
+											<button class="btn link col-xs-4 right gradual">立即夺宝</button>
 										{% endif %}
 										<div class="cls"></div>
 										
@@ -362,9 +380,9 @@
 											</div>
 										</div>
 										{% if item['is_end'] == 'Y' or item['timeout'] == 'Y' %}
-										<button class="link col-xs-4 right gradual disabled">立即购买</button>
+										<button class="link col-xs-4 right gradual disabled">立即夺宝</button>
 										{% else %}
-										<button class="btn link col-xs-4 right gradual">立即购买</button>
+										<button class="btn link col-xs-4 right gradual">立即夺宝</button>
 										{% endif %}
 
 
@@ -400,9 +418,9 @@
 											</div>
 										</div>
 										{% if item['is_end'] == 'Y' or item['timeout'] == 'Y' %}
-										<button class="link col-xs-4 right gradual disabled">立即购买</button>
+										<button class="link col-xs-4 right gradual disabled">立即夺宝</button>
 										{% else %}
-										<button class="btn link col-xs-4 right gradual">立即购买</button>
+										<button class="btn link col-xs-4 right gradual">立即夺宝</button>
 										{% endif %}
 
 
