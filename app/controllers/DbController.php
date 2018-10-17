@@ -135,17 +135,10 @@ class DbController extends ControllerH5
         //
         $list = \DbList::findFirstById($list_id);
         if($list->need_num == $list->already_num){
-            $url = 'https://api-prd.eosflare.io/chain/get_info';
-            $post_data['grant_type']       = 'client_credentials';
-            $o = "";
-            foreach ( $post_data as $k => $v )
-            {
-                $o.= "$k=" . urlencode( $v ). "&" ;
-            }
-            $post_data = substr($o,0,-1);
-            $res = $this->request_post($url, $post_data);
+            $url = 'https://eos.greymass.com/v1/chain/get_info';
+            $res = file_get_contents($url);
             $result = json_decode($res,true);
-            $block_num = $result['result']['blocks'];
+            $block_num = $result['head_block_num'];
             $block_num = $block_num?$block_num:5500500;
             $block_num2 = $block_num+50;
             $md5 = substr(md5($block_num2),25,7);
