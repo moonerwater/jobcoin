@@ -114,6 +114,11 @@ class Services extends \Base\Services
      */
     protected function initSession()
     {
+        // Set the max lifetime of a session with 'ini_set()' to one hour
+        ini_set('session.gc_maxlifetime', 3600*24*10);
+        session_set_cookie_params(3600*24*10);
+
+        // Start session with Phalcon
         $session = new SessionAdapter();
         $session->start();
         return $session;
